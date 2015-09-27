@@ -6,6 +6,7 @@ using ABSBuybackMVCWebAPI.Services.Repository;
 
 namespace ABSBuybackMVCWebAPI.Controllers
 {
+    [RoutePrefix("api/buybackvehicle")]
     public class BuybackVehicleController : ApiController
     {
         private readonly IRepositoryService repositoryService;
@@ -27,7 +28,8 @@ namespace ABSBuybackMVCWebAPI.Controllers
             return "value";
         }
 
-        // GET: api/BuybackVehicle
+        // GET: api/BuybackVehicle/search
+        [Route("search")]
         public IEnumerable<BuybackVehicle> Get([FromBody] BuybackVehicleQuery queryObject)
         {
             return repositoryService.VehicleRepository.Search(queryObject);

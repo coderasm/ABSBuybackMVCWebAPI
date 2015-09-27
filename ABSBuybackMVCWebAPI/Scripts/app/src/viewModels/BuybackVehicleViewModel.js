@@ -1,10 +1,9 @@
 ﻿export class BuybackVehicleViewModel
 {
-    currentValues = {};
     create = false;
+    reserve = null;
 
     constructor(data) {
         Object.assign(this, data);
-        Object.assign(this.currentValues, data);
     }
 }

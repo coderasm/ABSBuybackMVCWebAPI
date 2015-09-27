@@ -3,7 +3,7 @@ import {BuybackResult} from 'models/BuybackResult';
 import {Dealer} from 'models/Dealer';
 import {SaleLocation} from 'models/SaleLocation';
 import {Mapper} from 'utilities/Mapper';
-import * from 'utilities/ArrayExtensions';
+import {ArrayExtensions} from 'utilities/ArrayExtensions';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 
@@ -37,26 +37,30 @@ export class Buybacks {
 
     loadBuybackVehicles()
     {
-        this.repositoryService.BuybackResultRepository.getAll(0,0)
+        this.repositoryService.BuybackVehicleRepository.getAll()
           .then(response => response.json())
-          .then(json => $.map(json,(v) => {return new BuybackResultViewModel(v)}))
-          .then(buybacks => this.buybacks = buybacks);
+          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v)}))
+          .then(vehicles => this.vehicles = vehicles);
     }
 
     loadLocations()
     {
-        var locations = $.map(vehicles, v =>
+        var locations = $.map(this.vehicles, v =>
                             {
                                 return Object.create(SaleLocation.prototype, {id:{value:v.SaleLocationId},name:{value:v.SaleLocation}});
                             }).distinct();
+        locations.push(Object.create(SaleLocation.prototype, {id:{value:null},name:{value:"All"}}));
+        this.locations = locations;
     }
 
     loadDealers()
     {
-        var dealers = $.map(vehicles, v =>
+        var dealers = $.map(this.vehicles, v =>
                             {
                                 return Object.create(Dealer.prototype, {id:{value:v.BuyerId},name:{value:v.Buyer}});
                             }).distinct();
+        dealers.push(Object.create(Dealer.prototype, {id:{value:null},name:{value:"All"}}));
+        this.dealers = dealers;
     }
 
     loadReasons()

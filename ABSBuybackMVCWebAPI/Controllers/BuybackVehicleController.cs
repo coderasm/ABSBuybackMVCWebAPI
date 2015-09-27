@@ -22,6 +22,13 @@ namespace ABSBuybackMVCWebAPI.Controllers
             return repositoryService.VehicleRepository.GetAll();
         }
 
+        // GET: api/BuybackVehicle/paged
+        [Route("paged/{pageSize:int}/{pageNumber:int}")]
+        public IEnumerable<BuybackVehicle> Get(int pageSize, int pageNumber)
+        {
+            return repositoryService.VehicleRepository.GetAll();
+        }
+
         // GET: api/BuybackVehicle/5
         public string Get(int id)
         {
@@ -31,6 +38,13 @@ namespace ABSBuybackMVCWebAPI.Controllers
         // GET: api/BuybackVehicle/search
         [Route("search")]
         public IEnumerable<BuybackVehicle> Get([FromBody] BuybackVehicleQuery queryObject)
+        {
+            return repositoryService.VehicleRepository.Search(queryObject);
+        }
+
+        // GET: api/BuybackVehicle/search
+        [Route("search/{pageSize:int}/{pageNumber:int}")]
+        public IEnumerable<BuybackVehicle> Get(int pageSize, int pageNumber, [FromBody] BuybackVehicleQuery queryObject)
         {
             return repositoryService.VehicleRepository.Search(queryObject);
         }

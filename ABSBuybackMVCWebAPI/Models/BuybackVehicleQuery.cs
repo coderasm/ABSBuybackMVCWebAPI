@@ -7,6 +7,6 @@ namespace ABSBuybackMVCWebAPI.Models
     {
         public string BuyerId { get; set; }
         public int? SaleLocationId { get; set; }
-        public List<int?> VehicleIds { get; set; }
+        public List<int> VehicleIds { get; set; }
     }
 }

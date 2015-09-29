@@ -37,14 +37,14 @@ namespace ABSBuybackMVCWebAPI.Controllers
 
         // GET: api/BuybackVehicle/search
         [Route("search")]
-        public IEnumerable<BuybackVehicle> Get([FromBody] BuybackVehicleQuery queryObject)
+        public IEnumerable<BuybackVehicle> Post([FromBody] BuybackVehicleQuery queryObject)
         {
             return repositoryService.VehicleRepository.Search(queryObject);
         }
 
         // GET: api/BuybackVehicle/search/pageSize/pageNumber
-        [Route("search/{pageSize:int}/{pageNumber:int}")]
-        public IEnumerable<BuybackVehicle> Get(int pageSize, int pageNumber, [FromBody] BuybackVehicleQuery queryObject)
+        [Route("search/{pageNumber:int}/{pageSize:int}")]
+        public IEnumerable<BuybackVehicle> Post(int pageSize, int pageNumber, [FromBody] BuybackVehicleQuery queryObject)
         {
             return repositoryService.VehicleRepository.SearchPaged(queryObject, pageSize, pageNumber);
         }

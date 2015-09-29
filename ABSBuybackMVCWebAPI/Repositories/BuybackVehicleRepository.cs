@@ -12,8 +12,10 @@ namespace ABSBuybackMVCWebAPI.Repositories
 {
     class BuybackVehicleRepository : IBuybackVehicleRepository
     {
-        private const string Select = @"SELECT gs.SaleLocation, g2.SaleFirstDate ,g.VehicleID, dbo.WhoAMI(g.DealerID) AS Seller, g.DealerID AS SellerId, g2.SaleID AS SaleLocationId, dbo.WhoAMI(g1.DealerID) Buyer, g1.DealerID AS BuyerId, g.BidSheetNumber, dbo.YMM(g.VehicleID) YMM, RIGHT(g.VIN,6) VIN 
-                                        FROM GSV g
+        private const string Select = @"SELECT TOP 220 gs.SaleLocation, g2.SaleFirstDate ,g.VehicleID, dbo.WhoAMI(g.DealerID) AS Seller, g.DealerID AS SellerId, g2.SaleID AS SaleLocationId, dbo.WhoAMI(g1.DealerID) Buyer, g1.DealerID AS BuyerId, g.BidSheetNumber, dbo.YMM(g.VehicleID) YMM, RIGHT(g.VIN,6) VIN "
+                                        + FromAndJoins;
+
+        private const string FromAndJoins = @"FROM GSV g
                                         JOIN GSI g2 ON g.SaleInstanceID = g2.SaleInstanceID
                                         JOIN GSB g1 ON g.VehicleID = g1.VehicleID AND g1.WinningBid = 1
                                         JOIN ABSContact.dbo.CONTACT2 c ON g1.DealerID = c.ACCOUNTNO AND c.BuybackBidder = 1
@@ -22,19 +24,13 @@ namespace ABSBuybackMVCWebAPI.Repositories
         private const string SelectPaged = @"SELECT SaleLocation, SaleFirstDate, VehicleID, Seller, SellerId, SaleLocationId, Buyer, BuyerId, BidSheetNumber, YMM, VIN 
                                             FROM(
 	                                            SELECT gs.SaleLocation, g2.SaleFirstDate ,g.VehicleID, dbo.WhoAMI(g.DealerID) AS Seller, g.DealerID AS SellerId, g2.SaleID AS SaleLocationId, dbo.WhoAMI(g1.DealerID) Buyer, g1.DealerID AS BuyerId, g.BidSheetNumber, dbo.YMM(g.VehicleID) YMM, RIGHT(g.VIN,6) VIN, ROW_NUMBER()
-		                                            OVER (ORDER BY gs.SaleLocation, SaleFirstDate DESC, dbo.WhoAMI(g.DealerID), g.BidSheetNumber) AS RowNum
-		                                            FROM GSV g
-		                                            JOIN GSI g2 ON g.SaleInstanceID = g2.SaleInstanceID
-		                                            JOIN GSB g1 ON g.VehicleID = g1.VehicleID AND g1.WinningBid = 1
-		                                            JOIN ABSContact.dbo.CONTACT2 c ON g1.DealerID = c.ACCOUNTNO AND c.BuybackBidder = 1
-		                                            JOIN GroupSale gs ON g2.SaleID = gs.SaleID AND gs.ForDropDown = 1
-		                                            LEFT JOIN Buyback b ON g.VehicleID = b.VehicleIdOriginal
-		                                            WHERE b.VehicleIdOriginal IS NULL{0}
+		                                            OVER (ORDER BY gs.SaleLocation, SaleFirstDate DESC, dbo.WhoAMI(g.DealerID), g.BidSheetNumber) AS RowNum "
+                                                    + FromAndJoins
+		                                            + @"{0}
 	                                            ) AS BBV
-                                            WHERE BBV.RowNum BETWEEN ((@PageNumber-1)*@RowsPerPage)+1
-                                            AND @RowsPerPage*(@PageNumber)";
+                                            WHERE BBV.RowNum BETWEEN (({1}-1)*{2})+1
+                                            AND {2}*({1})";
         private const string WhereTemplate = @" WHERE b.VehicleIdOriginal IS NULL{0}";
-        private const string PagedTemplate = @"";
         private string WherePredicate = "";
         private const string OrderBy = @" ORDER BY
                                         gs.SaleLocation,SaleFirstDate DESC, Seller, g.BidSheetNumber";
@@ -56,14 +52,19 @@ namespace ABSBuybackMVCWebAPI.Repositories
             return Select + String.Format(WhereTemplate, WherePredicate) + OrderBy;
         }
 
-        public IEnumerable<BuybackVehicle> Paged(int pageSize, int pageNumber)
+        private string FormQuery(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            var whereClause = String.Format(WhereTemplate, WherePredicate);
+            return String.Format(SelectPaged, whereClause, pageNumber, pageSize);
         }
 
-        public IEnumerable<BuybackVehicle> SearchPaged(BuybackVehicleQuery queryObject, int pageSize, int pageNumber)
+        public IEnumerable<BuybackVehicle> Paged(int pageSize, int pageNumber)
         {
-            throw new NotImplementedException();
+            var query = FormQuery(pageNumber, pageSize);
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
+            {
+                return connection.Query<BuybackVehicle>(query).ToList();
+            }
         }
 
         public BuybackVehicle Get(int id)
@@ -107,6 +108,17 @@ namespace ABSBuybackMVCWebAPI.Repositories
             }
         }
 
+
+        public IEnumerable<BuybackVehicle> SearchPaged(BuybackVehicleQuery queryObject, int pageSize, int pageNumber)
+        {
+            ProcessQueryObject(queryObject);
+            var query = FormQuery(pageNumber, pageSize);
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
+            {
+                return connection.Query<BuybackVehicle>(query).ToList();
+            }
+        }
+
         private void ProcessQueryObject(BuybackVehicleQuery queryObject)
         {
             processDealer(queryObject);
@@ -116,13 +128,13 @@ namespace ABSBuybackMVCWebAPI.Repositories
 
         private void processVehicleIds(BuybackVehicleQuery queryObject)
         {
-            if (!queryObject.VehicleIds.Equals(null))
+            if (queryObject.VehicleIds.Count != 0)
                 WherePredicate += processVehicleIds(queryObject.VehicleIds);
         }
 
         private void processSaleLocation(BuybackVehicleQuery queryObject)
         {
-            if (!queryObject.SaleLocationId.Equals(null))
+            if (queryObject.SaleLocationId != null)
                 WherePredicate += FormatSaleIdPredicate(queryObject.SaleLocationId.Value);
         }
 
@@ -134,7 +146,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
 
         private void processDealer(BuybackVehicleQuery queryObject)
         {
-            if (!queryObject.BuyerId.Equals(null))
+            if (queryObject.BuyerId != null)
                 WherePredicate += FormatDealerIdPredicate(queryObject.BuyerId);
         }
 
@@ -144,7 +156,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
             return dealerIdPredicate;
         }
 
-        private string processVehicleIds(List<int?> vehicleIds)
+        private string processVehicleIds(List<int> vehicleIds)
         {
             var andInPredicate = "";
             vehicleIds.ForEach(v =>

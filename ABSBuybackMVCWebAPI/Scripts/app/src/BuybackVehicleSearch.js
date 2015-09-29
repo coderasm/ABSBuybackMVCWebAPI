@@ -2,6 +2,7 @@
 import {BuybackResult} from 'models/BuybackResult';
 import {Dealer} from 'models/Dealer';
 import {SaleLocation} from 'models/SaleLocation';
+import {BuybackVehicleQuery} from 'models/BuybackVehicleQuery';
 import {Mapper} from 'utilities/Mapper';
 import {ArrayExtensions} from 'utilities/ArrayExtensions';
 import {inject} from 'aurelia-framework';
@@ -15,11 +16,13 @@ export class Buybacks {
     vehicles = [];
     reasons = [];
     saleOptions = [];
-    saleLocation = null;
-    dealer = null;
-    vehicleIds = null;
+    saleLocationId = null;
+    buyerId = null;
+    vehicleIds = [];
     reason = 0;
     saleOption = 0;
+    pageNumber = 1;
+    pageSize = 10;
 
     constructor(repositoryService, mapper) {
         this.repositoryService = repositoryService;
@@ -29,18 +32,29 @@ export class Buybacks {
     activate()
     {
         this.loadBuybackVehicles();
-        this.loadLocations();
-        this.loadDealers();
         this.loadReasons();
         return this.loadSaleOptions();
     }
 
     loadBuybackVehicles()
     {
-        this.repositoryService.BuybackVehicleRepository.getAll()
+        var queryObject = this.createQueryObject();
+        this.repositoryService.BuybackVehicleRepository.search(queryObject)
           .then(response => response.json())
           .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v)}))
-          .then(vehicles => this.vehicles = vehicles);
+          .then(vehicles => this.loadVehicles(vehicles));
+}
+
+    createQueryObject()
+    {
+        return this.mapper.map(this, BuybackVehicleQuery);
+    }
+
+    loadVehicles(vehicles)
+    {
+        this.vehicles = vehicles;
+        this.loadLocations();
+        this.loadDealers();
     }
 
     loadLocations()
@@ -49,8 +63,8 @@ export class Buybacks {
                             {
                                 return Object.create(SaleLocation.prototype, {id:{value:v.SaleLocationId},name:{value:v.SaleLocation}});
                             }).distinct();
-        locations.push(Object.create(SaleLocation.prototype, {id:{value:null},name:{value:"All"}}));
-        this.locations = locations;
+        locations.unshift(Object.create(SaleLocation.prototype, {id:{value:null},name:{value:"All"}}));
+        this.saleLocations = locations;
     }
 
     loadDealers()
@@ -59,7 +73,7 @@ export class Buybacks {
                             {
                                 return Object.create(Dealer.prototype, {id:{value:v.BuyerId},name:{value:v.Buyer}});
                             }).distinct();
-        dealers.push(Object.create(Dealer.prototype, {id:{value:null},name:{value:"All"}}));
+        dealers.unshift(Object.create(Dealer.prototype, {id:{value:null},name:{value:"All"}}));
         this.dealers = dealers;
     }
 

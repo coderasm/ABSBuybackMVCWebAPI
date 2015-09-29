@@ -17,20 +17,30 @@ export class BuybackVehicleRepository
         return this.http.fetch('');
     }
 
+    paged(pageNumber, pageSize)
+    {
+        var uri = "paged/" + pageNumber + "/" + pageSize;
+        return this.http.fetch(uri);
+    }
+
     search(buybackVehicleQueryObject)
     {
         var requestInit = {
             headers: {"content-type" : "application/json"},
-            method: "GET",
+            method: "POST",
             body: JSON.stringify(buybackVehicleQueryObject)
         }
-        return this.http.fetch('', requestInit);
+        return this.http.fetch('search', requestInit);
     }
 
-    //getAll(searchOptions)
-    //{
-    //    return this.http
-    //        .withContent(searchOptions)
-    //        .fetch();
-    //}
+    searchPaged(buybackVehicleQueryObject, pageNumber, pageSize)
+    {
+        var requestInit = {
+            headers: {"content-type" : "application/json"},
+            method: "POST",
+            body: JSON.stringify(buybackVehicleQueryObject)
+        }
+        var uri = "search/" + pageNumber + "/" + pageSize;
+        return this.http.fetch(uri, requestInit);
+    }
 }

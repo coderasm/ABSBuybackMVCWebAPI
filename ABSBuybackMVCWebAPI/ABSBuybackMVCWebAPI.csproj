@@ -347,6 +347,7 @@
     <Content Include="Scripts\app\src\BuybackVehicleSearch.html" />
     <Content Include="Scripts\app\src\BuybackVehicleSearch.js" />
     <Content Include="Scripts\app\src\models\BuybackResult.js" />
+    <Content Include="Scripts\app\src\models\BuybackVehicleQuery.js" />
     <Content Include="Scripts\app\src\models\Dealer.js" />
     <Content Include="Scripts\app\src\models\SaleLocation.js" />
     <Content Include="Scripts\app\src\repositories\BuybackResultRepository.js" />

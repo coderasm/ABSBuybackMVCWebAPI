@@ -5,7 +5,6 @@ namespace ABSBuybackMVCWebAPI.Models
     public class BuybackVehicle
     {
         public int? Reserve { get; set; }
-        public bool Create { get; set; }
         public int? VehicleId { get; set; }
         public string Seller { get; set; }
         public string SellerId { get; set; }
@@ -17,6 +16,5 @@ namespace ABSBuybackMVCWebAPI.Models
         public string SaleLocation { get; set; }
         public int SaleLocationId { get; set; }
         public DateTime SaleFirstDate { get; set; }
-        public bool Inserted { get; set; }
     }
 }

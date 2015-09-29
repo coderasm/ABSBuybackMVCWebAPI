@@ -1,16 +1,16 @@
 ﻿<template>
-    <section class="au-animate">
+    <section>
         <h2>${heading}</h2>
-        <div class="row au-stagger">
-            <div class="col-sm-3 col-md-3">
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
                 <div class="form-group">
                     <label for="location">Location</label>
                     <select class="form-control" id="location">
-                        <option repeat.for="location of locations" value.bind="location.id">${location.name}</option>
+                        <option repeat.for="location of saleLocations" value.bind="location.id">${location.name}</option>
                     </select>
                 </div>
             </div>
-            <div class="col-sm-3 col-md-3">
+            <div class="col-sm-4 col-md-4">
                 <div class="form-group">
                     <label for="dealer">Dealer</label>
                     <select class="form-control" id="dealer">
@@ -18,45 +18,75 @@
                     </select>
                 </div>
             </div>
-            <div class="col-sm-3 col-md-3">
+            <div class="col-sm-4 col-md-4">
                 <div class="form-group">
                     <label for="vids">VIDs</label>
                     <input class="form-control" id="vids" />
                 </div>
             </div>
         </div>
-        <div class="row au-stagger">
-            <div class="col-sm-12 col-md-6 au-animate" repeat.for="vehicle of vehicles">
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <select class="form-control" id="reason">
+                        <option repeat.for="reason of reasons" value.bind="reason.ReasonId">${reason.ReasonDescription}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                    <label for="saleOption">Sale Option</label>
+                    <select class="form-control" id="saleOption">
+                        <option repeat.for="saleOption of saleOptions" value.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                    <label for="save">Save</label>
+                    <button class="form-control" id="save">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6" repeat.for="vehicle of vehicles">
                 <div class="panel panel-default">
                     <div class="panel-body ">
-                        <div class="row au-stagger">
-                            <div class="col-sm-3 col-md-6">
+                        <div class="row text-center row-5-padding">
+                            <div class="col-sm-1 col-md-2">
                                 <div class="form-group">
                                     <label for="create">Create</label>
                                     <input type="checkbox" class="form-control" id="create" value.bind="vehicle.create" />
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-md-6">
+                            <div class="col-sm-4 col-md-4">
                                 <div class="form-group">
                                     <label for="reserve">Reserve</label>
                                     <input class="form-control" id="reserve" value.bind="vehicle.reserve" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="row au-stagger">
-                            <div class="col-sm-2 col-md-2">
+                            <div class="col-sm-4 col-md-3">
                                 <div class="form-group">
                                     <label for="vid">VID</label>
                                     <span class="form-control" id="vid">${vehicle.VehicleId}</span>
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-md-4">
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="vin">VIN</label>
+                                    <span class="form-control" id="vin">${vehicle.VIN}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center row-5-padding">
+                            <div class="col-sm-5 col-md-5">
                                 <div class="form-group">
                                     <label for="seller">Seller</label>
                                     <span class="form-control" id="seller">${vehicle.Seller}</span>
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-md-4">
+                            <div class="col-sm-5 col-md-5">
                                 <div class="form-group">
                                     <label for="buyer">Buyer</label>
                                     <span class="form-control" id="buyer">${vehicle.Buyer}</span>
@@ -69,26 +99,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row au-stagger">
-                            <div class="col-sm-3 col-md-3">
+                        <div class="row row-5-padding">
+                            <div class="col-sm-4 col-md-4">
                                 <div class="form-group">
                                     <label for="ymm">YMM</label>
                                     <span class="form-control" id="ymm">${vehicle.YMM}</span>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-md-3">
-                                <div class="form-group">
-                                    <label for="vin">VIN</label>
-                                    <span class="form-control" id="vin">${vehicle.VIN}</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-md-3">
+                            <div class="col-sm-4 col-md-4">
                                 <div class="form-group">
                                     <label for="salelocation">SaleLocation</label>
                                     <span class="form-control" id="salelocation">${vehicle.SaleLocation}</span>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-md-3">
+                            <div class="col-sm-4 col-md-4">
                                 <div class="form-group">
                                     <label for="salefirstdate">SaleFirstDate</label>
                                     <span class="form-control" id="salefirstdate">${vehicle.SaleFirstDate}</span>
@@ -96,24 +120,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row au-stagger">
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    <label for="reason">Reason</label>
-                    <select class="form-control" id="reason">
-                        <option repeat.for="reason of reasons" value.bind="reason.ReasonId">${reason.ReasonDescription}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    <label for="saleOption">Sale Option</label>
-                    <select class="form-control" id="saleOption">
-                        <option repeat.for="saleOption of saleOptions" value.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
-                    </select>
                 </div>
             </div>
         </div>

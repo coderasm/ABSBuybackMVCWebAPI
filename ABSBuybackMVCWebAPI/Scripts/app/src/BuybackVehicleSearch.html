@@ -1,7 +1,7 @@
 ﻿<template>
-    <section>
+    <section class="au-animate">
         <h2>${heading}</h2>
-        <div class="row">
+        <div class="row au-stagger">
             <div class="col-sm-4 col-md-4">
                 <div class="form-group">
                     <label for="location">Location</label>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row au-stagger">
             <div class="col-sm-4 col-md-4">
                 <div class="form-group">
                     <label for="reason">Reason</label>
@@ -44,13 +44,13 @@
             </div>
             <div class="col-sm-4 col-md-4">
                 <div class="form-group">
-                    <label for="save">Save</label>
-                    <button class="form-control" id="save">Save</button>
+                    <label for="save"></label>
+                    <button type="button" class="btn btn-primary form-control" id="save">Save</button>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-6" repeat.for="vehicle of vehicles">
+        <div class="row au-stagger">
+            <div class="col-sm-12 col-md-6 au-animate" repeat.for="vehicle of shownVehicles">
                 <div class="panel panel-default">
                     <div class="panel-body ">
                         <div class="row text-center row-5-padding">
@@ -99,14 +99,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-5-padding">
-                            <div class="col-sm-4 col-md-4">
+                        <div class="row au-stagger row-5-padding">
+                            <div class="col-sm-5 col-md-5">
                                 <div class="form-group">
                                     <label for="ymm">YMM</label>
                                     <span class="form-control" id="ymm">${vehicle.YMM}</span>
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-md-4">
+                            <div class="col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="salelocation">SaleLocation</label>
                                     <span class="form-control" id="salelocation">${vehicle.SaleLocation}</span>
@@ -115,7 +115,7 @@
                             <div class="col-sm-4 col-md-4">
                                 <div class="form-group">
                                     <label for="salefirstdate">SaleFirstDate</label>
-                                    <span class="form-control" id="salefirstdate">${vehicle.SaleFirstDate}</span>
+                                    <span class="form-control" id="salefirstdate">${vehicle.showDateOnly()}</span>
                                 </div>
                             </div>
                         </div>

@@ -6,4 +6,8 @@
     constructor(data) {
         Object.assign(this, data);
     }
+
+    showDateOnly() {
+        return new Date(this.SaleFirstDate).toDateString();
+    }
 }

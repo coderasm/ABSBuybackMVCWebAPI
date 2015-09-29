@@ -14,6 +14,7 @@ export class Buybacks {
     saleLocations = [];
     dealers = [];
     vehicles = [];
+    shownVehicles = [];
     reasons = [];
     saleOptions = [];
     saleLocationId = null;
@@ -52,6 +53,7 @@ export class Buybacks {
 
     loadVehicles(vehicles)
     {
+        this.shownVehicles = vehicles.slice(this.pageNumber-1, this.pageSize-1);
         this.vehicles = vehicles;
         this.loadLocations();
         this.loadDealers();

@@ -96,7 +96,7 @@ System.config({
     },
     "github:aurelia/html-import-template-loader@0.2.2": {
       "aurelia-loader": "github:aurelia/loader@0.9.0",
-      "webcomponentsjs": "github:webcomponents/webcomponentsjs@0.7.13"
+      "webcomponentsjs": "github:webcomponents/webcomponentsjs@0.7.14"
     },
     "github:aurelia/loader-default@0.10.0": {
       "aurelia-loader": "github:aurelia/loader@0.9.0",

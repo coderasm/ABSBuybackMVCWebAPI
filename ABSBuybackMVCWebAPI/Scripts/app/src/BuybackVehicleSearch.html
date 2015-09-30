@@ -2,26 +2,32 @@
     <section class="au-animate">
         <h2>${heading}</h2>
         <div class="row au-stagger">
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="location">Location</label>
-                    <select class="form-control" id="location">
+                    <select value.bind="saleLocationId" change.trigger="loadBuybackVehiclesFromVM()" class="form-control" id="location">
                         <option repeat.for="location of saleLocations" value.bind="location.id">${location.name}</option>
                     </select>
                 </div>
             </div>
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="dealer">Dealer</label>
-                    <select class="form-control" id="dealer">
+                    <select class="form-control" value.bind="buyerId" change.trigger="loadBuybackVehiclesFromVM()" id="dealer">
                         <option repeat.for="dealer of dealers" value.bind="dealer.id">${dealer.name}</option>
                     </select>
                 </div>
             </div>
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="vids">VIDs</label>
                     <input class="form-control" id="vids" />
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <div class="form-group">
+                    <label for="search"></label>
+                    <button click.trigger="loadBuybackVehiclesFromVM()" type="button" class="btn btn-primary form-control" id="search">Search</button>
                 </div>
             </div>
         </div>
@@ -63,7 +69,7 @@
                             <div class="col-sm-4 col-md-4">
                                 <div class="form-group">
                                     <label for="reserve">Reserve</label>
-                                    <input class="form-control" id="reserve" value.bind="vehicle.reserve" />
+                                    <input class="form-control" id="reserve" value.bind="vehicle.Reserve" />
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-3">

@@ -79,18 +79,41 @@ export class Buybacks {
         this.dealers = dealers;
     }
 
+    locationSelected()
+    {
+        this.buyerId = null;
+        this.loadBuybackVehiclesFromVM();
+        this.loadDealers(this.queriedVehicles);
+    }
+
+    dealerSelected()
+    {
+        this.loadBuybackVehiclesFromVM();
+    }
+
     loadBuybackVehiclesFromVM()
     {
         this.nullValues();
         this.queriedVehicles = this.allVehicles.filter(v => this.doesMatch(v));
         this.shownVehicles = this.queriedVehicles.slice(this.pageNumber-1, this.pageSize-1);
-        this.loadDealers(this.queriedVehicles);
     }
 
     nullValues()
     {
         this.dealerUpdate();
         this.locationUpdate();
+    }
+
+    locationUpdate()
+    {
+        if (this.saleLocationId === "null")
+            this.saleLocationId = null;
+    }
+
+    dealerUpdate()
+    {
+        if (this.buyerId === "null")
+            this.buyerId = null;
     }
 
     doesMatch(vehicle)
@@ -121,18 +144,6 @@ export class Buybacks {
         return this.mapper.map(this, BuybackVehicleQuery);
     }
 
-    locationUpdate()
-    {
-        if (this.saleLocationId === "null")
-            this.saleLocationId = null;
-    }
-
-    dealerUpdate()
-    {
-        if (this.buyerId === "null")
-            this.buyerId = null;
-    }
-
     loadReasons()
     {
         this.repositoryService.ReasonRepository.getAll()
@@ -145,5 +156,13 @@ export class Buybacks {
         this.repositoryService.SaleOptionRepository.getAll()
             .then(response => response.json())
             .then(saleOptions => this.saleOptions = saleOptions);
+    }
+
+    createSelected()
+    {
+        for(let buyback of this.buybacks)
+        {
+            if (buyback.create);
+        }
     }
 }

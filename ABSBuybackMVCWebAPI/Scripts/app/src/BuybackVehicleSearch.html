@@ -5,7 +5,7 @@
             <div class="col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="location">Location</label>
-                    <select value.bind="saleLocationId" change.trigger="loadBuybackVehiclesFromVM()" class="form-control" id="location">
+                    <select value.bind="saleLocationId" change.trigger="locationSelected()" class="form-control" id="location">
                         <option repeat.for="location of saleLocations" value.bind="location.id">${location.name}</option>
                     </select>
                 </div>
@@ -13,7 +13,7 @@
             <div class="col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="dealer">Dealer</label>
-                    <select class="form-control" value.bind="buyerId" change.trigger="loadBuybackVehiclesFromVM()" id="dealer">
+                    <select class="form-control" value.bind="buyerId" change.trigger="dealerSelected()" id="dealer">
                         <option repeat.for="dealer of dealers" value.bind="dealer.id">${dealer.name}</option>
                     </select>
                 </div>
@@ -51,15 +51,15 @@
             <div class="col-sm-4 col-md-4">
                 <div class="form-group">
                     <label for="save"></label>
-                    <button type="button" class="btn btn-primary form-control" id="save">Save</button>
+                    <button type="button" class="btn btn-primary form-control" click.trigger="createSelected()" id="save">Save</button>
                 </div>
             </div>
         </div>
-        <div class="row au-stagger">
-            <div class="col-sm-12 col-md-6 au-animate" repeat.for="vehicle of shownVehicles">
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-6" repeat.for="vehicle of shownVehicles">
                 <div class="panel panel-default">
                     <div class="panel-body ">
-                        <div class="row text-center row-5-padding">
+                        <div class="row text-center">
                             <div class="col-sm-1 col-md-2">
                                 <div class="form-group">
                                     <label for="create">Create</label>
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row text-center row-5-padding">
+                        <div class="row text-center">
                             <div class="col-sm-5 col-md-5">
                                 <div class="form-group">
                                     <label for="seller">Seller</label>
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row au-stagger row-5-padding">
+                        <div class="row au-stagger">
                             <div class="col-sm-5 col-md-5">
                                 <div class="form-group">
                                     <label for="ymm">YMM</label>

@@ -7,11 +7,13 @@ using Dapper;
 
 namespace ABSBuybackMVCWebAPI.Repositories
 {
-    class SaleLocationRepository : ISaleLocationRepository
+    public class SaleLocationRepository : ISaleLocationRepository
     {
-        private const string @select = @"SELECT salelocation, saleid FROM GroupSale";
+        private const string @select = @"SELECT gs.SaleID, gs.SaleLocation, g.SaleInstanceID, g.SaleFirstDate, g.SaleEndDate 
+                                        FROM GroupSale gs
+                                        LEFT JOIN GSI g  ON g.SaleID = gs.SaleID AND (GETDATE() BETWEEN g.SaleFirstDate AND g.SaleEndDate OR g.SaleEndDate >= GETDATE())";
 
-        private string @where = @" where ForDropDown = 1 ";
+        private string @where = @" WHERE (gs.ForDropDown = 1) AND gs.SaleID NOT IN (21, 87) ";
 
         private const string orderBy = @"ORDER by SaleLocation";
 
@@ -20,7 +22,10 @@ namespace ABSBuybackMVCWebAPI.Repositories
             var query = FormQuery();
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
             {
-                return connection.Query<Location>(query).ToList();
+                return connection.Query<Location, List<SaleInstance>, Location>(query, (location, saleInstance) =>
+                {
+                    location.Sales = saleInstance; return location;
+                }, null, null, true, "SaleInstanceId").ToList();
             }
         }
 

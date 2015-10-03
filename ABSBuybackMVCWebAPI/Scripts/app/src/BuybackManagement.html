@@ -1,51 +1,50 @@
 ﻿<template>
     <section class="au-animate">
         <h2>${heading}</h2>
-        <div class="row au-stagger row-5-padding">
-            <div class="col-sm-12 col-md-6 au-animate" repeat.for="buyback of buybacks">
+        <div class="container-fluid">
+            <div class="row au-stagger row-5-padding">
+                <div class="col-sm-12 col-md-6 au-animate" repeat.for="buyback of buybacks">
                     <div class="panel panel-default">
                         <div class="panel-body ">
                             <form role="form" validate.bind="buyback.validation">
                                 <div class="row au-stagger">
-                                    <div class="col-sm-3 col-md-3">
+                                    <div class="col-xs-4 col-sm-3 col-md-3">
                                         <div class="form-group">
                                             <label for="saleOption">Sale</label>
                                             <span class="form-control" id="saleOption">${buyback.sale($parent.saleOptions)}</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-md-3">
+                                    <div class="col-xs-4 col-sm-3 col-md-3">
                                         <div class="form-group">
                                             <label for="reserve">Reserve</label>
                                             <input blur.trigger="buyback.updateIfChanged($event, $parent)" type="number" class="form-control" id="reserve" value.bind="buyback.Reserve" />
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-md-3">
+                                    <div class="col-xs-4 col-sm-2 col-md-2">
                                         <div class="form-group">
                                             <label for="vin">VIN</label>
                                             <span class="form-control" id="vin">${buyback.lastSixOfVIN()}</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-md-3">
+                                    <div class="col-xs-3 col-sm-2 col-md-2">
                                         <div class="form-group">
                                             <label for="mileage">Mileage</label>
                                             <span class="form-control" id="mileage">${buyback.Mileage}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row au-stagger">
-                                    <div class="col-sm-2 col-md-2">
+                                    <div class="col-xs-3 col-sm-2 col-md-2">
                                         <div class="form-group">
                                             <label for="year">Year</label>
                                             <span class="form-control" id="year">${buyback.Year}</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4 col-md-4">
+                                    <div class="col-xs-6 col-sm-5 col-md-5">
                                         <div class="form-group">
                                             <label for="make">Make</label>
                                             <span class="form-control" id="make">${buyback.Make}</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-7 col-md-7">
                                         <div class="form-group">
                                             <label for="model">Model</label>
                                             <span class="form-control" id="model">${buyback.Model}</span>
@@ -57,5 +56,6 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 </template>

@@ -195,7 +195,7 @@ export class Buybacks {
         for(let saleLocation of this.saleLocations)
         {
             if (this.absOptionLocationId == saleLocation.SaleId) {
-                this.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(location);
+                this.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(saleLocation);
                 break;
             }
         }

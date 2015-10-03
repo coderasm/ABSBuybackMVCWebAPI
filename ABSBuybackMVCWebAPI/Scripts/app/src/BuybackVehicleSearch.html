@@ -1,75 +1,91 @@
 ﻿<template>
     <section class="au-animate">
         <h2>${heading}</h2>
-        <div class="row au-stagger">
-            <div class="col-sm-3 col-md-3">
-                <div class="form-group">
-                    <label for="location">Location</label>
-                    <select value.bind="saleLocationId" change.trigger="locationSelected()" class="form-control" id="location">
-                        <option repeat.for="location of saleLocations" value.bind="location.SaleId">${location.SaleLocation}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-3 col-md-3">
-                <div class="form-group">
-                    <label for="dealer">Dealer</label>
-                    <select class="form-control" value.bind="buyerId" change.trigger="dealerSelected()" id="dealer">
-                        <option repeat.for="dealer of dealers" value.bind="dealer.id">${dealer.name}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-3 col-md-3">
-                <div class="form-group">
-                    <label for="vids">VIDs</label>
-                    <input class="form-control" id="vids" />
-                </div>
-            </div>
-            <div class="col-sm-3 col-md-3">
-                <div class="form-group">
-                    <label for="search"></label>
-                    <button click.trigger="loadBuybackVehiclesFromVM()" type="button" class="btn btn-primary form-control" id="search">Search</button>
-                </div>
-            </div>
-        </div>
-        <div class="row au-stagger">
-            <div class="col-sm-4 col-md-4">
-                <div class="form-group">
-                    <label for="reason">Reason</label>
-                    <select class="form-control" id="reason" value.bind="reason">
-                        <option repeat.for="reason of reasons" value.bind="reason.ReasonId">${reason.ReasonDescription}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-4">
-                <div class="form-group">
-                    <label for="saleOption">Sale Option</label>
-                    <select class="form-control" id="saleOption" value.bind="saleOption" change.trigger="saleOptionSelected()">
-                        <option repeat.for="saleOption of saleOptions" value.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-4">
-                <div class="form-group">
-                    <label for="save"></label>
-                    <button type="button" class="btn btn-primary form-control" click.trigger="createSelected()" id="save">Save</button>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+                        <div class="row au-stagger">
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <select value.bind="saleLocationId" change.trigger="locationSelected()" class="form-control" id="location">
+                                        <option repeat.for="location of saleLocations" value.bind="location.SaleId">${location.SaleLocation}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="dealer">Dealer</label>
+                                    <select class="form-control" value.bind="buyerId" change.trigger="dealerSelected()" id="dealer">
+                                        <option repeat.for="dealer of dealers" value.bind="dealer.id">${dealer.name}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="vids">VIDs</label>
+                                    <input class="form-control" id="vids" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="search"></label>
+                                    <button click.trigger="loadBuybackVehiclesFromVM()" type="button" class="btn btn-primary form-control" id="search">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row au-stagger row-5-padding" show.bind="showAbsSaleLocations">
-            <div class="col-sm-4 col-md-4">
-                <div class="form-group">
-                    <label for="abssalelocation">ABS Sale Location</label>
-                    <select value.bind="absOptionLocationId" change.trigger="absOptionLocationSelected()" class="form-control" id="abssalelocation">
-                        <option repeat.for="location of saleLocations.slice(1)" value.bind="location.SaleId">${location.SaleLocation}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-4">
-                <div class="form-group">
-                    <label for="Sale">Sale</label>
-                    <select value.bind="absOptionLocationInstanceId" class="form-control" id="Sale">
-                        <option repeat.for="saleInstance of absOptionSaleLocationInstances" value.bind="saleInstance.value">${saleInstance.name}</option>
-                    </select>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+                        <div class="row au-stagger">
+                            <div class="col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <label for="reason">Reason</label>
+                                    <select class="form-control" id="reason" value.bind="reason">
+                                        <option repeat.for="reason of reasons" value.bind="reason.ReasonId">${reason.ReasonDescription}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <label for="saleOption">Sale Option</label>
+                                    <select class="form-control" id="saleOption" value.bind="saleOption" change.trigger="saleOptionSelected()">
+                                        <option repeat.for="saleOption of saleOptions" value.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <label for="save"></label>
+                                    <button type="button" class="btn btn-primary form-control" click.trigger="createSelected()" id="save">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row au-stagger" show.bind="showAbsSaleLocations">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label for="abssalelocation">ABS Sale Location</label>
+                                    <select value.bind="absOptionLocationId" change.trigger="absOptionLocationSelected()" class="form-control" id="abssalelocation">
+                                        <option repeat.for="location of saleLocations.slice(1)" value.bind="location.SaleId">${location.SaleLocation}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label for="Sale">Sale</label>
+                                    <select value.bind="absOptionLocationInstanceId" class="form-control" id="Sale">
+                                        <option repeat.for="saleInstance of absOptionSaleLocationInstances" value.bind="saleInstance.value">${saleInstance.name}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

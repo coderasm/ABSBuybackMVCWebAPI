@@ -241,6 +241,7 @@
     <Compile Include="Controllers\BuybackVehicleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReasonController.cs" />
+    <Compile Include="Controllers\SaleLocationController.cs" />
     <Compile Include="Controllers\SaleOptionController.cs" />
     <Compile Include="Controllers\BuybackStatusController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -350,7 +351,6 @@
     <Content Include="Scripts\app\src\models\BuybackResult.js" />
     <Content Include="Scripts\app\src\models\BuybackVehicleQuery.js" />
     <Content Include="Scripts\app\src\models\Dealer.js" />
-    <Content Include="Scripts\app\src\models\SaleLocation.js" />
     <Content Include="Scripts\app\src\repositories\BuybackResultRepository.js" />
     <Content Include="Scripts\app\src\child-router.html" />
     <Content Include="Scripts\app\src\child-router.js" />
@@ -358,6 +358,7 @@
     <Content Include="Scripts\app\src\nav-bar.html" />
     <Content Include="Scripts\app\src\repositories\BuybackVehicleRepository.js" />
     <Content Include="Scripts\app\src\repositories\ReasonRepository.js" />
+    <Content Include="Scripts\app\src\repositories\SaleLocationRepository.js" />
     <Content Include="Scripts\app\src\repositories\SaleOptionRepository.js" />
     <Content Include="Scripts\app\src\repositories\StatusRepository.js" />
     <Content Include="Scripts\app\src\services\RepositoryService.js" />

@@ -1,7 +1,6 @@
 ﻿import {BuybackVehicleViewModel} from 'viewModels/BuybackVehicleViewModel';
 import {BuybackResult} from 'models/BuybackResult';
 import {Dealer} from 'models/Dealer';
-import {SaleLocation} from 'models/SaleLocation';
 import {BuybackVehicleQuery} from 'models/BuybackVehicleQuery';
 import {Mapper} from 'utilities/Mapper';
 import {ArrayExtensions} from 'utilities/ArrayExtensions';
@@ -23,6 +22,10 @@ export class Buybacks {
     vehicleIds = [];
     reason = 0;
     saleOption = 0;
+    showAbsSaleLocations = false;
+    absOptionLocationId = 98;
+    absOptionSaleLocationInstances = [];
+    absOptionLocationInstanceId = null;
     pageNumber = 1;
     pageSize = 15;
 
@@ -61,12 +64,23 @@ export class Buybacks {
 
     loadLocations()
     {
-        var locations = $.map(this.allVehicles, v =>
-                            {
-                                return Object.create(SaleLocation.prototype, {id:{value:v.SaleLocationId},name:{value:v.SaleLocation}});
-                            }).distinct();
-        locations.unshift(Object.create(SaleLocation.prototype, {id:{value:null},name:{value:"All"}}));
+        this.repositoryService.SaleLocationRepository.getAll()
+        .then(response => response.json())
+        .then(allLocations => this.filterAndSetLocations(allLocations));
+    }
+
+    filterAndSetLocations(allLocations)
+    {
+        var locations = allLocations.filter((l) => this.allVehicles.some((v) => v.SaleLocationId === l.SaleId));
+        locations.unshift({SaleId:null,SaleLocation:"All"});
         this.saleLocations = locations;
+        this.setDefaultSaleInstances();
+    }
+
+    setDefaultSaleInstances()
+    {
+        var locations = this.saleLocations.filter(l => l.SaleId === 98);
+        this.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(locations[0]);
     }
 
     loadDealers(vehicles)
@@ -75,8 +89,18 @@ export class Buybacks {
                             {
                                 return Object.create(Dealer.prototype, {id:{value:v.BuyerId},name:{value:v.Buyer}});
                             }).distinct();
+        dealers.sort(this.compareDealerByName);
         dealers.unshift(Object.create(Dealer.prototype, {id:{value:null},name:{value:"All"}}));
         this.dealers = dealers;
+    }
+    
+    compareDealerByName(a, b)
+    {
+        if(a.name.toUpperCase() < b.name.toUpperCase())
+            return -1;
+        if(a.name.toUpperCase() > b.name.toUpperCase())
+            return 1;
+        return 0;
     }
 
     locationSelected()
@@ -156,6 +180,33 @@ export class Buybacks {
         this.repositoryService.SaleOptionRepository.getAll()
             .then(response => response.json())
             .then(saleOptions => this.saleOptions = saleOptions);
+    }
+
+    saleOptionSelected()
+    {
+        if(this.saleOption == 10)
+            this.showAbsSaleLocations = true;
+        else
+            this.showAbsSaleLocations = false;
+    }
+
+    absOptionLocationSelected()
+    {
+        for(let saleLocation of this.saleLocations)
+        {
+            if (this.absOptionLocationId == saleLocation.SaleId) {
+                this.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(location);
+                break;
+            }
+        }
+    }
+
+    generateAbsOptionSaleLocationInstances(location)
+    {
+        if(location.Sales.length === 0)
+            return [{name:"Next", value:null}];
+        this.absOptionLocationInstanceId = location.Sales[0].SaleInstanceId;
+        return [{name:"Next", value:null},{name:"Current", value:location.Sales[0].SaleInstanceId}];
     }
 
     createSelected()

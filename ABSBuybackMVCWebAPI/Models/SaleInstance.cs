@@ -9,6 +9,7 @@ namespace ABSBuybackMVCWebAPI.Models
     {
         [Key]
         public int SaleInstanceId { get; set; }
+        public int SaleId { get; set; }
         public DateTime? SaleFirstDate { get; set; }
         public DateTime? SaleEndDate { get; set; }
     }

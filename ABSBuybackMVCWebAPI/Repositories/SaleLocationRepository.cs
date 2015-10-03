@@ -9,24 +9,37 @@ namespace ABSBuybackMVCWebAPI.Repositories
 {
     public class SaleLocationRepository : ISaleLocationRepository
     {
-        private const string @select = @"SELECT gs.SaleID, gs.SaleLocation, g.SaleInstanceID, g.SaleFirstDate, g.SaleEndDate 
+        private const string @select = @"SELECT gs.SaleID, gs.SaleLocation
                                         FROM GroupSale gs
-                                        LEFT JOIN GSI g  ON g.SaleID = gs.SaleID AND (GETDATE() BETWEEN g.SaleFirstDate AND g.SaleEndDate OR g.SaleEndDate >= GETDATE())";
+                                        WHERE (gs.ForDropDown = 1) AND gs.SaleID NOT IN (21, 87)
+                                        ORDER by SaleLocation
+                                        SELECT g.SaleID, g.SaleInstanceID, g.SaleFirstDate, g.SaleEndDate
+                                        FROM GSI g
+                                        WHERE GETDATE() BETWEEN g.SaleFirstDate AND g.SaleEndDate OR g.SaleEndDate >= GETDATE()";
 
-        private string @where = @" WHERE (gs.ForDropDown = 1) AND gs.SaleID NOT IN (21, 87) ";
+        private string @where = @"";
 
-        private const string orderBy = @"ORDER by SaleLocation";
+        private const string orderBy = @"";
 
         public List<Location> GetAll()
         {
             var query = FormQuery();
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
             {
-                return connection.Query<Location, List<SaleInstance>, Location>(query, (location, saleInstance) =>
+                using (var multi = connection.QueryMultiple(query))
                 {
-                    location.Sales = saleInstance; return location;
-                }, null, null, true, "SaleInstanceId").ToList();
+                    return FindLocations(multi).ToList();
+                }
             }
+        }
+
+        private IEnumerable<Location> FindLocations(SqlMapper.GridReader multi)
+        {
+            var locations = multi.Read<Location>();
+            var sales = multi.Read<SaleInstance>();
+            foreach (var location in locations)
+                location.Sales = sales.Where(s => s.SaleId == location.SaleId).ToList();
+            return locations;
         }
 
         public Location Get(int id)

@@ -21,7 +21,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -314,6 +314,68 @@
     <Content Include="Scripts\app\build\tasks\test.js" />
     <Content Include="Scripts\app\build\tasks\watch.js" />
     <Content Include="Scripts\app\config.js" />
+    <Content Include="Scripts\app\dist\app.html" />
+    <Content Include="Scripts\app\dist\app.js" />
+    <Content Include="Scripts\app\dist\aurelia.js" />
+    <Content Include="Scripts\app\dist\blur-image.js" />
+    <Content Include="Scripts\app\dist\BuybackManagement.html" />
+    <Content Include="Scripts\app\dist\BuybackManagement.js" />
+    <Content Include="Scripts\app\dist\BuybackVehicleSearch.html" />
+    <Content Include="Scripts\app\dist\BuybackVehicleSearch.js" />
+    <Content Include="Scripts\app\dist\child-router.html" />
+    <Content Include="Scripts\app\dist\child-router.js" />
+    <Content Include="Scripts\app\dist\main.js" />
+    <Content Include="Scripts\app\dist\models\BuybackResult.js" />
+    <Content Include="Scripts\app\dist\models\BuybackVehicleQuery.js" />
+    <Content Include="Scripts\app\dist\models\Dealer.js" />
+    <Content Include="Scripts\app\dist\nav-bar.html" />
+    <Content Include="Scripts\app\dist\repositories\BuybackResultRepository.js" />
+    <Content Include="Scripts\app\dist\repositories\BuybackVehicleRepository.js" />
+    <Content Include="Scripts\app\dist\repositories\ReasonRepository.js" />
+    <Content Include="Scripts\app\dist\repositories\SaleLocationRepository.js" />
+    <Content Include="Scripts\app\dist\repositories\SaleOptionRepository.js" />
+    <Content Include="Scripts\app\dist\repositories\StatusRepository.js" />
+    <Content Include="Scripts\app\dist\services\RepositoryService.js" />
+    <Content Include="Scripts\app\dist\users.html" />
+    <Content Include="Scripts\app\dist\users.js" />
+    <Content Include="Scripts\app\dist\utilities\ArrayExtensions.js" />
+    <Content Include="Scripts\app\dist\utilities\Mapper.js" />
+    <Content Include="Scripts\app\dist\viewModels\BuybackResultViewModel.js" />
+    <Content Include="Scripts\app\dist\viewModels\BuybackVehicleViewModel.js" />
+    <Content Include="Scripts\app\dist\welcome.html" />
+    <Content Include="Scripts\app\dist\welcome.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\html-import-template-loader%400.2.2.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\html-import-template-loader%400.2.2\aurelia-html-import-template-loader.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\debouncer.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\decorators.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\index.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\path-observer.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\resources\en-US.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\strategies\twbootstrap-view-strategy.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\utilities.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validate-custom-attribute.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-config.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-group-builder.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-group.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-locale.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-property.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-result.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-rules-collection.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-rules.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-view-strategy.js" />
+    <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation.js" />
+    <Content Include="Scripts\app\jspm_packages\github\components\jquery%402.1.4.js" />
+    <Content Include="Scripts\app\jspm_packages\github\components\jquery%402.1.4\jquery.js" />
+    <Content Include="Scripts\app\jspm_packages\github\github\fetch%400.9.0.js" />
+    <Content Include="Scripts\app\jspm_packages\github\github\fetch%400.9.0\fetch.js" />
+    <Content Include="Scripts\app\jspm_packages\github\systemjs\plugin-text%400.0.2.js" />
+    <Content Include="Scripts\app\jspm_packages\github\systemjs\plugin-text%400.0.2\text.js" />
+    <Content Include="Scripts\app\jspm_packages\github\twbs\bootstrap%403.3.5.js" />
+    <Content Include="Scripts\app\jspm_packages\github\twbs\bootstrap%403.3.5\css\bootstrap.css" />
+    <Content Include="Scripts\app\jspm_packages\github\twbs\bootstrap%403.3.5\js\bootstrap.js" />
+    <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\css\font-awesome.css" />
+    <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\css\font-awesome.min.css" />
     <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.woff2" />
     <Content Include="Config\AppSettings.config">
       <TransformOnBuild>true</TransformOnBuild>
@@ -338,8 +400,10 @@
       <DependentUpon>ConnectionStrings.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
+    <None Include="Properties\PublishProfiles\BuybackStaging.pubxml" />
+    <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\css\font-awesome.min.css" />
     <Content Include="Scripts\app\jspm_packages\system.js" />
     <Content Include="Scripts\app\src\app.html" />
     <Content Include="Scripts\app\src\app.js" />

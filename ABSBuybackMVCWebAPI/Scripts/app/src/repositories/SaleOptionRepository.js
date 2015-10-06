@@ -9,7 +9,7 @@ export class SaleOptionRepository
         this.http.configure(config => {
             config
               .useStandardConfiguration()
-              .withBaseUrl('http://localhost:63778/api/saleoption/')
+              .withBaseUrl('api/saleoption/')
         });
     }
 

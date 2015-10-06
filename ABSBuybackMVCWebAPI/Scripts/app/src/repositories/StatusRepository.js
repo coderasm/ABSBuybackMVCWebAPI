@@ -9,7 +9,7 @@ export class StatusRepository
         this.http.configure(config => {
             config
               .useStandardConfiguration()
-              .withBaseUrl('http://localhost:63778/api/buybackstatus/')
+              .withBaseUrl('api/buybackstatus/')
         });
     }
 

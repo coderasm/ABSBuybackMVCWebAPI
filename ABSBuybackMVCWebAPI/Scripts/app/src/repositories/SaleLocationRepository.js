@@ -9,7 +9,7 @@ export class SaleLocationRepository
         this.http.configure(config => {
             config
               .useStandardConfiguration()
-              .withBaseUrl('http://localhost:63778/api/salelocation/')
+              .withBaseUrl('api/salelocation/')
         });
     }
 

@@ -9,7 +9,7 @@ export class ReasonRepository
         this.http.configure(config => {
             config
               .useStandardConfiguration()
-              .withBaseUrl('http://localhost:63778/api/reason/')
+              .withBaseUrl('api/reason/')
         });
     }
 

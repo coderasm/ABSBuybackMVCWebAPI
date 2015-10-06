@@ -12,7 +12,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
 {
     class BuybackVehicleRepository : IBuybackVehicleRepository
     {
-        private const string Select = @"SELECT gs.SaleLocation, g2.SaleFirstDate ,g.VehicleID, dbo.WhoAMI(g.DealerID) AS Seller, g.DealerID AS SellerId, g2.SaleID AS SaleLocationId, dbo.WhoAMI(g1.DealerID) Buyer, g1.DealerID AS BuyerId, g.BidSheetNumber, dbo.YMM(g.VehicleID) YMM, RIGHT(g.VIN,6) VIN "
+        private const string Select = @"SELECT TOP 15 gs.SaleLocation, g2.SaleFirstDate ,g.VehicleID, dbo.WhoAMI(g.DealerID) AS Seller, g.DealerID AS SellerId, g2.SaleID AS SaleLocationId, dbo.WhoAMI(g1.DealerID) Buyer, g1.DealerID AS BuyerId, g.BidSheetNumber, dbo.YMM(g.VehicleID) YMM, RIGHT(g.VIN,6) VIN "
                                         + FromAndJoins;
 
         private const string FromAndJoins = @"FROM GSV g
@@ -33,8 +33,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
                                             AND {2}*({1})";
         private const string WhereTemplate = @" WHERE b.VehicleIdOriginal IS NULL AND g2.salefirstdate BETWEEN DATEADD(DAY, -30,GETDATE()) AND GETDATE(){0}";
         private string WherePredicate = "";
-        private const string OrderBy = @" ORDER BY
-                                        gs.SaleLocation,SaleFirstDate DESC, Seller, g.BidSheetNumber";
+        private const string OrderBy = @" ORDER BY gs.SaleLocation,SaleFirstDate DESC, Seller, g.BidSheetNumber";
         private const string SaleIdPredicateTemplate =  @" AND g2.SaleID = {0}";
         private const string DealerIdPredicateTemplate = @" AND g1.DealerID = '{0}'";
         private const string VehicleIdPredicateTemplate = @" AND g.VehicleID IN({0})";

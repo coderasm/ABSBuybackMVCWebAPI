@@ -12,15 +12,19 @@ namespace ABSBuybackMVCWebAPI.Repositories
 {
     class BuybackVehicleRepository : IBuybackVehicleRepository
     {
-        private const string Select = @"SELECT TOP 15 gs.SaleLocation, g2.SaleFirstDate ,g.VehicleID, dbo.WhoAMI(g.DealerID) AS Seller, g.DealerID AS SellerId, g2.SaleID AS SaleLocationId, dbo.WhoAMI(g1.DealerID) Buyer, g1.DealerID AS BuyerId, g.BidSheetNumber, dbo.YMM(g.VehicleID) YMM, RIGHT(g.VIN,6) VIN "
+        private const string Select = @"SELECT gs.SaleLocation, g2.SaleFirstDate ,g.VehicleID, dbo.WhoAMI(g.DealerID) AS Seller, g.DealerID AS SellerId, g2.SaleID AS SaleLocationId, dbo.WhoAMI(g1.DealerID) Buyer, g1.DealerID AS BuyerId, g.BidSheetNumber, dbo.YMM(g.VehicleID) YMM, RIGHT(g.VIN,6) VIN "
                                         + FromAndJoins;
 
         private const string FromAndJoins = @"FROM GSV g
                                             JOIN GSI g2 ON g.SaleInstanceID = g2.SaleInstanceID
                                             JOIN GSB g1 ON g.VehicleID = g1.VehicleID AND g1.WinningBid = 1
-                                            JOIN ABSContact.dbo.CONTACT2 c ON g1.DealerID = c.ACCOUNTNO --AND c.BuybackBidder = 1
+                                            JOIN ABSContact.dbo.CONTACT2 c ON g1.DealerID = c.ACCOUNTNO-- AND c.BuybackBidder = 1
                                             JOIN GroupSale gs ON g2.SaleID = gs.SaleID AND gs.ForDropDown = 1
-                                            JOIN GroupSaleParticipants gsp ON g.SaleInstanceID = gsp.SaleInstanceID AND g.DealerID = gsp.DealerID AND gsp.BidsCompleted = 1
+                                            JOIN GroupSaleParticipants gsp 
+                                                  ON g.SaleInstanceID = gsp.SaleInstanceID 
+                                                  AND g.DealerID = gsp.DealerID 
+                                                  AND (gsp.BidsCompleted = 1 OR gsp.DealerPrelimsDone = 1)
+                                            JOIN GroupSaleVehiclesAdditionalData AD ON g.VehicleID = AD.VehicleID AND AD.AbsInventory = 1
                                             LEFT JOIN Buyback b ON g.VehicleID = b.VehicleIdOriginal";
         private const string SelectPaged = @"SELECT SaleLocation, SaleFirstDate, VehicleID, Seller, SellerId, SaleLocationId, Buyer, BuyerId, BidSheetNumber, YMM, VIN 
                                             FROM(

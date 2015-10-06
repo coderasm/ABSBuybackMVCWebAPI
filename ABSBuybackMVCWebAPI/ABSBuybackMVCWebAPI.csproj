@@ -310,6 +310,7 @@
     <Content Include="Scripts\app\build\tasks\e2e.js" />
     <Content Include="Scripts\app\build\tasks\lint.js" />
     <Content Include="Scripts\app\build\tasks\prepare-release.js" />
+    <Content Include="Scripts\app\build\tasks\proxy.js" />
     <Content Include="Scripts\app\build\tasks\serve.js" />
     <Content Include="Scripts\app\build\tasks\test.js" />
     <Content Include="Scripts\app\build\tasks\watch.js" />

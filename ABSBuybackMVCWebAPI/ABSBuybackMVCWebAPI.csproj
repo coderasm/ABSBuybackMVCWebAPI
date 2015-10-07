@@ -315,8 +315,10 @@
     <Content Include="Scripts\app\build\tasks\test.js" />
     <Content Include="Scripts\app\build\tasks\watch.js" />
     <Content Include="Scripts\app\config.js" />
+    <Content Include="Scripts\app\dist\app-build.js" />
     <Content Include="Scripts\app\dist\app.html" />
     <Content Include="Scripts\app\dist\app.js" />
+    <Content Include="Scripts\app\dist\aurelia.js" />
     <Content Include="Scripts\app\dist\blur-image.js" />
     <Content Include="Scripts\app\dist\BuybackManagement.html" />
     <Content Include="Scripts\app\dist\BuybackManagement.js" />
@@ -336,14 +338,10 @@
     <Content Include="Scripts\app\dist\repositories\SaleOptionRepository.js" />
     <Content Include="Scripts\app\dist\repositories\StatusRepository.js" />
     <Content Include="Scripts\app\dist\services\RepositoryService.js" />
-    <Content Include="Scripts\app\dist\users.html" />
-    <Content Include="Scripts\app\dist\users.js" />
     <Content Include="Scripts\app\dist\utilities\ArrayExtensions.js" />
     <Content Include="Scripts\app\dist\utilities\Mapper.js" />
     <Content Include="Scripts\app\dist\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\dist\viewModels\BuybackVehicleViewModel.js" />
-    <Content Include="Scripts\app\dist\welcome.html" />
-    <Content Include="Scripts\app\dist\welcome.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\animator-css%400.16.0.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\animator-css%400.16.0\aurelia-animator-css.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\binding%400.9.1.js" />
@@ -553,10 +551,10 @@
       <IsTransformFile>True</IsTransformFile>
     </None>
     <None Include="Properties\PublishProfiles\BuybackStaging.pubxml" />
+    <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.woff" />
     <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\FontAwesome.otf" />
     <Content Include="Scripts\app\jspm_packages\npm\process%400.10.1.js" />
     <Content Include="Scripts\app\jspm_packages\npm\process%400.10.1\browser.js" />
     <Content Include="Scripts\app\jspm_packages\npm\process%400.10.1\index.js" />
@@ -582,14 +580,10 @@
     <Content Include="Scripts\app\src\repositories\SaleOptionRepository.js" />
     <Content Include="Scripts\app\src\repositories\StatusRepository.js" />
     <Content Include="Scripts\app\src\services\RepositoryService.js" />
-    <Content Include="Scripts\app\src\users.html" />
-    <Content Include="Scripts\app\src\users.js" />
     <Content Include="Scripts\app\src\utilities\ArrayExtensions.js" />
     <Content Include="Scripts\app\src\utilities\Mapper.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackVehicleViewModel.js" />
-    <Content Include="Scripts\app\src\welcome.html" />
-    <Content Include="Scripts\app\src\welcome.js" />
     <Content Include="Scripts\app\styles\styles.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

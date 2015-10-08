@@ -13,7 +13,21 @@ export class Buybacks {
     saleLocations = [];
     dealers = [];
     allVehicles = [];
-    shownVehicles = [];
+    shownVehicles = [
+        //new BuybackVehicleViewModel(
+        //    {
+        //        Reserve: 500,
+        //        VehicleId: 12345,
+        //        VIN: "de43562",
+        //        Seller: "The Seller",
+        //        Buyer: "The Buyer",
+        //        BidSheetNumber: 3,
+        //        YMM: "Chevy Tahoe 2013",
+        //        SaleLocation: "Bellflower",
+        //        SaleFirstDate: Date.now()
+        //    }
+        //)
+    ];
     queriedVehicles = [];
     reasons = [];
     saleOptions = [];
@@ -42,7 +56,6 @@ export class Buybacks {
             this.loadReasons();
         if(this.saleOptions.length === 0)
             this.loadSaleOptions();
-        return;
     }
 
     loadBuybackVehiclesFromApi()

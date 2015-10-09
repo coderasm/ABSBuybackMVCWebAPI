@@ -6,46 +6,69 @@ import {Mapper} from 'utilities/Mapper';
 import {ArrayExtensions} from 'utilities/ArrayExtensions';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
+import {singleton} from 'aurelia-framework';
+import {computedFrom} from 'aurelia-framework';
+import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
 
-@inject(RepositoryService, Mapper)
+@singleton()
+@inject(RepositoryService, Mapper, ObserverLocator)
 export class Buybacks {
     heading = 'Buyback Vehicles Needing New Sale';
     saleLocations = [];
     dealers = [];
     allVehicles = [];
-    shownVehicles = [
-        //new BuybackVehicleViewModel(
-        //    {
-        //        Reserve: 500,
-        //        VehicleId: 12345,
-        //        VIN: "de43562",
-        //        Seller: "The Seller",
-        //        Buyer: "The Buyer",
-        //        BidSheetNumber: 3,
-        //        YMM: "Chevy Tahoe 2013",
-        //        SaleLocation: "Bellflower",
-        //        SaleFirstDate: Date.now()
-        //    }
-        //)
-    ];
+    shownVehicles = [];
     queriedVehicles = [];
     reasons = [];
     saleOptions = [];
     saleLocationId = null;
     buyerId = null;
     vehicleIds = [];
-    reason = 0;
-    saleOption = 0;
-    showAbsSaleLocations = false;
-    absOptionLocationId = 98;
+    reason = null;
+    saleOption = null;
+    absOptionLocations = [];
+    absOptionLocationId = null;
     absOptionSaleLocationInstances = [];
-    absOptionLocationInstanceId = null;
+    absOptionLocationInstanceId = -1;
+    nullableValues = ["saleLocationId", "buyerId", "reason", "saleOption", "absOptionLocationId"];
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, mapper) {
+    constructor(repositoryService, mapper, observerLocator) {
         this.repositoryService = repositoryService;
         this.mapper = mapper;
+        this.observerLocator = observerLocator;
+        this.createNullableSubscribers();
+    }
+
+    createNullableSubscribers()
+    {
+        for (var property of this.nullableValues) {
+            this.observerLocator
+                .getObserver(this, property)
+                .subscribe(this.onChange(property));
+        }
+    }
+
+    onChange(property)
+    {
+        var self = this;
+        return function(newValue, oldValue) {
+            if (newValue === "null")
+                self[property] = null;
+        }
+    }
+
+    @computedFrom("saleOption")
+    get showAbsSaleLocations()
+    {
+        return this.saleOption == 10 ? true : false;
+    }
+
+    @computedFrom("absOptionLocationId","showAbsSaleLocations")
+    get showLocationSales()
+    {
+        return this.showAbsSaleLocations && this.absOptionLocationId !== null;
     }
 
     activate()
@@ -85,15 +108,10 @@ export class Buybacks {
     filterAndSetLocations(allLocations)
     {
         var locations = allLocations.filter((l) => this.allVehicles.some((v) => v.SaleLocationId === l.SaleId));
+        this.absOptionLocations = locations.slice(0);
+        this.absOptionLocations.unshift({ SaleId: null, SaleLocation: "Select" });
         locations.unshift({SaleId:null,SaleLocation:"All"});
         this.saleLocations = locations;
-        this.setDefaultSaleInstances();
-    }
-
-    setDefaultSaleInstances()
-    {
-        var locations = this.saleLocations.filter(l => l.SaleId === 98);
-        this.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(locations[0]);
     }
 
     loadDealers(vehicles)
@@ -118,39 +136,27 @@ export class Buybacks {
 
     locationSelected()
     {
-        this.buyerId = null;
+        this.resetProperties(this.nullableValues.filter((p) => {return !["saleLocationId"].some((e) => {return e === p})}));
         this.loadBuybackVehiclesFromVM();
         this.loadDealers(this.queriedVehicles);
     }
 
+    resetProperties(properties)
+    {
+        for(var property of properties)
+            this[property] = null;
+    }
+
     dealerSelected()
     {
+        this.resetProperties(this.nullableValues.filter((p) => {return !["saleLocationId", "buyerId"].some((e) => {return e === p})}));
         this.loadBuybackVehiclesFromVM();
     }
 
     loadBuybackVehiclesFromVM()
     {
-        this.nullValues();
         this.queriedVehicles = this.allVehicles.filter(v => this.doesMatch(v));
         this.shownVehicles = this.queriedVehicles.slice(this.pageNumber-1, this.pageSize-1);
-    }
-
-    nullValues()
-    {
-        this.dealerUpdate();
-        this.locationUpdate();
-    }
-
-    locationUpdate()
-    {
-        if (this.saleLocationId === "null")
-            this.saleLocationId = null;
-    }
-
-    dealerUpdate()
-    {
-        if (this.buyerId === "null")
-            this.buyerId = null;
     }
 
     doesMatch(vehicle)
@@ -184,27 +190,30 @@ export class Buybacks {
     loadReasons()
     {
         this.repositoryService.ReasonRepository.getAll()
-            .then(response => response.json())
-            .then(reasons => this.reasons = reasons);
-    }
+            .then(response =>response.json())
+            .then(reasons =>
+                {
+                    reasons.unshift({ ReasonId: null, ReasonDescription: "Select" });
+                    this.reasons = reasons;
+                }
+            );
+    };
 
     loadSaleOptions()
     {
         this.repositoryService.SaleOptionRepository.getAll()
             .then(response => response.json())
-            .then(saleOptions => this.saleOptions = saleOptions);
-    }
-
-    saleOptionSelected()
-    {
-        if(this.saleOption == 10)
-            this.showAbsSaleLocations = true;
-        else
-            this.showAbsSaleLocations = false;
+            .then(saleOptions =>
+                {
+                    saleOptions.unshift({ResultDescriptionId:null,ResultDescription:"Select"});
+                    this.saleOptions = saleOptions;
+                }
+            );
     }
 
     absOptionLocationSelected()
     {
+        this.absOptionLocationInstanceId = -1;
         for(let saleLocation of this.saleLocations)
         {
             if (this.absOptionLocationId == saleLocation.SaleId) {
@@ -217,9 +226,9 @@ export class Buybacks {
     generateAbsOptionSaleLocationInstances(location)
     {
         if(location.Sales.length === 0)
-            return [{name:"Next", value:null}];
+            return [{name:"Select",value:-1},{name:"Next", value:null}];
         this.absOptionLocationInstanceId = location.Sales[0].SaleInstanceId;
-        return [{name:"Next", value:null},{name:"Current", value:location.Sales[0].SaleInstanceId}];
+        return [{name:"Select",value:-1},{name:"Current", value:location.Sales[0].SaleInstanceId},{name:"Next", value:null}];
     }
 
     createSelected()

@@ -55,7 +55,7 @@
                             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
                                 <div class="form-group">
                                     <label for="saleOption">Sale Option</label>
-                                    <select class="form-control" id="saleOption" value.bind="saleOption" change.trigger="saleOptionSelected()">
+                                    <select class="form-control" id="saleOption" value.bind="saleOption">
                                         <option repeat.for="saleOption of saleOptions" value.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
                                     </select>
                                 </div>
@@ -64,11 +64,11 @@
                                 <div class="form-group">
                                     <label for="abssalelocation">ABS Sale Location</label>
                                     <select value.bind="absOptionLocationId" change.trigger="absOptionLocationSelected()" class="form-control" id="abssalelocation">
-                                        <option repeat.for="location of saleLocations.slice(1)" value.bind="location.SaleId">${location.SaleLocation}</option>
+                                        <option repeat.for="location of absOptionLocations" value.bind="location.SaleId">${location.SaleLocation}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2" show.bind="showAbsSaleLocations">
+                            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2" show.bind="showLocationSales">
                                 <div class="form-group">
                                     <label for="Sale">Sale</label>
                                     <select value.bind="absOptionLocationInstanceId" class="form-control" id="Sale">
@@ -88,79 +88,78 @@
             </div>
         </div>
         <div class="row au-stagger row-5-padding">
-            <virtual-list items.bind="shownVehicles">
-                <template replace-part="item-template">
-            <!--<div class="col-sm-12 col-md-6" repeat.for="vehicle of shownVehicles">-->
-                    <div class="col-sm-12 col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-body ">
-                                <div class="row text-center">
-                                    <div class="col-xs-2 col-sm-1 col-md-2">
-                                        <div class="checkbox-inline">
-                                            <label for="create">Create</label>
-                                            <input id="create" type="checkbox" value.bind="item.create" />
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <div class="form-group">
-                                            <label for="reserve">Reserve</label>
-                                            <input class="form-control" id="reserve" value.bind="item.Reserve" />
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-4 col-md-3">
-                                        <div class="form-group">
-                                            <label for="vid">VID</label>
-                                            <span class="form-control" id="vid">${item.VehicleId}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3">
-                                        <div class="form-group">
-                                            <label for="vin">VIN</label>
-                                            <span class="form-control" id="vin">${item.VIN}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-5 col-md-5">
-                                        <div class="form-group">
-                                            <label for="seller">Seller</label>
-                                            <span class="form-control" id="seller">${item.Seller}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-5 col-md-5">
-                                        <div class="form-group">
-                                            <label for="buyer">Buyer</label>
-                                            <span class="form-control" id="buyer">${item.Buyer}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-2 col-sm-2 col-md-2">
-                                        <div class="form-group">
-                                            <label for="bidsheetnumber">BidSheet#</label>
-                                            <span class="form-control" id="bidsheetnumber">${item.BidSheetNumber}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-10 col-sm-5 col-md-5">
-                                        <div class="form-group">
-                                            <label for="ymm">YMM</label>
-                                            <span class="form-control" id="ymm">${item.YMM}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-3 col-md-3">
-                                        <div class="form-group">
-                                            <label for="salelocation">SaleLocation</label>
-                                            <span class="form-control" id="salelocation">${item.SaleLocation}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        <div class="form-group">
-                                            <label for="salefirstdate">SaleFirstDate</label>
-                                            <span class="form-control" id="salefirstdate">${item.showDateOnly()}</span>
-                                        </div>
-                                    </div>
+            <!--<virtual-list items.bind="shownVehicles">
+                <template replace-part="item-template">-->
+            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="vehicle of shownVehicles">
+                <div class="panel panel-default">
+                    <div class="panel-body bg-info">
+                        <div class="row text-center">
+                            <div class="col-xs-2 col-sm-1 col-md-2">
+                                <div class="checkbox-inline">
+                                    <label for="create">Create</label>
+                                    <input id="create" type="checkbox" value.bind="vehicle.create" />
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <label for="reserve">Reserve</label>
+                                    <input class="form-control" id="reserve" value.bind="vehicle.Reserve" />
+                                </div>
+                            </div>
+                            <div class="col-xs-3 col-sm-4 col-md-3">
+                                <div class="form-group">
+                                    <label for="vid">VID</label>
+                                    <span class="form-control" id="vid">${vehicle.VehicleId}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="vin">VIN</label>
+                                    <span class="form-control" id="vin">${vehicle.VIN}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-5 col-md-5">
+                                <div class="form-group">
+                                    <label for="seller">Seller</label>
+                                    <span class="form-control" id="seller">${vehicle.Seller}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-5 col-md-5">
+                                <div class="form-group">
+                                    <label for="buyer">Buyer</label>
+                                    <span class="form-control" id="buyer">${vehicle.Buyer}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <label for="bidsheetnumber">BidSheet#</label>
+                                    <span class="form-control" id="bidsheetnumber">${vehicle.BidSheetNumber}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-10 col-sm-5 col-md-5">
+                                <div class="form-group">
+                                    <label for="ymm">YMM</label>
+                                    <span class="form-control" id="ymm">${vehicle.YMM}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="salelocation">SaleLocation</label>
+                                    <span class="form-control" id="salelocation">${vehicle.SaleLocation}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <label for="salefirstdate">SaleFirstDate</label>
+                                    <span class="form-control" id="salefirstdate">${vehicle.showDateOnly()}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </template>
-            </virtual-list>
+                </div>
+            </div>
+            <!--</template>
+            </virtual-list>-->
         </div>
     </section>
 </template>

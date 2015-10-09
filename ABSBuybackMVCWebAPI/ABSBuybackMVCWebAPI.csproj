@@ -425,12 +425,16 @@
     <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-rules.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation-view-strategy.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\validation%400.3.1\validation.js" />
+    <Content Include="Scripts\app\jspm_packages\github\coderasm\ui-virtualization%40UpdateToAureliaFramework16.0.js" />
+    <Content Include="Scripts\app\jspm_packages\github\coderasm\ui-virtualization%40UpdateToAureliaFramework16.0\index.js" />
+    <Content Include="Scripts\app\jspm_packages\github\coderasm\ui-virtualization%40UpdateToAureliaFramework16.0\scroll-handler.js" />
+    <Content Include="Scripts\app\jspm_packages\github\coderasm\ui-virtualization%40UpdateToAureliaFramework16.0\virtual-list.html" />
+    <Content Include="Scripts\app\jspm_packages\github\coderasm\ui-virtualization%40UpdateToAureliaFramework16.0\virtual-list.js" />
+    <Content Include="Scripts\app\jspm_packages\github\coderasm\ui-virtualization%40UpdateToAureliaFramework16.0\virtual-repeat.js" />
     <Content Include="Scripts\app\jspm_packages\github\components\jquery%402.1.4.js" />
     <Content Include="Scripts\app\jspm_packages\github\components\jquery%402.1.4\jquery.js" />
     <Content Include="Scripts\app\jspm_packages\github\github\fetch%400.9.0.js" />
     <Content Include="Scripts\app\jspm_packages\github\github\fetch%400.9.0\fetch.js" />
-    <Content Include="Scripts\app\jspm_packages\github\jspm\nodelibs-process%400.1.1.js" />
-    <Content Include="Scripts\app\jspm_packages\github\jspm\nodelibs-process%400.1.1\index.js" />
     <Content Include="Scripts\app\jspm_packages\github\systemjs\plugin-text%400.0.2.js" />
     <Content Include="Scripts\app\jspm_packages\github\systemjs\plugin-text%400.0.2\text.js" />
     <Content Include="Scripts\app\jspm_packages\github\twbs\bootstrap%403.3.5.js" />
@@ -555,9 +559,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.woff" />
     <Content Include="Scripts\app\jspm_packages\npm\font-awesome%404.4.0\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Scripts\app\jspm_packages\npm\process%400.10.1.js" />
-    <Content Include="Scripts\app\jspm_packages\npm\process%400.10.1\browser.js" />
-    <Content Include="Scripts\app\jspm_packages\npm\process%400.10.1\index.js" />
     <Content Include="Scripts\app\jspm_packages\system.js" />
     <Content Include="Scripts\app\src\app.html" />
     <Content Include="Scripts\app\src\app.js" />
@@ -616,6 +617,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\app\jspm_packages\github\jspm\" />
     <Folder Include="Scripts\app\src\interceptors\" />
   </ItemGroup>
   <ItemGroup>

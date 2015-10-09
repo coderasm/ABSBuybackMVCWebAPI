@@ -4,7 +4,9 @@ import {Mapper} from 'utilities/Mapper';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
+import {singleton} from 'aurelia-framework';
 
+@singleton()
 @inject(RepositoryService, Mapper, Validation)
 export class Buybacks {
     heading = 'Buyback Without Reserves';

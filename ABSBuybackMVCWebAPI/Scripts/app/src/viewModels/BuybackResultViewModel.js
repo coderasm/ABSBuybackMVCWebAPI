@@ -3,9 +3,10 @@ export class BuybackResultViewModel
 {
     currentValues = {};
 
-    constructor(data, validation) {
+    constructor(data, validation, observerLocator) {
         Object.assign(this, data);
         Object.assign(this.currentValues, data);
+        this.observerLocator = observerLocator;
         this.validation = validation.on(this)
             .ensure('Reserve')
                 .containsOnly(/^[1-9]\d*$|^$/)
@@ -13,6 +14,20 @@ export class BuybackResultViewModel
                     return {
                     }
             },(onValidateError)=>{ alert("Fix errors.")});
+        this.createReserveNullableSubscriber();
+    }
+
+    createReserveNullableSubscriber()
+    {
+        this.observerLocator
+                .getObserver(this, "Reserve")
+                .subscribe(this.onChangeOfReserve);
+    }
+
+    onChangeOfReserve(newValue, OldValue)
+    {
+        if(newValue === "")
+            this.Reserve = null;
     }
 
     lastSixOfVIN()
@@ -38,7 +53,6 @@ export class BuybackResultViewModel
 
     doUpdate(parent)
     {
-        this.nullValues();
         for (var property in this.currentValues) {
             if (this.currentValues[property] !== this[property] ) {
                 this.updateCurrentValues(property);
@@ -46,12 +60,6 @@ export class BuybackResultViewModel
                 return;
             }
         }
-    }
-
-    nullValues()
-    {
-        if(this.Reserve === "")
-            this.Reserve = null;
     }
 
     updateCurrentValues(property, parent)

@@ -6,12 +6,13 @@ import {Mapper} from 'utilities/Mapper';
 import {ArrayExtensions} from 'utilities/ArrayExtensions';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
+import {Validation} from 'aurelia-validation';
 import {singleton} from 'aurelia-framework';
 import {computedFrom} from 'aurelia-framework';
 import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
 
 @singleton()
-@inject(RepositoryService, Mapper, ObserverLocator)
+@inject(RepositoryService, Mapper, ObserverLocator, Validation)
 export class Buybacks {
     heading = 'Buyback Vehicles Needing New Sale';
     saleLocations = [];
@@ -34,11 +35,39 @@ export class Buybacks {
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, mapper, observerLocator) {
+    constructor(repositoryService, mapper, observerLocator, validation) {
         this.repositoryService = repositoryService;
         this.mapper = mapper;
         this.observerLocator = observerLocator;
         this.createNullableSubscribers();
+        this.nonAbsSaleValidation = validation.on(this)
+            .ensure('reason')
+                .isNotEmpty()
+                .withMessage("Choose a reason.")
+            .ensure('saleOption')
+                .isNotEmpty()
+                .withMessage("Choose a sale option.")
+            .onValidate( () => {
+                return {
+                }
+            },(onValidateError)=>{ alert("Fix errors.")});
+        this.absSaleValidation = validation.on(this)
+            .ensure('absOptionLocationId', (config) => {config.computedFrom('saleOption')})
+                .passes(() => {return true;})
+                .if(() => { return this.saleOption == 10; })
+                    .isNotEmpty()
+                    .withMessage("Choose a location.")
+                .endIf()
+            .ensure('absOptionLocationInstanceId', (config) => {config.computedFrom('absOptionLocationId')})
+                .passes(() => {return true;})
+                .if(() => { return this.absOptionLocationId !== null; })
+                    .containsOnly(/^[^\-]/)
+                    .withMessage("Choose a sale.")
+                .endIf()
+            .onValidate( () => {
+                return {
+                }
+            },(onValidateError)=>{ alert("Fix errors.")});
     }
 
     createNullableSubscribers()
@@ -62,6 +91,7 @@ export class Buybacks {
     @computedFrom("saleOption")
     get showAbsSaleLocations()
     {
+        this.absSaleValidation.validate().then().catch(err => {});
         return this.saleOption == 10 ? true : false;
     }
 
@@ -86,7 +116,7 @@ export class Buybacks {
         var queryObject = this.createQueryObject();
         this.repositoryService.BuybackVehicleRepository.search(queryObject)
           .then(response => response.json())
-          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v)}))
+          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, new Validation(this.observerLocator), this.observerLocator)}))
           .then(vehicles => this.loadVehicles(vehicles));
     }
 
@@ -211,6 +241,12 @@ export class Buybacks {
             );
     }
 
+    saleOptionSelected()
+    {
+        this.absOptionLocationId = null;
+        this.absOptionLocationInstanceId = -1;
+    }
+
     absOptionLocationSelected()
     {
         this.absOptionLocationInstanceId = -1;
@@ -225,17 +261,23 @@ export class Buybacks {
 
     generateAbsOptionSaleLocationInstances(location)
     {
+        var nextSaleWording = "Next Sale Setup";
         if(location.Sales.length === 0)
-            return [{name:"Select",value:-1},{name:"Next", value:null}];
+            return [{name:"Select",value:-1},{name:nextSaleWording, value:null}];
         this.absOptionLocationInstanceId = location.Sales[0].SaleInstanceId;
-        return [{name:"Select",value:-1},{name:"Current", value:location.Sales[0].SaleInstanceId},{name:"Next", value:null}];
+        var date = (new Date(location.Sales[0].SaleFirstDate)).toLocaleDateString();
+        return [{name:"Select",value:-1},{name:date, value:this.absOptionLocationInstanceId},{name:nextSaleWording, value:null}];
     }
 
     createSelected()
     {
-        for(let buyback of this.buybacks)
+        this.nonAbsSaleValidation.validate().catch(err => {});
+        this.absSaleValidation.validate().catch(err => {});
+        console.log(this.nonAbsSaleValidation.result.isValid);
+        console.log(this.absSaleValidation.result.isValid);
+        for(let vehicle of this.shownVehicles)
         {
-            if (buyback.create);
+            if (vehicle.create);
         }
     }
 }

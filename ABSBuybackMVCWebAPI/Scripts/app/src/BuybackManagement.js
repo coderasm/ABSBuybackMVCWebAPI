@@ -5,19 +5,21 @@ import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
 import {singleton} from 'aurelia-framework';
+import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
 
 @singleton()
-@inject(RepositoryService, Mapper, Validation)
+@inject(RepositoryService, Mapper, Validation, ObserverLocator)
 export class Buybacks {
     heading = 'Buyback Without Reserves';
     buybacks = [];
     saleOptions = [];
     statuses = [];
 
-    constructor(repositoryService, mapper, validation) {
+    constructor(repositoryService, mapper, validation, observerLocator) {
         this.repositoryService = repositoryService;
         this.mapper = mapper;
         this.validation = validation;
+        this.observerLocator = observerLocator;
     }
 
     activate()
@@ -45,7 +47,7 @@ export class Buybacks {
     {
         this.repositoryService.BuybackResultRepository.getAll(0,0)
           .then(response => response.json())
-          .then(json => $.map(json,(v) => {return new BuybackResultViewModel(v, this.validation)}))
+          .then(json => $.map(json,(v) => {return new BuybackResultViewModel(v, new Validation(this.observerLocator), this.observerLocator)}))
           .then(buybacks => this.buybacks = buybacks);
     }
 

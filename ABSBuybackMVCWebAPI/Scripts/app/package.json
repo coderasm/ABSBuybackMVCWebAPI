@@ -76,7 +76,7 @@
       "aurelia-templating-binding": "github:aurelia/templating-binding@^0.15.0",
       "aurelia-templating-resources": "github:aurelia/templating-resources@^0.15.2",
       "aurelia-templating-router": "github:aurelia/templating-router@^0.16.1",
-      "aurelia-ui-virtualization": "github:coderasm/ui-virtualization@UpdateToAureliaFramework16.0",
+      "aurelia-ui-virtualization": "github:aurelia/ui-virtualization@master",
       "aurelia-validation": "github:aurelia/validation@^0.3.1",
       "bootstrap": "github:twbs/bootstrap@^3.3.4",
       "core-js": "npm:core-js@^1.1.0",

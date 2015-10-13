@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.40\lib\net45\Dapper.dll</HintPath>
     </Reference>
@@ -236,6 +239,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="Controllers\AbsBuybackProcessor.cs" />
+    <Compile Include="Controllers\AbsBuybackResultController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BuybackResultController.cs" />
     <Compile Include="Controllers\BuybackVehicleController.cs" />
@@ -248,33 +254,40 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AbsBuybackResult.cs" />
+    <Compile Include="Models\AbsVehicleWithChoices.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Buyback.cs" />
     <Compile Include="Models\BuybackReasonDescription.cs" />
     <Compile Include="Models\BuybackResult.cs" />
+    <Compile Include="Models\BuybackResultAbsSale.cs" />
     <Compile Include="Models\BuybackResultDescription.cs" />
     <Compile Include="Models\BuybackStatus.cs" />
     <Compile Include="Models\BuybackVehicle.cs" />
     <Compile Include="Models\BuybackVehicleQuery.cs" />
-    <Compile Include="Models\BuybackWithOptions.cs" />
     <Compile Include="Models\Dealer.cs" />
     <Compile Include="Models\GroupSaleVehicle.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\SaleFirstDate.cs" />
     <Compile Include="Models\SaleInstance.cs" />
+    <Compile Include="Models\VehicleWithChoices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Repositories\AbsBuyBackResultRepository.cs" />
     <Compile Include="Repositories\BuybackReasonDescriptionRepository.cs" />
     <Compile Include="Repositories\BuybackRepository.cs" />
+    <Compile Include="Repositories\BuybackResultAbsSaleRepository.cs" />
     <Compile Include="Repositories\BuybackResultDescriptionRepository.cs" />
     <Compile Include="Repositories\BuybackResultRepository.cs" />
     <Compile Include="Repositories\BuybackVehicleRepository.cs" />
     <Compile Include="Repositories\GSVRepository.cs" />
+    <Compile Include="Repositories\IAbsBuybackResultRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="Repositories\IBuybackReasonDescriptionRepository.cs" />
     <Compile Include="Repositories\IBuybackRepository.cs" />
+    <Compile Include="Repositories\IBuybackResultAbsSaleRepository.cs" />
     <Compile Include="Repositories\IBuybackResultDescritionRepository.cs" />
     <Compile Include="Repositories\IBuybackResultRepository.cs" />
     <Compile Include="Repositories\IBuybackVehicleRepository.cs" />
@@ -289,8 +302,14 @@
     <Compile Include="Services\Repository\IRepositoryService.cs" />
     <Compile Include="Services\Repository\RepositoryService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Utilities\BuybackUpdateProcessor.cs" />
-    <Compile Include="Utilities\IBuybackUpdateProcessor.cs" />
+    <Compile Include="Utilities\AbsBuybackInserter.cs" />
+    <Compile Include="Utilities\AbsBuybackProcessor.cs" />
+    <Compile Include="Utilities\AbsBuybackUpdater.cs" />
+    <Compile Include="Utilities\BuybackInsertProcessor.cs" />
+    <Compile Include="Utilities\IAbsBuybackProcessor.cs" />
+    <Compile Include="Utilities\IAbsBuybackUpdater.cs" />
+    <Compile Include="Utilities\IAbsBuybackInserter.cs" />
+    <Compile Include="Utilities\IBuybackProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

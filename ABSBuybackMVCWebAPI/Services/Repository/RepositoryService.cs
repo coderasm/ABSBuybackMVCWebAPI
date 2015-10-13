@@ -91,5 +91,30 @@ namespace ABSBuybackMVCWebAPI.Services.Repository
                 throw new System.NotImplementedException();
             }
         }
+
+
+        public IAbsBuybackResultRepository AbsBuybackResultRepository
+        {
+            get
+            {
+                return new AbsBuyBackResultRepository();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public IBuybackResultAbsSaleRepository BuybackResultAbsSaleRepository
+        {
+            get
+            {
+                return new BuybackResultAbsSaleRepository();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
     }
 }

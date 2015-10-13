@@ -271,13 +271,19 @@ export class Buybacks {
 
     createSelected()
     {
-        this.nonAbsSaleValidation.validate().catch(err => {});
-        this.absSaleValidation.validate().catch(err => {});
-        console.log(this.nonAbsSaleValidation.result.isValid);
-        console.log(this.absSaleValidation.result.isValid);
+        if(!doesValidate) return;
         for(let vehicle of this.shownVehicles)
         {
             if (vehicle.create);
         }
+    }
+
+    doesValidate()
+    {
+        this.nonAbsSaleValidation.validate().catch(err => {});
+        this.absSaleValidation.validate().catch(err => {});
+        if(!this.nonAbsSaleValidation.isValid || !this.absSaleValidation.isValid)
+            return false;
+        return true;
     }
 }

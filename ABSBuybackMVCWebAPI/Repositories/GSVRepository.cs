@@ -25,6 +25,11 @@ namespace ABSBuybackMVCWebAPI.Repositories
             throw new System.NotImplementedException();
         }
 
+        public int Insert(GroupSaleVehicle poco, IDbConnection connection)
+        {
+            return (int)connection.Insert(poco);
+        }
+
         public bool Update(GroupSaleVehicle poco)
         {
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))

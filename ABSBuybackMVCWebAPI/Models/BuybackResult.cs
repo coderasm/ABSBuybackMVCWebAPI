@@ -8,7 +8,6 @@ namespace ABSBuybackMVCWebAPI.Models
     {
         [Key]
         public int BuyBackResultId { get; set; }
-        public int? VehicleId { get; set; }
         public int? HighBid { get; set; }
         public int? Reserve { get; set; }
         public int StatusDescriptionId { get; set; }

@@ -10,9 +10,9 @@ namespace ABSBuybackMVCWebAPI.Controllers
     public class BuybackResultController : ApiController
     {
         private readonly IRepositoryService repositoryService;
-        private readonly IBuybackUpdateProcessor buybackResultProcessor;
+        private readonly IBuybackProcessor buybackResultProcessor;
 
-        public BuybackResultController(IRepositoryService repositoryService, IBuybackUpdateProcessor buybackResultProcessor)
+        public BuybackResultController(IRepositoryService repositoryService, IBuybackProcessor buybackResultProcessor)
         {
             this.repositoryService = repositoryService;
             this.buybackResultProcessor = buybackResultProcessor;
@@ -38,16 +38,15 @@ namespace ABSBuybackMVCWebAPI.Controllers
         }
 
         // POST: api/BuybackResult
-        public void Post([FromBody]BuybackResult value)
+        public int Post([FromBody]VehicleWithChoices vehicleWithChoices)
         {
+            return buybackResultProcessor.Process(vehicleWithChoices);
         }
 
         // PUT: api/BuybackResult/
-        public bool Put([FromBody]BuybackResult value)
+        public bool Put([FromBody]BuybackResult buybackResult)
         {
-            if (value.VehicleId.Equals(null))
-                return repositoryService.ResultRepository.Update(value);
-            return buybackResultProcessor.Process(value);
+            return repositoryService.ResultRepository.Update(buybackResult);
         }
 
         // DELETE: api/BuybackResult/5

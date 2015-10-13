@@ -5,7 +5,7 @@ namespace ABSBuybackMVCWebAPI.Models
     public class BuybackVehicle
     {
         public int? Reserve { get; set; }
-        public int? VehicleId { get; set; }
+        public int VehicleId { get; set; }
         public string Seller { get; set; }
         public string SellerId { get; set; }
         public string Buyer { get; set; }

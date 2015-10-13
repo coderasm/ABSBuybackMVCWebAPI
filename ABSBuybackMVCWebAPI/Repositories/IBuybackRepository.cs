@@ -3,7 +3,7 @@ using ABSBuybackMVCWebAPI.Models;
 
 namespace ABSBuybackMVCWebAPI.Repositories
 {
-    interface IBuybackRepository : IBaseRepository<Buyback>
+    public interface IBuybackRepository : IBaseRepository<Buyback>
     {
         int Insert(Buyback poco, IDbConnection connection);
     }

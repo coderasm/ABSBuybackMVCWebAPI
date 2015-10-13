@@ -10,7 +10,7 @@ using Dapper.Contrib.Extensions;
 
 namespace ABSBuybackMVCWebAPI.Repositories
 {
-    class BuybackRepository : IBuybackRepository
+    public class BuybackRepository : IBuybackRepository
     {
         private const string @select = @"SELECT * FROM Buyback b";
         private const string @where = @" ";

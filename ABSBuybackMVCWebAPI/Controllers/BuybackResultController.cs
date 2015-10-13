@@ -19,22 +19,37 @@ namespace ABSBuybackMVCWebAPI.Controllers
         }
 
         // GET: api/BuybackResult
-        public IEnumerable<string> Get()
+        public IEnumerable<BuybackResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            return repositoryService.ResultRepository.GetAll();
         }
 
-        // GET: api/BuybackResult/{reserve:int}/{status:int}
-        [Route("{reserve:int}/{status:int}")]
-        public IEnumerable<BuybackResult> Get(int reserve, int status)
+        // GET: api/BuybackResult/paged/pageSize/pageNumber
+        [Route("paged/{pageSize:int}/{pageNumber:int}")]
+        public IEnumerable<BuybackResult> Get(int pageSize, int pageNumber)
         {
-            return repositoryService.ResultRepository.Get(reserve, status);
+            return repositoryService.ResultRepository.Paged(pageSize, pageNumber);
         }
 
         // GET: api/BuybackResult/5
-        public string Get(int id)
+        [Route({"{id:int}")]
+        public BuybackResult Get(int id)
         {
-            return "value";
+            return repositoryService.ResultRepository.Get(id);
+        }
+
+        // GET: api/BuybackResult/search
+        [Route("search")]
+        public IEnumerable<BuybackResult> Post([FromBody] BuybackResultQuery queryObject)
+        {
+            return repositoryService.ResultRepository.Search(queryObject);
+        }
+
+        // GET: api/BuybackResult/search/pageSize/pageNumber
+        [Route("search/{pageNumber:int}/{pageSize:int}")]
+        public IEnumerable<BuybackResult> Post(int pageSize, int pageNumber, [FromBody] BuybackResultQuery queryObject)
+        {
+            return repositoryService.ResultRepository.SearchPaged(queryObject, pageSize, pageNumber);
         }
 
         // POST: api/BuybackResult

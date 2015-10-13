@@ -121,5 +121,67 @@ namespace ABSBuybackMVCWebAPI.Repositories
         {
             return select + wherePredicate + orderBy;
         }
+
+        public IEnumerable<BuybackResult> Paged(int pageSize, int pageNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<BuybackResult> Search(BuybackResultQuery queryObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<BuybackResult> SearchPaged(BuybackResultQuery queryObject, int pageSize, int pageNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessQueryObject(BuybackVehicleQuery queryObject)
+        {
+            processDealer(queryObject);
+            processSaleLocation(queryObject);
+            processVehicleIds(queryObject);
+        }
+
+        private void processVehicleIds(BuybackVehicleQuery queryObject)
+        {
+            if (queryObject.VehicleIds.Count != 0)
+                WherePredicate += processVehicleIds(queryObject.VehicleIds);
+        }
+
+        private void processSaleLocation(BuybackVehicleQuery queryObject)
+        {
+            if (queryObject.SaleLocationId != null)
+                WherePredicate += FormatSaleIdPredicate(queryObject.SaleLocationId.Value);
+        }
+
+        private static string FormatSaleIdPredicate(int saleId)
+        {
+            var saleIdPredicate = String.Format(SaleIdPredicateTemplate, saleId);
+            return saleIdPredicate;
+        }
+
+        private void processDealer(BuybackVehicleQuery queryObject)
+        {
+            if (queryObject.BuyerId != null)
+                WherePredicate += FormatDealerIdPredicate(queryObject.BuyerId);
+        }
+
+        private static string FormatDealerIdPredicate(string dealerId)
+        {
+            var dealerIdPredicate = String.Format(DealerIdPredicateTemplate, dealerId);
+            return dealerIdPredicate;
+        }
+
+        private string processVehicleIds(List<int> vehicleIds)
+        {
+            var andInPredicate = "";
+            vehicleIds.ForEach(v =>
+            {
+                andInPredicate += v + ",";
+            });
+            return String.Format(VehicleIdPredicateTemplate, andInPredicate.TrimEnd(','));
+        }
     }
 }

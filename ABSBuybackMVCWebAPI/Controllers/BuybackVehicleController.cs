@@ -30,9 +30,9 @@ namespace ABSBuybackMVCWebAPI.Controllers
         }
 
         // GET: api/BuybackVehicle/5
-        public string Get(int id)
+        public BuybackVehicle Get(int id)
         {
-            return "value";
+            return repositoryService.VehicleRepository.Get(id);
         }
 
         // GET: api/BuybackVehicle/search

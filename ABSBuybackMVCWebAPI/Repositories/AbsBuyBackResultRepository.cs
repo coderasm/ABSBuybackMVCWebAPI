@@ -123,5 +123,20 @@ namespace ABSBuybackMVCWebAPI.Repositories
         {
             return select + wherePredicate + orderBy;
         }
+
+        public List<AbsBuybackResult> Search(AbsBuybackResultQuery queryObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<AbsBuybackResult> Paged(int pageSize, int pageNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<AbsBuybackResult> SearchPaged(AbsBuybackResultQuery queryObject, int pageSize, int pageNumber)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

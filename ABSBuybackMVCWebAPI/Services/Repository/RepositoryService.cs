@@ -1,4 +1,5 @@
-﻿using ABSBuybackMVCWebAPI.Repositories;
+﻿using System;
+using ABSBuybackMVCWebAPI.Repositories;
 
 namespace ABSBuybackMVCWebAPI.Services.Repository
 {
@@ -114,6 +115,32 @@ namespace ABSBuybackMVCWebAPI.Services.Repository
             set
             {
                 throw new System.NotImplementedException();
+            }
+        }
+
+        public BuybackRepository BuybackRepository
+        {
+            get
+            {
+                return new BuybackRepository();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IGSVRepository GsvRepository
+        {
+            get
+            {
+                return new GsvRepository();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
             }
         }
     }

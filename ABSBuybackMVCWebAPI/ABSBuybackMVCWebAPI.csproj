@@ -22,6 +22,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -240,7 +241,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="AutoMapper\AutoMapperConfig.cs" />
-    <Compile Include="Controllers\AbsBuybackProcessor.cs" />
     <Compile Include="Controllers\AbsBuybackResultController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BuybackResultController.cs" />
@@ -255,6 +255,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AbsBuybackResult.cs" />
+    <Compile Include="Models\AbsBuybackResultQuery.cs" />
     <Compile Include="Models\AbsVehicleWithChoices.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -263,6 +264,7 @@
     <Compile Include="Models\BuybackResult.cs" />
     <Compile Include="Models\BuybackResultAbsSale.cs" />
     <Compile Include="Models\BuybackResultDescription.cs" />
+    <Compile Include="Models\BuybackResultQuery.cs" />
     <Compile Include="Models\BuybackStatus.cs" />
     <Compile Include="Models\BuybackVehicle.cs" />
     <Compile Include="Models\BuybackVehicleQuery.cs" />

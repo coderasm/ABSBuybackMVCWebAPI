@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Web.Http;
 using ABSBuybackMVCWebAPI.Services.Repository;
 using ABSBuybackMVCWebAPI.Utilities;
+using ABSBuybackMVCWebAPI.Models;
 
 namespace ABSBuybackMVCWebAPI.Controllers
 {
+    [RoutePrefix("api/absbuybackresult")]
     public class AbsBuybackResultController : ApiController
     {
         private readonly IRepositoryService repositoryService;
@@ -18,25 +20,49 @@ namespace ABSBuybackMVCWebAPI.Controllers
         }
 
         // GET: api/AbsBuybackResult
-        public IEnumerable<string> Get()
+        public IEnumerable<AbsBuybackResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            return repositoryService.AbsBuybackResultRepository.GetAll();
+        }
+
+        // GET: api/AbsBuybackResult/paged/pageSize/pageNumber
+        [Route("paged/{pageSize:int}/{pageNumber:int}")]
+        public IEnumerable<AbsBuybackResult> Get(int pageSize, int pageNumber)
+        {
+            return repositoryService.AbsBuybackResultRepository.Paged(pageSize, pageNumber);
         }
 
         // GET: api/AbsBuybackResult/5
-        public string Get(int id)
+        [Route("{id:int}")]
+        public AbsBuybackResult Get(int id)
         {
-            return "value";
+            return repositoryService.AbsBuybackResultRepository.Get(id);
+        }
+
+        // GET: api/AbsBuybackResult/search
+        [Route("search")]
+        public IEnumerable<AbsBuybackResult> Post([FromBody] AbsBuybackResultQuery queryObject)
+        {
+            return repositoryService.AbsBuybackResultRepository.Search(queryObject);
+        }
+
+        // GET: api/AbsBuybackResult/search/pageSize/pageNumber
+        [Route("search/{pageNumber:int}/{pageSize:int}")]
+        public IEnumerable<AbsBuybackResult> Post(int pageSize, int pageNumber, [FromBody] AbsBuybackResultQuery queryObject)
+        {
+            return repositoryService.AbsBuybackResultRepository.SearchPaged(queryObject, pageSize, pageNumber);
         }
 
         // POST: api/AbsBuybackResult
-        public void Post([FromBody]string value)
+        public int Post([FromBody] AbsVehicleWithChoices absVehicleWithChoices)
         {
+            return absBuybackProcessor.ProcessInsert(absVehicleWithChoices);
         }
 
-        // PUT: api/AbsBuybackResult/5
-        public void Put(int id, [FromBody]string value)
+        // PUT: api/AbsBuybackResult
+        public bool Put([FromBody]AbsBuybackResult absBuybackResult)
         {
+            return absBuybackProcessor.ProcessUpdate(absBuybackResult);
         }
 
         // DELETE: api/AbsBuybackResult/5

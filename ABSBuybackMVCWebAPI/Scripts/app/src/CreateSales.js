@@ -40,6 +40,7 @@ export class Buybacks {
         this.mapper = mapper;
         this.observerLocator = observerLocator;
         this.createNullableSubscribers();
+        this.validation = validation;
         this.nonAbsSaleValidation = validation.on(this)
             .ensure('reason')
                 .isNotEmpty()
@@ -116,7 +117,7 @@ export class Buybacks {
         var queryObject = this.createQueryObject();
         this.repositoryService.BuybackVehicleRepository.search(queryObject)
           .then(response => response.json())
-          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, new Validation(this.observerLocator), this.observerLocator)}))
+          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, this.validation, this.observerLocator)}))
           .then(vehicles => this.loadVehicles(vehicles));
     }
 

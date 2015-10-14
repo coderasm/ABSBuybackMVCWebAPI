@@ -41,6 +41,8 @@ namespace ABSBuybackMVCWebAPI
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IRepositoryService, RepositoryService>();
             container.RegisterType<IBuybackProcessor, BuybackInsertProcessor>();
+            container.RegisterType<IBuybackQueryProcessorFactory, BuybackQueryProcessorFactory>();
+            container.RegisterType<IBuybackRepository, BuybackRepository>();
             container.RegisterType<IBuybackResultRepository, BuybackResultRepository>();
             container.RegisterType<IGSVRepository, GsvRepository>();
             container.RegisterType<IAbsBuybackProcessor, AbsBuybackProcessor>();

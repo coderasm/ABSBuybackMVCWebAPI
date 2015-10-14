@@ -18,6 +18,33 @@ getAll(reserve, status)
     return this.http.fetch(uri);
 }
 
+paged(pageNumber, pageSize)
+{
+    var uri = "paged/" + pageNumber + "/" + pageSize;
+    return this.http.fetch(uri);
+}
+
+search(buybackResultQueryObject)
+{
+    var requestInit = {
+        headers: {"content-type" : "application/json"},
+        method: "POST",
+        body: JSON.stringify(buybackResultQueryObject)
+    }
+    return this.http.fetch('search', requestInit);
+}
+
+searchPaged(buybackResultQueryObject, pageNumber, pageSize)
+{
+    var requestInit = {
+        headers: {"content-type" : "application/json"},
+        method: "POST",
+        body: JSON.stringify(buybackResultQueryObject)
+    }
+    var uri = "search/" + pageNumber + "/" + pageSize;
+    return this.http.fetch(uri, requestInit);
+}
+
 update(buybackResult)
 {
     var requestInit = {

@@ -7,6 +7,7 @@ using System.Linq;
 using ABSBuybackMVCWebAPI.Models;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using ABSBuybackMVCWebAPI.Utilities;
 
 namespace ABSBuybackMVCWebAPI.Repositories
 {
@@ -38,9 +39,12 @@ namespace ABSBuybackMVCWebAPI.Repositories
         private const string WhereTemplate = @" WHERE b.VehicleIdOriginal IS NULL AND g2.salefirstdate BETWEEN DATEADD(DAY, -30,GETDATE()) AND GETDATE(){0}";
         private string WherePredicate = "";
         private const string OrderBy = @" ORDER BY gs.SaleLocation,SaleFirstDate DESC, Seller, g.BidSheetNumber";
-        private const string SaleIdPredicateTemplate =  @" AND g2.SaleID = {0}";
-        private const string DealerIdPredicateTemplate = @" AND g1.DealerID = '{0}'";
-        private const string VehicleIdPredicateTemplate = @" AND g.VehicleID IN({0})";
+        private readonly IBuybackVehicleQueryProcessorFactory buybackVehicleQueryProcessorFactory;
+
+        public BuybackVehicleRepository(IBuybackVehicleQueryProcessorFactory buybackVehicleQueryProcessorFactory)
+        {
+            this.buybackVehicleQueryProcessorFactory = buybackVehicleQueryProcessorFactory;
+        }
 
         public List<BuybackVehicle> GetAll()
         {
@@ -104,7 +108,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
 
         public List<BuybackVehicle> Search(BuybackVehicleQuery queryObject)
         {
-            ProcessQueryObject(queryObject);
+            WherePredicate = buybackVehicleQueryProcessorFactory.Create(queryObject).ProcessAll();
             var query = FormQuery();
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
             {
@@ -115,59 +119,12 @@ namespace ABSBuybackMVCWebAPI.Repositories
 
         public IEnumerable<BuybackVehicle> SearchPaged(BuybackVehicleQuery queryObject, int pageSize, int pageNumber)
         {
-            ProcessQueryObject(queryObject);
+            WherePredicate = buybackVehicleQueryProcessorFactory.Create(queryObject).ProcessAll();
             var query = FormQuery(pageNumber, pageSize);
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
             {
                 return connection.Query<BuybackVehicle>(query).ToList();
             }
-        }
-
-        private void ProcessQueryObject(BuybackVehicleQuery queryObject)
-        {
-            processDealer(queryObject);
-            processSaleLocation(queryObject);
-            processVehicleIds(queryObject);
-        }
-
-        private void processVehicleIds(BuybackVehicleQuery queryObject)
-        {
-            if (queryObject.VehicleIds.Count != 0)
-                WherePredicate += processVehicleIds(queryObject.VehicleIds);
-        }
-
-        private void processSaleLocation(BuybackVehicleQuery queryObject)
-        {
-            if (queryObject.SaleLocationId != null)
-                WherePredicate += FormatSaleIdPredicate(queryObject.SaleLocationId.Value);
-        }
-
-        private static string FormatSaleIdPredicate(int saleId)
-        {
-            var saleIdPredicate = String.Format(SaleIdPredicateTemplate, saleId);
-            return saleIdPredicate;
-        }
-
-        private void processDealer(BuybackVehicleQuery queryObject)
-        {
-            if (queryObject.BuyerId != null)
-                WherePredicate += FormatDealerIdPredicate(queryObject.BuyerId);
-        }
-
-        private static string FormatDealerIdPredicate(string dealerId)
-        {
-            var dealerIdPredicate = String.Format(DealerIdPredicateTemplate, dealerId);
-            return dealerIdPredicate;
-        }
-
-        private string processVehicleIds(List<int> vehicleIds)
-        {
-            var andInPredicate = "";
-            vehicleIds.ForEach(v =>
-            {
-                andInPredicate += v + ",";
-            });
-            return String.Format(VehicleIdPredicateTemplate, andInPredicate.TrimEnd(','));
         }
     }
 }

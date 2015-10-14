@@ -32,7 +32,7 @@ namespace ABSBuybackMVCWebAPI.Controllers
         }
 
         // GET: api/BuybackResult/5
-        [Route({"{id:int}")]
+        [Route("{id:int}")]
         public BuybackResult Get(int id)
         {
             return repositoryService.ResultRepository.Get(id);

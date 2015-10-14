@@ -1,5 +1,6 @@
 ﻿using System;
 using ABSBuybackMVCWebAPI.Repositories;
+using ABSBuybackMVCWebAPI.Utilities;
 
 namespace ABSBuybackMVCWebAPI.Services.Repository
 {
@@ -9,7 +10,7 @@ namespace ABSBuybackMVCWebAPI.Services.Repository
         {
             get
             {
-                return new BuybackVehicleRepository();
+                return new BuybackVehicleRepository(new BuybackVehicleQueryProcessorFactory());
             }
             set
             {
@@ -72,7 +73,7 @@ namespace ABSBuybackMVCWebAPI.Services.Repository
         {
             get
             {
-                return new BuybackResultRepository();
+                return new BuybackResultRepository(new BuybackQueryProcessorFactory());
             }
             set
             {
@@ -98,7 +99,7 @@ namespace ABSBuybackMVCWebAPI.Services.Repository
         {
             get
             {
-                return new AbsBuyBackResultRepository();
+                return new AbsBuybackResultRepository(new AbsBuybackQueryProcessorFactory());
             }
             set
             {

@@ -1,5 +1,6 @@
 ﻿import {BuybackResultViewModel} from 'viewModels/BuybackResultViewModel';
 import {BuybackResult} from 'models/BuybackResult';
+import {BuybackResultQuery} from 'models/BuybackResultQuery';
 import {Mapper} from 'utilities/Mapper';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
@@ -14,6 +15,9 @@ export class Buybacks {
     buybacks = [];
     saleOptions = [];
     statuses = [];
+    resultDescriptionId = null;
+    statusDescriptionId = 0;
+    reserve = 0;
 
     constructor(repositoryService, mapper, validation, observerLocator) {
         this.repositoryService = repositoryService;
@@ -45,10 +49,16 @@ export class Buybacks {
 
     loadBuybackResults()
     {
-        this.repositoryService.BuybackResultRepository.getAll(0,0)
+        var queryObject = this.createQueryObject();
+        this.repositoryService.BuybackResultRepository.search(queryObject)
           .then(response => response.json())
-          .then(json => $.map(json,(v) => {return new BuybackResultViewModel(v, new Validation(this.observerLocator), this.observerLocator)}))
+          .then(json => $.map(json,(v) => {return new BuybackResultViewModel(v, this.validation, this.observerLocator)}))
           .then(buybacks => this.buybacks = buybacks);
+    }
+
+    createQueryObject()
+    {
+        return this.mapper.map(this, BuybackResultQuery);
     }
 
     updateBuybackResult(buybackResult)

@@ -7,7 +7,7 @@
         Object.assign(this, data);
         this.observerLocator = observerLocator;
         this.validation = validation.on(this)
-            .ensure('Reserve')
+            .ensure('reserve')
                 .containsOnly(/^[1-9]\d*$|^$/)
             .onValidate( () => {
                     return {
@@ -19,14 +19,14 @@
     createReserveNullableSubscriber()
     {
         this.observerLocator
-                .getObserver(this, "Reserve")
+                .getObserver(this, "reserve")
                 .subscribe(this.onChangeOfReserve);
     }
 
     onChangeOfReserve(newValue, OldValue)
     {
         if(newValue === "")
-            this.Reserve = null;
+            this.reserve = null;
     }
 
     showDateOnly() {

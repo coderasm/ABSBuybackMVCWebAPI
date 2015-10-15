@@ -1,4 +1,5 @@
 ﻿import {BuybackVehicleViewModel} from 'viewModels/BuybackVehicleViewModel';
+import {CreateSalesState} from 'vmstate/CreateSalesState';
 import {BuybackResult} from 'models/BuybackResult';
 import {Dealer} from 'models/Dealer';
 import {BuybackVehicleQuery} from 'models/BuybackVehicleQuery';
@@ -12,40 +13,25 @@ import {computedFrom} from 'aurelia-framework';
 import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
 
 @singleton()
-@inject(RepositoryService, Mapper, ObserverLocator, Validation)
-export class Buybacks {
+@inject(RepositoryService, Mapper, ObserverLocator, Validation, CreateSalesState)
+export class CreateSales {
     heading = 'Buyback Vehicles Needing New Sale';
-    saleLocations = [];
-    dealers = [];
-    allVehicles = [];
-    shownVehicles = [];
-    queriedVehicles = [];
-    reasons = [];
-    saleOptions = [];
-    saleLocationId = null;
-    buyerId = null;
-    vehicleIds = [];
-    reason = null;
-    saleOption = null;
-    absOptionLocations = [];
-    absOptionLocationId = null;
-    absOptionSaleLocationInstances = [];
-    absOptionLocationInstanceId = -1;
     nullableValues = ["saleLocationId", "buyerId", "reason", "saleOption", "absOptionLocationId"];
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, mapper, observerLocator, validation) {
+    constructor(repositoryService, mapper, observerLocator, validation, createSalesState) {
         this.repositoryService = repositoryService;
         this.mapper = mapper;
         this.observerLocator = observerLocator;
+        this.state = createSalesState;
         this.createNullableSubscribers();
         this.validation = validation;
         this.nonAbsSaleValidation = validation.on(this)
-            .ensure('reason')
+            .ensure('state.reason')
                 .isNotEmpty()
                 .withMessage("Choose a reason.")
-            .ensure('saleOption')
+            .ensure('state.saleOption')
                 .isNotEmpty()
                 .withMessage("Choose a sale option.")
             .onValidate( () => {
@@ -53,15 +39,15 @@ export class Buybacks {
                 }
             },(onValidateError)=>{ alert("Fix errors.")});
         this.absSaleValidation = validation.on(this)
-            .ensure('absOptionLocationId', (config) => {config.computedFrom('saleOption')})
+            .ensure('state.absOptionLocationId', (config) => {config.computedFrom('state.saleOption')})
                 .passes(() => {return true;})
-                .if(() => { return this.saleOption == 10; })
+                .if(() => { return this.state.saleOption == 10; })
                     .isNotEmpty()
                     .withMessage("Choose a location.")
                 .endIf()
-            .ensure('absOptionLocationInstanceId', (config) => {config.computedFrom('absOptionLocationId')})
+            .ensure('state.absOptionLocationInstanceId', (config) => {config.computedFrom('state.absOptionLocationId')})
                 .passes(() => {return true;})
-                .if(() => { return this.absOptionLocationId !== null; })
+                .if(() => { return this.state.absOptionLocationId !== null; })
                     .containsOnly(/^[^\-]/)
                     .withMessage("Choose a sale.")
                 .endIf()
@@ -75,40 +61,40 @@ export class Buybacks {
     {
         for (var property of this.nullableValues) {
             this.observerLocator
-                .getObserver(this, property)
+                .getObserver(this.state, property)
                 .subscribe(this.onChange(property));
         }
     }
 
     onChange(property)
     {
-        var self = this;
+        var self = this.state;
         return function(newValue, oldValue) {
             if (newValue === "null")
                 self[property] = null;
         }
     }
 
-    @computedFrom("saleOption")
+    @computedFrom("state.saleOption")
     get showAbsSaleLocations()
     {
         this.absSaleValidation.validate().then().catch(err => {});
-        return this.saleOption == 10 ? true : false;
+        return this.state.saleOption == 10 ? true : false;
     }
 
-    @computedFrom("absOptionLocationId","showAbsSaleLocations")
+    @computedFrom("state.absOptionLocationId","state.showAbsSaleLocations")
     get showLocationSales()
     {
-        return this.showAbsSaleLocations && this.absOptionLocationId !== null;
+        return this.state.showAbsSaleLocations && this.state.absOptionLocationId !== null;
     }
 
     activate()
     {
-        if(this.allVehicles.length === 0)
+        if(this.state.allVehicles.length === 0)
             this.loadBuybackVehiclesFromApi();
-        if(this.reasons.length === 0)
+        if(this.state.reasons.length === 0)
             this.loadReasons();
-        if(this.saleOptions.length === 0)
+        if(this.state.saleOptions.length === 0)
             this.loadSaleOptions();
     }
 
@@ -123,8 +109,8 @@ export class Buybacks {
 
     loadVehicles(vehicles)
     {
-        this.shownVehicles = vehicles.slice(this.pageNumber-1, this.pageSize-1);
-        this.allVehicles = vehicles;
+        this.state.shownVehicles = vehicles.slice(this.pageNumber-1, this.pageSize-1);
+        this.state.allVehicles = vehicles;
         this.loadLocations();
         this.loadDealers(vehicles);
     }
@@ -138,11 +124,11 @@ export class Buybacks {
 
     filterAndSetLocations(allLocations)
     {
-        var locations = allLocations.filter((l) => this.allVehicles.some((v) => v.SaleLocationId === l.SaleId));
-        this.absOptionLocations = locations.slice(0);
-        this.absOptionLocations.unshift({ SaleId: null, SaleLocation: "Select" });
+        var locations = allLocations.filter((l) => this.state.allVehicles.some((v) => v.SaleLocationId === l.SaleId));
+        this.state.absOptionLocations = locations.slice(0);
+        this.state.absOptionLocations.unshift({ SaleId: null, SaleLocation: "Select" });
         locations.unshift({SaleId:null,SaleLocation:"All"});
-        this.saleLocations = locations;
+        this.state.saleLocations = locations;
     }
 
     loadDealers(vehicles)
@@ -153,7 +139,7 @@ export class Buybacks {
                             }).distinct();
         dealers.sort(this.compareDealerByName);
         dealers.unshift(Object.create(Dealer.prototype, {id:{value:null},name:{value:"All"}}));
-        this.dealers = dealers;
+        this.state.dealers = dealers;
     }
     
     compareDealerByName(a, b)
@@ -169,13 +155,13 @@ export class Buybacks {
     {
         this.resetProperties(this.nullableValues.filter((p) => {return !["saleLocationId"].some((e) => {return e === p})}));
         this.loadBuybackVehiclesFromVM();
-        this.loadDealers(this.queriedVehicles);
+        this.loadDealers(this.state.queriedVehicles);
     }
 
     resetProperties(properties)
     {
         for(var property of properties)
-            this[property] = null;
+            this.state[property] = null;
     }
 
     dealerSelected()
@@ -186,13 +172,13 @@ export class Buybacks {
 
     loadBuybackVehiclesFromVM()
     {
-        this.queriedVehicles = this.allVehicles.filter(v => this.doesMatch(v));
-        this.shownVehicles = this.queriedVehicles.slice(this.pageNumber-1, this.pageSize-1);
+        this.state.queriedVehicles = this.state.allVehicles.filter(v => this.doesMatch(v));
+        this.state.shownVehicles = this.state.queriedVehicles.slice(this.pageNumber-1, this.pageSize-1);
     }
 
     doesMatch(vehicle)
     {
-        if(this.vehicleIds.length > 0)
+        if(this.state.vehicleIds.length > 0)
             return this.matchesVids(vehicle);
         return this.matchFound(vehicle);
 
@@ -200,22 +186,22 @@ export class Buybacks {
 
     matchesVids(vehicle)
     {
-        return this.vehicleIds.some(vid => vid == vehicle.VehicleId);
+        return this.state.vehicleIds.some(vid => vid == vehicle.VehicleId);
     }
 
     matchFound(vehicle)
     {
         var predicate = true;
-        if (this.saleLocationId !== null)
-            predicate = vehicle.SaleLocationId == this.saleLocationId;
-        if(this.buyerId !== null)
-            predicate = predicate && vehicle.BuyerId == this.buyerId;
+        if (this.state.saleLocationId !== null)
+            predicate = vehicle.SaleLocationId == this.state.saleLocationId;
+        if(this.state.buyerId !== null)
+            predicate = predicate && vehicle.BuyerId == this.state.buyerId;
         return predicate;
     }
 
     createQueryObject()
     {
-        return this.mapper.map(this, BuybackVehicleQuery);
+        return this.mapper.map(this.state, BuybackVehicleQuery);
     }
 
     loadReasons()
@@ -225,7 +211,7 @@ export class Buybacks {
             .then(reasons =>
                 {
                     reasons.unshift({ ReasonId: null, ReasonDescription: "Select" });
-                    this.reasons = reasons;
+                    this.state.reasons = reasons;
                 }
             );
     };
@@ -237,24 +223,24 @@ export class Buybacks {
             .then(saleOptions =>
                 {
                     saleOptions.unshift({ResultDescriptionId:null,ResultDescription:"Select"});
-                    this.saleOptions = saleOptions;
+                    this.state.saleOptions = saleOptions;
                 }
             );
     }
 
     saleOptionSelected()
     {
-        this.absOptionLocationId = null;
-        this.absOptionLocationInstanceId = -1;
+        this.state.absOptionLocationId = null;
+        this.state.absOptionLocationInstanceId = -1;
     }
 
     absOptionLocationSelected()
     {
-        this.absOptionLocationInstanceId = -1;
-        for(let saleLocation of this.saleLocations)
+        this.state.absOptionLocationInstanceId = -1;
+        for(let saleLocation of this.state.saleLocations)
         {
-            if (this.absOptionLocationId == saleLocation.SaleId) {
-                this.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(saleLocation);
+            if (this.state.absOptionLocationId == saleLocation.SaleId) {
+                this.state.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(saleLocation);
                 break;
             }
         }
@@ -265,15 +251,15 @@ export class Buybacks {
         var nextSaleWording = "Next Sale Setup";
         if(location.Sales.length === 0)
             return [{name:"Select",value:-1},{name:nextSaleWording, value:null}];
-        this.absOptionLocationInstanceId = location.Sales[0].SaleInstanceId;
+        this.state.absOptionLocationInstanceId = location.Sales[0].SaleInstanceId;
         var date = (new Date(location.Sales[0].SaleFirstDate)).toLocaleDateString();
-        return [{name:"Select",value:-1},{name:date, value:this.absOptionLocationInstanceId},{name:nextSaleWording, value:null}];
+        return [{name:"Select",value:-1},{name:date, value:this.state.absOptionLocationInstanceId},{name:nextSaleWording, value:null}];
     }
 
     createSelected()
     {
         if(!doesValidate) return;
-        for(let vehicle of this.shownVehicles)
+        for(let vehicle of this.state.shownVehicles)
         {
             if (vehicle.create);
         }

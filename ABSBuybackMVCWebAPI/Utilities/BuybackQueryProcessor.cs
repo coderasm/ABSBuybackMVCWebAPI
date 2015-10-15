@@ -33,7 +33,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
 
         public string ProcessSaleOption()
         {
-            var predicate = buybackResultQuery.ResultDescriptionId != null ? FormatSaleOptionPredicate(buybackResultQuery.ResultDescriptionId) : "";
+            var predicate = buybackResultQuery.ResultDescriptionId != null ? FormatSaleOptionPredicate(buybackResultQuery.ResultDescriptionId.Value) : "";
             WherePredicate += predicate;
             return predicate;
         }
@@ -45,7 +45,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
 
         public string ProcessStatus()
         {
-            var predicate = buybackResultQuery.StatusDescriptionId != null ? FormatStatusPredicate(buybackResultQuery.StatusDescriptionId) : "";
+            var predicate = buybackResultQuery.StatusDescriptionId != null ? FormatStatusPredicate(buybackResultQuery.StatusDescriptionId.Value) : "";
             WherePredicate += predicate;
             return predicate;
         }
@@ -58,7 +58,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
         public string ProcessReserve()
         {
             //Treating a 0 reserve as null or no reserve, since we can not have a 0 reserve
-            var predicate = buybackResultQuery.Reserve != null ? FormatReservePredicate(buybackResultQuery.Reserve) : "";
+            var predicate = buybackResultQuery.Reserve != null ? FormatReservePredicate(buybackResultQuery.Reserve.Value) : "";
             WherePredicate += predicate;
             return predicate;
 

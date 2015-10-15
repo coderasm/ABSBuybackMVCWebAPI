@@ -21,13 +21,15 @@ export class BuybackResultViewModel
     {
         this.observerLocator
                 .getObserver(this, "Reserve")
-                .subscribe(this.onChangeOfReserve);
+                .subscribe(this.onChangeOfReserve(this));
     }
 
-    onChangeOfReserve(newValue, OldValue)
+    onChangeOfReserve(context)
     {
-        if(newValue === "")
-            this.Reserve = null;
+        return function(newValue, OldValue) {
+            if(newValue === "")
+                context.Reserve = null;   
+        }
     }
 
     lastSixOfVIN()

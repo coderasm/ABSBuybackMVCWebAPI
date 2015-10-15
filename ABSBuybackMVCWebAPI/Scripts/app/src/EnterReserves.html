@@ -1,8 +1,8 @@
 ﻿<template>
-    <section class="au-animate">
+    <section>
         <h2>${heading}</h2>
         <div class="row au-stagger row-5-padding">
-            <div class="col-sm-12 col-md-6 col-lg-4 au-animate" repeat.for="buyback of buybacks">
+            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="buyback of state.buybacks">
                 <div class="panel panel-default">
                     <div class="panel-body bg-info">
                         <form role="form" validate.bind="buyback.validation">
@@ -10,7 +10,7 @@
                                 <div class="col-xs-4 col-sm-3 col-md-3">
                                     <div class="form-group">
                                         <label for="saleOption">Sale</label>
-                                        <span class="form-control" id="saleOption">${buyback.sale($parent.saleOptions)}</span>
+                                        <span class="form-control" id="saleOption">${buyback.sale($parent.state.saleOptions)}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-4 col-sm-3 col-md-3">

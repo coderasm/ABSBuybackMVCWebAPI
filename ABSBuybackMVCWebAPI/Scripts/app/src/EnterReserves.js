@@ -1,5 +1,6 @@
 ﻿import {BuybackResultViewModel} from 'viewModels/BuybackResultViewModel';
 import {BuybackResult} from 'models/BuybackResult';
+import {EnterReservesState} from 'vmstate/EnterReservesState';
 import {BuybackResultQuery} from 'models/BuybackResultQuery';
 import {Mapper} from 'utilities/Mapper';
 import {inject} from 'aurelia-framework';
@@ -9,42 +10,40 @@ import {singleton} from 'aurelia-framework';
 import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
 
 @singleton()
-@inject(RepositoryService, Mapper, Validation, ObserverLocator)
+@inject(RepositoryService, Mapper, Validation, ObserverLocator, EnterReservesState)
 export class Buybacks {
     heading = 'Buyback Without Reserves';
-    buybacks = [];
-    saleOptions = [];
-    statuses = [];
-    resultDescriptionId = null;
-    statusDescriptionId = 0;
-    reserve = 0;
 
-    constructor(repositoryService, mapper, validation, observerLocator) {
+    constructor(repositoryService, mapper, validation, observerLocator, enterReservesState) {
         this.repositoryService = repositoryService;
         this.mapper = mapper;
+        this.state = enterReservesState;
         this.validation = validation;
         this.observerLocator = observerLocator;
     }
 
     activate()
     {
-        this.loadSaleOptions();
-        this.loadStatuses();
-        return this.loadBuybackResults();
+        if(this.state.saleOptions.length === 0)
+            this.loadSaleOptions();
+        if(this.state.statuses.length === 0)
+            this.loadStatuses();    
+        if(this.state.buybacks.length === 0)
+            this.loadBuybackResults();
     }
 
     loadSaleOptions()
     {
         this.repositoryService.SaleOptionRepository.getAll()
             .then(response => response.json())
-            .then(saleOptions => this.saleOptions = saleOptions);
+            .then(saleOptions => this.state.saleOptions = saleOptions);
     }
 
     loadStatuses()
     {
         this.repositoryService.StatusRepository.getAll()
             .then(response => response.json())
-            .then(statuses => this.statuses = statuses);
+            .then(statuses => this.state.statuses = statuses);
     }
 
     loadBuybackResults()
@@ -53,12 +52,12 @@ export class Buybacks {
         this.repositoryService.BuybackResultRepository.search(queryObject)
           .then(response => response.json())
           .then(json => $.map(json,(v) => {return new BuybackResultViewModel(v, this.validation, this.observerLocator)}))
-          .then(buybacks => this.buybacks = buybacks);
+          .then(buybacks => this.state.buybacks = buybacks);
     }
 
     createQueryObject()
     {
-        return this.mapper.map(this, BuybackResultQuery);
+        return this.mapper.map(this.state, BuybackResultQuery);
     }
 
     updateBuybackResult(buybackResult)

@@ -14,22 +14,6 @@ export class BuybackResultViewModel
                     return {
                     }
             },(onValidateError)=>{ alert("Fix errors.")});
-        this.createReserveNullableSubscriber();
-    }
-
-    createReserveNullableSubscriber()
-    {
-        this.observerLocator
-                .getObserver(this, "Reserve")
-                .subscribe(this.onChangeOfReserve(this));
-    }
-
-    onChangeOfReserve(context)
-    {
-        return function(newValue, OldValue) {
-            if(newValue === "")
-                context.Reserve = null;   
-        }
     }
 
     lastSixOfVIN()

@@ -55,6 +55,16 @@ update(buybackResult)
     return this.http.fetch('', requestInit);
 }
 
+insert(vehicleWithChoices)
+{
+    var requestInit = {
+        headers: {"content-type" : "application/json"},
+        method: "POST",
+        body: JSON.stringify(vehicleWithChoices)
+    }
+    return this.http.fetch('', requestInit);
+}
+
 //getAll(searchOptions)
 //{
 //    return this.http

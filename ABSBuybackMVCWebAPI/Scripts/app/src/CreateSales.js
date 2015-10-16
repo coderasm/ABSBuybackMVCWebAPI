@@ -1,18 +1,16 @@
 ﻿import {BuybackVehicleViewModel} from 'viewModels/BuybackVehicleViewModel';
 import {CreateSalesState} from 'vmstate/CreateSalesState';
-import {BuybackResult} from 'models/BuybackResult';
 import {Dealer} from 'models/Dealer';
 import {BuybackVehicleQuery} from 'models/BuybackVehicleQuery';
+import {BuybackVehicle} from 'models/BuybackVehicle';
 import {Mapper} from 'utilities/Mapper';
 import {ArrayExtensions} from 'utilities/ArrayExtensions';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
-import {singleton} from 'aurelia-framework';
 import {computedFrom} from 'aurelia-framework';
 import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
 
-@singleton()
 @inject(RepositoryService, Mapper, ObserverLocator, Validation, CreateSalesState)
 export class CreateSales {
     heading = 'Buyback Vehicles Needing New Sale';
@@ -27,25 +25,25 @@ export class CreateSales {
         this.state = createSalesState;
         this.createNullableSubscribers();
         this.validation = validation;
-        this.nonAbsSaleValidation = validation.on(this)
-            .ensure('state.reason')
+        this.nonAbsSaleValidation = validation.on(this.state)
+            .ensure('reason')
                 .isNotEmpty()
                 .withMessage("Choose a reason.")
-            .ensure('state.saleOption')
+            .ensure('saleOption')
                 .isNotEmpty()
                 .withMessage("Choose a sale option.")
             .onValidate( () => {
                 return {
                 }
             },(onValidateError)=>{ alert("Fix errors.")});
-        this.absSaleValidation = validation.on(this)
-            .ensure('state.absOptionLocationId', (config) => {config.computedFrom('state.saleOption')})
+        this.absSaleValidation = validation.on(this.state)
+            .ensure('absOptionLocationId', (config) => {config.computedFrom('saleOption')})
                 .passes(() => {return true;})
                 .if(() => { return this.state.saleOption == 10; })
                     .isNotEmpty()
                     .withMessage("Choose a location.")
                 .endIf()
-            .ensure('state.absOptionLocationInstanceId', (config) => {config.computedFrom('state.absOptionLocationId')})
+            .ensure('absOptionLocationInstanceId', (config) => {config.computedFrom('absOptionLocationId')})
                 .passes(() => {return true;})
                 .if(() => { return this.state.absOptionLocationId !== null; })
                     .containsOnly(/^[^\-]/)
@@ -78,7 +76,6 @@ export class CreateSales {
     @computedFrom("state.saleOption")
     get showAbsSaleLocations()
     {
-        this.absSaleValidation.validate().then().catch(err => {});
         return this.state.saleOption == 10 ? true : false;
     }
 
@@ -258,19 +255,46 @@ export class CreateSales {
 
     createSelected()
     {
-        if(!doesValidate) return;
+        if(!this.isValid()) return;
         for(let vehicle of this.state.shownVehicles)
         {
-            if (vehicle.create);
+            if (vehicle.create && vehicle.isValid()) {
+                this.createBuybackResult(vehicle);
+            };
         }
     }
 
-    doesValidate()
+    isValid()
     {
         this.nonAbsSaleValidation.validate().catch(err => {});
         this.absSaleValidation.validate().catch(err => {});
-        if(!this.nonAbsSaleValidation.isValid || !this.absSaleValidation.isValid)
+        if(!this.nonAbsSaleValidation.result.isValid || !this.absSaleValidation.result.isValid)
             return false;
         return true;
+    }
+
+    createBuybackResult(vehicle)
+    {
+        var vehicleWithChoices = this.createVehicleWithChoices(vehicle);
+        if (this.state.saleOption != 10)
+            this.repositoryService.BuybackResultRepository.insert(vehicleWithChoices);
+        else
+            this.createAbsBuyback(vehicle);
+    }
+
+    createVehicleWithChoices(vehicle)
+    {
+        return {
+            Vehicle:this.mapper.map(vehicle, BuybackVehicle),
+            ResultDescriptionId:this.state.saleOption,
+            ReasonId:this.state.reason
+        }
+    }
+
+    createAbsBuybackVehicle(vehicle)
+    {
+        vehicle.SaleInstanceId = this.state.absOptionLocationInstanceId;
+        vehicle.SaleId = this.state.absOptionLocationId;
+        this.repositoryService.AbsBuybackResultRepository.insert(vehicleWithChoices);
     }
 }

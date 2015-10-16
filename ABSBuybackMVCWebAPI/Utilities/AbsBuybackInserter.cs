@@ -12,9 +12,9 @@ namespace ABSBuybackMVCWebAPI.Utilities
     {
         private readonly IRepositoryService repositoryService;
         private AbsVehicleWithChoices absVehicleWithChoices;
-        private int buybackId = 0;
-        private int buybackResultId = 0;
-        private int? vehicleId = 0;
+        private int buybackId;
+        private int buybackResultId;
+        private int? vehicleId;
         private SqlConnection connection;
 
         public AbsBuybackInserter(IRepositoryService repositoryService)
@@ -42,7 +42,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
             {
                 buybackId = createBuyback();
                 buybackResultId = createBuybackResult(buybackId);
-                vehicleId = createVehicle().Value;
+                vehicleId = createVehicle();
                 createBuybackResultAbsSale();
             }
             catch (TransactionAbortedException exception)
@@ -74,12 +74,16 @@ namespace ABSBuybackMVCWebAPI.Utilities
         {
             if (absVehicleWithChoices.SaleInstanceId == null)
                 return null;
-            //TODO: create entry in gsv using gsv repository
-            return repositoryService.GsvRepository.Insert(new GroupSaleVehicle
-            {
-                MA = absVehicleWithChoices.Vehicle.Reserve.Value,
-                VehicleID = absVehicleWithChoices.Vehicle.VehicleId
-            }, connection);
+            var fullVehicle = prepareVehicle();
+            return repositoryService.GsvRepository.Insert(fullVehicle, connection);
+        }
+
+        private GroupSaleVehicle prepareVehicle()
+        {
+            var fullVehicle = repositoryService.GsvRepository.Get(absVehicleWithChoices.Vehicle.VehicleId);
+            fullVehicle.ma = absVehicleWithChoices.Vehicle.Reserve;
+            fullVehicle.SaleInstanceId = absVehicleWithChoices.SaleInstanceId;
+            return fullVehicle;
         }
 
         private void createBuybackResultAbsSale()
@@ -88,7 +92,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
             {
                 BuybackResultId = buybackResultId,
                 SaleId = absVehicleWithChoices.SaleId,
-                VehicleId = absVehicleWithChoices.Vehicle.VehicleId
+                VehicleId = vehicleId
             }, connection);
         }
     }

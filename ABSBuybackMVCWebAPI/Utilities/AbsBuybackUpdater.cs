@@ -55,7 +55,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
             var groupSaleVehicle = new GroupSaleVehicle
             {
                 VehicleID = absBuybackResult.VehicleId.Value,
-                MA = absBuybackResult.Reserve.Value
+                ma = absBuybackResult.Reserve.Value
             };
             return gsvRepository.Update(groupSaleVehicle, connection) &&
                    buybackResultRepository.Update(Mapper.Map<BuybackResult>(absBuybackResult), connection) &&

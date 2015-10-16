@@ -1,9 +1,11 @@
 ﻿
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Linq;
 using ABSBuybackMVCWebAPI.Models;
 using System.Collections.Generic;
 using System.Data;
+using Dapper;
 using Dapper.Contrib.Extensions;
 
 namespace ABSBuybackMVCWebAPI.Repositories
@@ -20,6 +22,11 @@ namespace ABSBuybackMVCWebAPI.Repositories
             throw new System.NotImplementedException();
         }
 
+        public GroupSaleVehicle Get(int id, IDbConnection connection)
+        {
+            return connection.Get<GroupSaleVehicle>(id);
+        }
+
         public int Insert(GroupSaleVehicle poco)
         {
             throw new System.NotImplementedException();
@@ -27,7 +34,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
 
         public int Insert(GroupSaleVehicle poco, IDbConnection connection)
         {
-            return (int)connection.Insert(poco);
+            return connection.Query<int>("InsertSaleVehicle7", poco).SingleOrDefault();
         }
 
         public bool Update(GroupSaleVehicle poco)

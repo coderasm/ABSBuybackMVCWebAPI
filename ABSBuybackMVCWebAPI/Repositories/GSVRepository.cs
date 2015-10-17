@@ -1,7 +1,7 @@
 ﻿
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
+using ABSBuybackMVCWebAPI.Mapping;
 using ABSBuybackMVCWebAPI.Models;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +12,13 @@ namespace ABSBuybackMVCWebAPI.Repositories
 {
     public class GsvRepository : IGSVRepository
     {
+        private IMaptToNew<GroupSaleVehicle, GSVInsert> mapper; 
+
+        public GsvRepository(IMaptToNew<GroupSaleVehicle, GSVInsert> mapper)
+        {
+            this.mapper = mapper;
+        }
+
         public List<GroupSaleVehicle> GetAll()
         {
             throw new System.NotImplementedException();
@@ -34,7 +41,10 @@ namespace ABSBuybackMVCWebAPI.Repositories
 
         public int Insert(GroupSaleVehicle poco, IDbConnection connection)
         {
-            return connection.Query<int>("InsertSaleVehicle7", poco).SingleOrDefault();
+            var dynamicParams = new DynamicParameters(mapper.Map(poco));
+            dynamicParams.Add("@VehicleID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            connection.Execute("InsertSaleVehicle7", dynamicParams ,commandType: CommandType.StoredProcedure);
+            return dynamicParams.Get<int>("@VehicleID");
         }
 
         public bool Update(GroupSaleVehicle poco)

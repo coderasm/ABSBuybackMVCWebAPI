@@ -3,8 +3,9 @@ import 'bootstrap';
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    //.developmentLogging()
-    .plugin('aurelia-validation');
+    .developmentLogging()
+    .plugin('aurelia-validation')
+    .plugin('aurelia-computed');
 
   //aurelia.use.plugin('aurelia-ui-virtualization');
 

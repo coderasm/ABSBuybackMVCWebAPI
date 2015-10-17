@@ -80,9 +80,9 @@ namespace ABSBuybackMVCWebAPI.Utilities
 
         private GroupSaleVehicle prepareVehicle()
         {
-            var fullVehicle = repositoryService.GsvRepository.Get(absVehicleWithChoices.Vehicle.VehicleId);
+            var fullVehicle = repositoryService.GsvRepository.Get(absVehicleWithChoices.Vehicle.VehicleId, connection);
             fullVehicle.ma = absVehicleWithChoices.Vehicle.Reserve;
-            fullVehicle.SaleInstanceId = absVehicleWithChoices.SaleInstanceId;
+            fullVehicle.SaleInstanceId = absVehicleWithChoices.SaleInstanceId.Value;
             return fullVehicle;
         }
 

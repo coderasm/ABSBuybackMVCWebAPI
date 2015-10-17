@@ -2,9 +2,10 @@
 
 namespace ABSBuybackMVCWebAPI.Models
 {
+    [Table("BuybackResultAbsSale")]
     public class BuybackResultAbsSale
     {
-        [Key]
+        public int Id { get; set; }
         public int BuybackResultId { get; set; }
         public int? VehicleId { get; set; }
         public int? SaleId { get; set; }

@@ -1,13 +1,13 @@
-﻿
-using ABSBuybackMVCWebAPI.Models;
+﻿using ABSBuybackMVCWebAPI.Models;
 using AutoMapper;
 
-namespace ABSBuybackMVCWebAPI.AutoMapper
+namespace ABSBuybackMVCWebAPI.Mapping
 {
-    public static class AutoMapperConfig
+    public class BuybackProfile : Profile
     {
-        public static void Configure()
+        protected override void Configure()
         {
+            base.Configure();
             Mapper.CreateMap<AbsBuybackResult, BuybackResult>();
             Mapper.CreateMap<AbsBuybackResultQuery, BuybackResultQuery>();
         }

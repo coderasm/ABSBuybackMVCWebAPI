@@ -73,16 +73,14 @@ export class CreateSales {
         }
     }
 
-    @computedFrom("state.saleOption")
     get showAbsSaleLocations()
     {
         return this.state.saleOption == 10 ? true : false;
     }
 
-    @computedFrom("state.absOptionLocationId","state.showAbsSaleLocations")
     get showLocationSales()
     {
-        return this.state.showAbsSaleLocations && this.state.absOptionLocationId !== null;
+        return this.showAbsSaleLocations && this.state.absOptionLocationId !== null;
     }
 
     activate()
@@ -229,6 +227,8 @@ export class CreateSales {
     {
         this.state.absOptionLocationId = null;
         this.state.absOptionLocationInstanceId = -1;
+        if(this.state.saleOption == 10)
+            this.absSaleValidation.validate().catch(err=>{});
     }
 
     absOptionLocationSelected()
@@ -279,7 +279,7 @@ export class CreateSales {
         if (this.state.saleOption != 10)
             this.repositoryService.BuybackResultRepository.insert(vehicleWithChoices);
         else
-            this.createAbsBuyback(vehicle);
+            this.createAbsBuyback(vehicleWithChoices);
     }
 
     createVehicleWithChoices(vehicle)
@@ -291,10 +291,10 @@ export class CreateSales {
         }
     }
 
-    createAbsBuybackVehicle(vehicle)
+    createAbsBuyback(vehicle)
     {
         vehicle.SaleInstanceId = this.state.absOptionLocationInstanceId;
         vehicle.SaleId = this.state.absOptionLocationId;
-        this.repositoryService.AbsBuybackResultRepository.insert(vehicleWithChoices);
+        this.repositoryService.AbsBuybackResultRepository.insert(vehicle);
     }
 }

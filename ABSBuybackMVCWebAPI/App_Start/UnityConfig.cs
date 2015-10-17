@@ -1,4 +1,6 @@
 using System;
+using ABSBuybackMVCWebAPI.Mapping;
+using ABSBuybackMVCWebAPI.Models;
 using ABSBuybackMVCWebAPI.Repositories;
 using ABSBuybackMVCWebAPI.Services.Repository;
 using ABSBuybackMVCWebAPI.Utilities;
@@ -44,6 +46,7 @@ namespace ABSBuybackMVCWebAPI
             container.RegisterType<IBuybackQueryProcessorFactory, BuybackQueryProcessorFactory>();
             container.RegisterType<IBuybackRepository, BuybackRepository>();
             container.RegisterType<IBuybackResultRepository, BuybackResultRepository>();
+            container.RegisterType<IMaptToNew<GroupSaleVehicle,GSVInsert>, GSVMapper>();
             container.RegisterType<IGSVRepository, GsvRepository>();
             container.RegisterType<IAbsBuybackProcessor, AbsBuybackProcessor>();
             container.RegisterType<IAbsBuybackInserter, AbsBuybackInserter>();

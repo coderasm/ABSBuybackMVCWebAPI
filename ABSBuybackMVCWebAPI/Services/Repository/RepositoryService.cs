@@ -1,4 +1,5 @@
 ﻿using System;
+using ABSBuybackMVCWebAPI.Mapping;
 using ABSBuybackMVCWebAPI.Repositories;
 using ABSBuybackMVCWebAPI.Utilities;
 
@@ -136,7 +137,7 @@ namespace ABSBuybackMVCWebAPI.Services.Repository
         {
             get
             {
-                return new GsvRepository();
+                return new GsvRepository(new GSVMapper());
             }
 
             set

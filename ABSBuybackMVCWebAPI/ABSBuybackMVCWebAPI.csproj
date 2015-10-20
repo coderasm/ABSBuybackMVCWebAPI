@@ -519,6 +519,8 @@
     <Content Include="Scripts\app\src\app.js" />
     <Content Include="Scripts\app\src\blur-image.js" />
     <Content Include="Scripts\app\src\CreateSales.html" />
+    <Content Include="Scripts\app\src\customElements\select-all-none\select-all-none.html" />
+    <Content Include="Scripts\app\src\customElements\select-all-none\select-all-none.js" />
     <Content Include="Scripts\app\src\EditSales.html" />
     <Content Include="Scripts\app\src\EditSales.js" />
     <Content Include="Scripts\app\src\EnterReserves.html" />
@@ -546,6 +548,7 @@
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackVehicleViewModel.js" />
     <Content Include="Scripts\app\src\vmstate\CreateSalesState.js" />
+    <Content Include="Scripts\app\src\vmstate\EditSaleState.js" />
     <Content Include="Scripts\app\src\vmstate\EnterReservesState.js" />
     <Content Include="Scripts\app\styles\styles.css" />
     <Content Include="Scripts\bootstrap.js" />

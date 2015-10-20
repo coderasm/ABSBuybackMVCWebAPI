@@ -9,28 +9,30 @@ import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
 import {computedFrom} from 'aurelia-framework';
-import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
+import {bindingEngine} from 'aurelia-binding';  // or 'aurelia-framework'
 
-@inject(RepositoryService, Mapper, ObserverLocator, Validation, CreateSalesState)
+@inject(RepositoryService, Mapper, bindingEngine, Validation, CreateSalesState)
 export class CreateSales {
     heading = 'Buyback Vehicles Needing New Sale';
-    nullableValues = ["saleLocationId", "buyerId", "reason", "saleOption", "absOptionLocationId"];
+    searchProperties = ["saleLocationId", "buyerId"];
+    saveProperties = ["reason", "saleOption", "absOptionLocationId"];
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, mapper, observerLocator, validation, createSalesState) {
+    constructor(repositoryService, mapper, bindingEngine, validation, createSalesState) {
         this.repositoryService = repositoryService;
         this.mapper = mapper;
-        this.observerLocator = observerLocator;
+        this.bindingEngine = bindingEngine;
         this.state = createSalesState;
-        this.createNullableSubscribers();
         this.validation = validation;
         this.nonAbsSaleValidation = validation.on(this.state)
             .ensure('reason')
                 .isNotEmpty()
+                .passes((value) => {return value !== "null";})
                 .withMessage("Choose a reason.")
             .ensure('saleOption')
                 .isNotEmpty()
+                .passes((value) => {return value !== "null";})
                 .withMessage("Choose a sale option.")
             .onValidate( () => {
                 return {
@@ -41,6 +43,7 @@ export class CreateSales {
                 .passes(() => {return true;})
                 .if(() => { return this.state.saleOption == 10; })
                     .isNotEmpty()
+                    .passes((value) => {return value !== "null";})
                     .withMessage("Choose a location.")
                 .endIf()
             .ensure('absOptionLocationInstanceId', (config) => {config.computedFrom('absOptionLocationId')})
@@ -53,24 +56,6 @@ export class CreateSales {
                 return {
                 }
             },(onValidateError)=>{ alert("Fix errors.")});
-    }
-
-    createNullableSubscribers()
-    {
-        for (var property of this.nullableValues) {
-            this.observerLocator
-                .getObserver(this.state, property)
-                .subscribe(this.onChange(property));
-        }
-    }
-
-    onChange(property)
-    {
-        var self = this.state;
-        return function(newValue, oldValue) {
-            if (newValue === "null")
-                self[property] = null;
-        }
     }
 
     get showAbsSaleLocations()
@@ -98,7 +83,7 @@ export class CreateSales {
         var queryObject = this.createQueryObject();
         this.repositoryService.BuybackVehicleRepository.search(queryObject)
           .then(response => response.json())
-          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, this.validation, this.observerLocator)}))
+          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, this.validation)}))
           .then(vehicles => this.loadVehicles(vehicles));
     }
 
@@ -148,9 +133,18 @@ export class CreateSales {
 
     locationSelected()
     {
-        this.resetProperties(this.nullableValues.filter((p) => {return !["saleLocationId"].some((e) => {return e === p})}));
+        this.nullSearchProperties();
+        this.resetProperties(this.saveProperties.concat("buyerId"));
         this.loadBuybackVehiclesFromVM();
         this.loadDealers(this.state.queriedVehicles);
+    }
+
+    nullSearchProperties()
+    {
+        for (var property of this.searchProperties) {
+            if (this.state[property] === "null")
+                this.state[property] = null;
+        }
     }
 
     resetProperties(properties)
@@ -161,7 +155,8 @@ export class CreateSales {
 
     dealerSelected()
     {
-        this.resetProperties(this.nullableValues.filter((p) => {return !["saleLocationId", "buyerId"].some((e) => {return e === p})}));
+        this.nullSearchProperties();
+        this.resetProperties(this.saveProperties);
         this.loadBuybackVehiclesFromVM();
     }
 

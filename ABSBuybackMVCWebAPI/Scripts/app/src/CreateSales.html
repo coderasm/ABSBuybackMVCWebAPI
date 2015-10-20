@@ -1,4 +1,5 @@
 ﻿<template>
+    <require from="customElements/select-all-none/select-all-none"></require>
     <section>
         <h2>${heading}</h2>
         <div class="row au-stagger row-5-padding">
@@ -9,7 +10,7 @@
                             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
                                 <div class="form-group">
                                     <label for="location">Location</label>
-                                    <select value.bind="state.saleLocationId" change.trigger="locationSelected()" class="form-control" id="location">
+                                    <select value.bind="state.saleLocationId" change.delegate="locationSelected()" class="form-control" id="location">
                                         <option repeat.for="location of state.saleLocations" value.bind="location.SaleId">${location.SaleLocation}</option>
                                     </select>
                                 </div>
@@ -17,7 +18,7 @@
                             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
                                 <div class="form-group">
                                     <label for="dealer">Dealer</label>
-                                    <select class="form-control" value.bind="state.buyerId" change.trigger="dealerSelected()" id="dealer">
+                                    <select class="form-control" value.bind="state.buyerId" change.delegate="dealerSelected()" id="dealer">
                                         <option repeat.for="dealer of state.dealers" value.bind="dealer.id">${dealer.name}</option>
                                     </select>
                                 </div>
@@ -31,7 +32,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
                                 <div class="form-group">
                                     <label for="search"></label>
-                                    <button click.trigger="loadBuybackVehiclesFromVM()" type="button" class="btn btn-primary form-control" id="search">Search</button>
+                                    <button click.trigger="loadBuybackVehiclesFromApi()" type="button" class="btn btn-primary form-control" id="search">Search</button>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +57,7 @@
                                 <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
                                     <div class="form-group">
                                         <label for="saleOption">Sale Option</label>
-                                        <select class="form-control" id="saleOption" value.bind="state.saleOption" change.trigger="saleOptionSelected()" validate="saleOption">
+                                        <select class="form-control" id="saleOption" value.bind="state.saleOption" change.delegate="saleOptionSelected()" validate="saleOption">
                                             <option repeat.for="saleOption of state.saleOptions" value.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
                                         </select>
                                     </div>
@@ -66,7 +67,7 @@
                                 <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2" show.bind="showAbsSaleLocations">
                                     <div class="form-group">
                                         <label for="abssalelocation">ABS Sale Location</label>
-                                        <select value.bind="state.absOptionLocationId" change.trigger="absOptionLocationSelected()" validate="absOptionLocationId" class="form-control" id="abssalelocation">
+                                        <select value.bind="state.absOptionLocationId" change.delegate="absOptionLocationSelected()" validate="absOptionLocationId" class="form-control" id="abssalelocation">
                                             <option repeat.for="location of state.absOptionLocations" value.bind="location.SaleId">${location.SaleLocation}</option>
                                         </select>
                                     </div>
@@ -92,6 +93,9 @@
             </div>
         </div>
         <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12">
+                <select-all-none items.bind="state.shownVehicles" selector.bind="'create'"></select-all-none>
+            </div>
             <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="vehicle of state.shownVehicles">
                 <div class="panel panel-default">
                     <div class="panel-body bg-info">

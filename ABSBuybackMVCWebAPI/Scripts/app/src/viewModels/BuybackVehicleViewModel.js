@@ -2,9 +2,8 @@
 {
     create = false;
 
-    constructor(data, validation, observerLocator) {
+    constructor(data, validation) {
         Object.assign(this, data);
-        this.observerLocator = observerLocator;
         this.validation = validation.on(this)
             .ensure('Reserve')
                 .containsOnly(/^[1-9]\d*$|^$/)

@@ -24,8 +24,6 @@ export class Buybacks {
     {
         if(this.state.saleOptions.length === 0)
             this.loadSaleOptions();
-        if(this.state.statuses.length === 0)
-            this.loadStatuses();    
         if(this.state.buybacks.length === 0)
             this.loadBuybackResults();
     }
@@ -35,13 +33,6 @@ export class Buybacks {
         this.repositoryService.SaleOptionRepository.getAll()
             .then(response => response.json())
             .then(saleOptions => this.state.saleOptions = saleOptions);
-    }
-
-    loadStatuses()
-    {
-        this.repositoryService.StatusRepository.getAll()
-            .then(response => response.json())
-            .then(statuses => this.state.statuses = statuses);
     }
 
     loadBuybackResults()

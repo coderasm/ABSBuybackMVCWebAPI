@@ -2,7 +2,6 @@
     var prototype = {
         buybacks: [],
         saleOptions: [],
-        statuses: [],
         resultDescriptionId: null,
         statusDescriptionId: 0,
         reserve: 0

@@ -1,6 +1,8 @@
 ﻿export function EnterReservesState() {
     var prototype = {
-        buybacks: [],
+        allBuybacks: [],
+        queriedBuybacks: [],
+        shownBuybacks: [],
         saleOptions: [],
         resultDescriptionId: null,
         statusDescriptionId: 0,

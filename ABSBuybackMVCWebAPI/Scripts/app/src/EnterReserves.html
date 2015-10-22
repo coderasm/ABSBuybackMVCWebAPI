@@ -2,7 +2,7 @@
     <section>
         <h2>${heading}</h2>
         <div class="row au-stagger row-5-padding">
-            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="buyback of state.buybacks">
+            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="buyback of state.shownBuybacks">
                 <div class="panel panel-default">
                     <div class="panel-body bg-info">
                         <form role="form" validate.bind="buyback.validation">
@@ -16,7 +16,7 @@
                                 <div class="col-xs-4 col-sm-3 col-md-3">
                                     <div class="form-group">
                                         <label for="reserve">Reserve</label>
-                                        <input blur.trigger="buyback.updateIfChanged($event, $parent)" type="number" class="form-control" id="reserve" value.bind="buyback.Reserve" />
+                                        <input blur.trigger="buyback.updateIfChanged($event, $parent)" type="number" class="form-control" id="reserve" value.bind="buyback.Reserve" validate="Reserve"/>
                                     </div>
                                 </div>
                                 <div class="col-xs-4 col-sm-2 col-md-2">

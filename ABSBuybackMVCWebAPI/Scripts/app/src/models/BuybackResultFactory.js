@@ -1,7 +1,6 @@
-﻿export function BuybackResult() {
+﻿export function BuybackResultFactory() {
     return {
         BuyBackResultId: null,
-        VehicleId: null,
         HighBid: null,
         Reserve: null,
         StatusDescriptionId: null,

@@ -1,4 +1,4 @@
-﻿export function BuybackVehicle() {
+﻿export function BuybackVehicleFactory() {
     return {
         VehicleId: null,
         Seller: null,

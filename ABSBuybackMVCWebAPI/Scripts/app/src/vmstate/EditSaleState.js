@@ -3,7 +3,6 @@
         allBuybacks: [],
         queriedBuybacks: [],
         shownBuybacks: [],
-        buybacks: [],
         saleOptions: [],
         statuses: [],
         resultDescriptionId: null

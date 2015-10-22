@@ -1,9 +1,8 @@
 ﻿import {BuybackVehicleViewModel} from 'viewModels/BuybackVehicleViewModel';
 import {CreateSalesState} from 'vmstate/CreateSalesState';
+import {CreateSaleStateToBuybackVehicleQuery} from 'utilities/mapping/CreateSaleStateToBuybackVehicleQuery';
+import {BuybackVehicleVMToBuybackVehicle} from 'utilities/mapping/BuybackVehicleVMToBuybackVehicle';
 import {Dealer} from 'models/Dealer';
-import {BuybackVehicleQuery} from 'models/BuybackVehicleQuery';
-import {BuybackVehicle} from 'models/BuybackVehicle';
-import {Mapper} from 'utilities/Mapper';
 import {ArrayExtensions} from 'utilities/ArrayExtensions';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
@@ -11,7 +10,7 @@ import {Validation} from 'aurelia-validation';
 import {computedFrom} from 'aurelia-framework';
 import {bindingEngine} from 'aurelia-binding';  // or 'aurelia-framework'
 
-@inject(RepositoryService, Mapper, bindingEngine, Validation, CreateSalesState)
+@inject(RepositoryService, CreateSaleStateToBuybackVehicleQuery, BuybackVehicleVMToBuybackVehicle, bindingEngine, Validation, CreateSalesState)
 export class CreateSales {
     heading = 'Buyback Vehicles Needing New Sale';
     searchProperties = ["saleLocationId", "buyerId"];
@@ -19,9 +18,10 @@ export class CreateSales {
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, mapper, bindingEngine, validation, createSalesState) {
+    constructor(repositoryService, createSaleStateToBuybackVehicleQuery, buybackVehicleVMToBuybackVehicle, bindingEngine, validation, createSalesState) {
         this.repositoryService = repositoryService;
-        this.mapper = mapper;
+        this.createSaleStateToBuybackVehicleQuery = createSaleStateToBuybackVehicleQuery;
+        this.buybackVehicleVMToBuybackVehicle = buybackVehicleVMToBuybackVehicle;
         this.bindingEngine = bindingEngine;
         this.state = createSalesState;
         this.validation = validation;
@@ -49,7 +49,7 @@ export class CreateSales {
             .ensure('absOptionLocationInstanceId', (config) => {config.computedFrom('absOptionLocationId')})
                 .passes(() => {return true;})
                 .if(() => { return this.state.absOptionLocationId !== null; })
-                    .containsOnly(/^[^\-]/)
+                    .passes((value) => {return value != -1;})
                     .withMessage("Choose a sale.")
                 .endIf()
             .onValidate( () => {
@@ -70,36 +70,41 @@ export class CreateSales {
 
     activate()
     {
-        if(this.state.allVehicles.length === 0)
-            this.loadBuybackVehiclesFromApi();
-        if(this.state.reasons.length === 0)
-            this.loadReasons();
-        if(this.state.saleOptions.length === 0)
-            this.loadSaleOptions();
+        if (this.state.allVehicles.length === 0) {
+            Promise.all([
+                    this.loadBuybackVehiclesFromApi(),
+                    this.loadLocations(),
+                    this.loadReasons(),
+                    this.loadSaleOptions()
+                ]).then((data) =>
+                {
+                    this.setVehicles(data[0]);
+                    this.filterAndSetLocations(data[1]);
+                    this.setReasons(data[2]);
+                    this.setSaleOptions(data[3]);
+                });
+        }
     }
 
     loadBuybackVehiclesFromApi()
     {
         var queryObject = this.createQueryObject();
-        this.repositoryService.BuybackVehicleRepository.search(queryObject)
-          .then(response => response.json())
-          .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, this.validation)}))
-          .then(vehicles => this.loadVehicles(vehicles));
+        return this.repositoryService.BuybackVehicleRepository.search(queryObject)
+              .then(response => response.json())
+              .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, this.validation, this.repositoryService)}));
     }
 
-    loadVehicles(vehicles)
+    setVehicles(vehicles)
     {
         this.state.shownVehicles = vehicles.slice(this.pageNumber-1, this.pageSize-1);
         this.state.allVehicles = vehicles;
-        this.loadLocations();
         this.loadDealers(vehicles);
     }
 
     loadLocations()
     {
-        this.repositoryService.SaleLocationRepository.getAll()
-        .then(response => response.json())
-        .then(allLocations => this.filterAndSetLocations(allLocations));
+        return this.repositoryService.SaleLocationRepository.getAll()
+                .then(response => response.json());
     }
 
     filterAndSetLocations(allLocations)
@@ -191,31 +196,31 @@ export class CreateSales {
 
     createQueryObject()
     {
-        return this.mapper.map(this.state, BuybackVehicleQuery);
+        return this.createSaleStateToBuybackVehicleQuery.map(this.state);
     }
 
     loadReasons()
     {
-        this.repositoryService.ReasonRepository.getAll()
-            .then(response =>response.json())
-            .then(reasons =>
-                {
-                    reasons.unshift({ ReasonId: null, ReasonDescription: "Select" });
-                    this.state.reasons = reasons;
-                }
-            );
+        return this.repositoryService.ReasonRepository.getAll()
+              .then(response =>response.json());
     };
+
+    setReasons(reasons)
+    {
+        reasons.unshift({ ReasonId: null, ReasonDescription: "Select" });
+        this.state.reasons = reasons;
+    }
 
     loadSaleOptions()
     {
-        this.repositoryService.SaleOptionRepository.getAll()
-            .then(response => response.json())
-            .then(saleOptions =>
-                {
-                    saleOptions.unshift({ResultDescriptionId:null,ResultDescription:"Select"});
-                    this.state.saleOptions = saleOptions;
-                }
-            );
+        return this.repositoryService.SaleOptionRepository.getAll()
+              .then(response => response.json());
+    }
+
+    setSaleOptions(saleOptions)
+    {
+        saleOptions.unshift({ResultDescriptionId:null,ResultDescription:"Select"});
+        this.state.saleOptions = saleOptions;
     }
 
     saleOptionSelected()
@@ -229,6 +234,15 @@ export class CreateSales {
     absOptionLocationSelected()
     {
         this.state.absOptionLocationInstanceId = -1;
+        if (this.state.absOptionLocationId === null)
+            return;
+        this.setSales();
+        this.absSaleValidation.validate().catch(err=>{});
+
+    }
+
+    setSales()
+    {
         for(let saleLocation of this.state.saleLocations)
         {
             if (this.state.absOptionLocationId == saleLocation.SaleId) {
@@ -243,9 +257,8 @@ export class CreateSales {
         var nextSaleWording = "Next Sale Setup";
         if(location.Sales.length === 0)
             return [{name:"Select",value:-1},{name:nextSaleWording, value:null}];
-        this.state.absOptionLocationInstanceId = location.Sales[0].SaleInstanceId;
         var date = (new Date(location.Sales[0].SaleFirstDate)).toLocaleDateString();
-        return [{name:"Select",value:-1},{name:date, value:this.state.absOptionLocationInstanceId},{name:nextSaleWording, value:null}];
+        return [{name:"Select",value:-1},{name:date, value:location.Sales[0].SaleInstanceId},{name:nextSaleWording, value:null}];
     }
 
     createSelected()
@@ -280,7 +293,7 @@ export class CreateSales {
     createVehicleWithChoices(vehicle)
     {
         return {
-            Vehicle:this.mapper.map(vehicle, BuybackVehicle),
+            Vehicle:this.buybackVehicleVMToBuybackVehicle.map(vehicle),
             ResultDescriptionId:this.state.saleOption,
             ReasonId:this.state.reason
         }

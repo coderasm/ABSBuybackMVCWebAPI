@@ -14,7 +14,7 @@
         saleOption: null,
         absOptionLocations: [],
         absOptionLocationId: null,
-        absOptionSaleLocationInstances: [],
+        absOptionSaleLocationInstances: [{name:"Select",value:-1}],
         absOptionLocationInstanceId: -1
     };
     return Object.create(prototype, {});

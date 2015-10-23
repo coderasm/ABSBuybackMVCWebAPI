@@ -1,4 +1,5 @@
-import {BuybackResultViewModel} from 'viewModels/BuybackResultViewModel';
+//import {BuybackResultViewModel} from 'viewModels/BuybackResultViewModel';
+import {BuybackResultViewModelFactory} from 'viewModels/BuybackResultViewModelFactory';
 import {BuybackResultVMToBuybackResult} from 'utilities/mapping/BuybackResultVMToBuybackResult';
 import {EditSaleStateToBuybackResultQuery} from 'utilities/mapping/EditSaleStateToBuybackResultQuery';
 import {EditSaleState} from 'vmstate/EditSaleState';
@@ -62,12 +63,26 @@ export class Buybacks {
         this.state.statuses = statuses;
     }
 
+    loadAbsBuybackResults()
+    {
+        var queryObject = this.createQueryObject();
+        return this.repositoryService.AbsBuybackResultRepository.search(queryObject)
+              .then(response => response.json())
+              .then(json => $.map(json,(v) =>
+    {
+        return BuybackResultViewModelFactory(v, this.validation, this.buybackResultVMToBuybackResult, this.repositoryService)
+    }));
+    }
+
     loadBuybackResults()
     {
         var queryObject = this.createQueryObject();
         return this.repositoryService.BuybackResultRepository.search(queryObject)
               .then(response => response.json())
-              .then(json => $.map(json,(v) => {return new BuybackResultViewModel(v, this.validation, this.buybackResultVMToBuybackResult, this.observerLocator, this.repositoryService)}));
+              .then(json => $.map(json,(v) =>
+    {
+        return BuybackResultViewModelFactory(v, this.validation, this.buybackResultVMToBuybackResult, this.repositoryService)
+    }));
     }
 
     setBuybacks(buybackResults)

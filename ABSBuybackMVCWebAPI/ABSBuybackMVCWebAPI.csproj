@@ -552,6 +552,7 @@
     <Content Include="Scripts\app\src\utilities\mapping\BuybackResultVMToBuybackResult.js" />
     <Content Include="Scripts\app\src\viewModels\AbsBuybackViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModel.js" />
+    <Content Include="Scripts\app\src\viewModels\BuybackResultViewModelFactory.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackVehicleViewModel.js" />
     <Content Include="Scripts\app\src\vmstate\CreateSalesState.js" />
     <Content Include="Scripts\app\src\vmstate\EditSaleState.js" />

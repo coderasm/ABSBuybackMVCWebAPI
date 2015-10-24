@@ -46,7 +46,8 @@ namespace ABSBuybackMVCWebAPI
             container.RegisterType<IBuybackQueryProcessorFactory, BuybackQueryProcessorFactory>();
             container.RegisterType<IBuybackRepository, BuybackRepository>();
             container.RegisterType<IBuybackResultRepository, BuybackResultRepository>();
-            container.RegisterType<IMaptToNew<GroupSaleVehicle,GSVInsert>, GSVMapper>();
+            container.RegisterType<IMapToNew<GroupSaleVehicle,GSVInsert>, GSVMapper>();
+            container.RegisterType<IMapToExisting<AbsBuybackResult, GroupSaleVehicle>, ToExistingGSVmapper>();
             container.RegisterType<IGSVRepository, GsvRepository>();
             container.RegisterType<IAbsBuybackProcessor, AbsBuybackProcessor>();
             container.RegisterType<IAbsBuybackInserter, AbsBuybackInserter>();

@@ -3,7 +3,7 @@ using ABSBuybackMVCWebAPI.Models;
 
 namespace ABSBuybackMVCWebAPI.Mapping
 {
-    public class GSVMapper : IMaptToNew<GroupSaleVehicle, GSVInsert>
+    public class GSVMapper : IMapToNew<GroupSaleVehicle, GSVInsert>
     {
         public GSVInsert Map(GroupSaleVehicle source)
         {

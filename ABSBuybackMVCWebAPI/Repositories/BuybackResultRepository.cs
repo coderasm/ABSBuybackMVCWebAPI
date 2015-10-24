@@ -17,7 +17,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
                                         JOIN Buyback b ON bbr.BuybackId = b.BuyBackId
                                         JOIN GSV g ON b.VehicleIdOriginal = g.VehicleID
                                         JOIN Manufacturers m ON g.VehicleManufacturer = m.ManufacturerID";
-        private const string WhereTemplate = @" WHERE 1=1{0}";
+        private const string WhereTemplate = @" WHERE 1=1 AND bbr.ResultDescriptionId != 10{0}";
         private string WherePredicate = "";
         private const string OrderBy = @" ORDER BY CreationDate DESC";
         private const string IdPredicateTemplate = @" AND bbr.BuybackResultId = {0}";

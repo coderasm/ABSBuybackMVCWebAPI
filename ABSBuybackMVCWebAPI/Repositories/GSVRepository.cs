@@ -12,9 +12,9 @@ namespace ABSBuybackMVCWebAPI.Repositories
 {
     public class GsvRepository : IGSVRepository
     {
-        private IMaptToNew<GroupSaleVehicle, GSVInsert> mapper; 
+        private IMapToNew<GroupSaleVehicle, GSVInsert> mapper; 
 
-        public GsvRepository(IMaptToNew<GroupSaleVehicle, GSVInsert> mapper)
+        public GsvRepository(IMapToNew<GroupSaleVehicle, GSVInsert> mapper)
         {
             this.mapper = mapper;
         }

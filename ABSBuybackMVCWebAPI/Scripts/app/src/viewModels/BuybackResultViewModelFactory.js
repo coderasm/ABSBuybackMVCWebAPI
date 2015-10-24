@@ -1,5 +1,5 @@
 ﻿
-export function BuybackResultViewModelFactory(vehicle, validation, buybackResultVMToBuybackResult, repositoryService)
+export function BuybackResultViewModelFactory(vehicle, validation, mapper, repositoryService)
 {
     let prototype = {
         get isAbsSale()
@@ -52,7 +52,7 @@ export function BuybackResultViewModelFactory(vehicle, validation, buybackResult
 
     let instanceMembers = {
         validation: validation,
-        buybackResultVMToBuybackResult: buybackResultVMToBuybackResult,
+        mapper: mapper,
         repositoryService: repositoryService
     };
 

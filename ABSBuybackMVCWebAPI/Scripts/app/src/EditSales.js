@@ -1,27 +1,27 @@
-//import {BuybackResultViewModel} from 'viewModels/BuybackResultViewModel';
 import {BuybackResultViewModelFactory} from 'viewModels/BuybackResultViewModelFactory';
+import {AbsBuybackResultViewModelFactory} from 'viewModels/AbsBuybackResultViewModelFactory';
 import {BuybackResultVMToBuybackResult} from 'utilities/mapping/BuybackResultVMToBuybackResult';
+import {AbsBuybackResultVMToAbsBuybackResult} from 'utilities/mapping/AbsBuybackResultVMToAbsBuybackResult';
 import {EditSaleStateToBuybackResultQuery} from 'utilities/mapping/EditSaleStateToBuybackResultQuery';
 import {EditSaleState} from 'vmstate/EditSaleState';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
-import {ObserverLocator} from 'aurelia-binding';  // or 'aurelia-framework'
 
-@inject(RepositoryService, BuybackResultVMToBuybackResult, EditSaleStateToBuybackResultQuery, Validation, ObserverLocator, EditSaleState)
+@inject(RepositoryService, BuybackResultVMToBuybackResult, AbsBuybackResultVMToAbsBuybackResult, EditSaleStateToBuybackResultQuery, Validation, EditSaleState)
 export class Buybacks {
     heading = 'Buyback';
     searchProperties = ['resultDescriptionId'];
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, buybackResultVMToBuybackResult, editSaleStateToBuybackResultQuery, validation, observerLocator, editSaleState) {
+    constructor(repositoryService, buybackResultVMToBuybackResult, absBuybackResultVMToAbsBuybackResult, editSaleStateToBuybackResultQuery, validation, editSaleState) {
         this.repositoryService = repositoryService;
         this.buybackResultVMToBuybackResult = buybackResultVMToBuybackResult;
+        this.absBuybackResultVMToAbsBuybackResult = absBuybackResultVMToAbsBuybackResult;
         this.editSaleStateToBuybackResultQuery = editSaleStateToBuybackResultQuery;
         this.state = editSaleState;
         this.validation = validation;
-        this.observerLocator = observerLocator;
     }
 
     activate()
@@ -29,13 +29,14 @@ export class Buybacks {
         if(this.state.allBuybacks.length === 0) {
             Promise.all([
                     this.loadBuybackResults(),
+                    this.loadAbsBuybackResults(),
                     this.loadSaleOptions(),
                     this.loadStatuses()
                 ]).then((data) =>
                 {
-                    this.setBuybacks(data[0]);
-                    this.setSaleOptions(data[1]);
-                    this.setStatuses(data[2]);
+                    this.setBuybacks(data[0].concat(data[1]));
+                    this.setSaleOptions(data[2]);
+                    this.setStatuses(data[3]);
                 });
         }
     }
@@ -68,10 +69,7 @@ export class Buybacks {
         var queryObject = this.createQueryObject();
         return this.repositoryService.AbsBuybackResultRepository.search(queryObject)
               .then(response => response.json())
-              .then(json => $.map(json,(v) =>
-    {
-        return BuybackResultViewModelFactory(v, this.validation, this.buybackResultVMToBuybackResult, this.repositoryService)
-    }));
+              .then(json => $.map(json,v => {return AbsBuybackResultViewModelFactory(v, this.validation, this.absBuybackResultVMToAbsBuybackResult, this.repositoryService)}));
     }
 
     loadBuybackResults()
@@ -79,10 +77,7 @@ export class Buybacks {
         var queryObject = this.createQueryObject();
         return this.repositoryService.BuybackResultRepository.search(queryObject)
               .then(response => response.json())
-              .then(json => $.map(json,(v) =>
-    {
-        return BuybackResultViewModelFactory(v, this.validation, this.buybackResultVMToBuybackResult, this.repositoryService)
-    }));
+              .then(json => $.map(json, v => {return BuybackResultViewModelFactory(v, this.validation, this.buybackResultVMToBuybackResult, this.repositoryService)}));
     }
 
     setBuybacks(buybackResults)

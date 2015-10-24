@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Transactions;
+using ABSBuybackMVCWebAPI.Mapping;
 using ABSBuybackMVCWebAPI.Models;
 using ABSBuybackMVCWebAPI.Repositories;
 using AutoMapper;
@@ -13,14 +14,16 @@ namespace ABSBuybackMVCWebAPI.Utilities
     {
         private IBuybackResultRepository buybackResultRepository;
         private IGSVRepository gsvRepository;
+        private IMapToExisting<AbsBuybackResult, GroupSaleVehicle> gsvMapper; 
         private AbsBuybackResult absBuybackResult;
         private bool success = false;
         private SqlConnection connection;
 
-        public AbsBuybackUpdater(IBuybackResultRepository buybackResultRepository, IGSVRepository gsvRepository)
+        public AbsBuybackUpdater(IBuybackResultRepository buybackResultRepository, IGSVRepository gsvRepository, IMapToExisting<AbsBuybackResult, GroupSaleVehicle> gsvMapper)
         {
             this.buybackResultRepository = buybackResultRepository;
             this.gsvRepository = gsvRepository;
+            this.gsvMapper = gsvMapper;
         }
 
         public bool Process(AbsBuybackResult absBuybackResult)
@@ -52,20 +55,15 @@ namespace ABSBuybackMVCWebAPI.Utilities
 
         private bool CouldUpdate()
         {
-            var groupSaleVehicle = new GroupSaleVehicle
+            
+            var buybackUpdateResult = buybackResultRepository.Update(Mapper.Map<BuybackResult>(absBuybackResult), connection);
+            if (absBuybackResult.VehicleId != null)
             {
-                VehicleID = absBuybackResult.VehicleId.Value,
-                ma = absBuybackResult.Reserve.Value
-            };
-            return gsvRepository.Update(groupSaleVehicle, connection) &&
-                   buybackResultRepository.Update(Mapper.Map<BuybackResult>(absBuybackResult), connection) &&
-                   doSaleUpdate();
-        }
-
-        private bool doSaleUpdate()
-        {
-            //TODO: How do we handle sale location changes? Generate a new VID or move the VID to a new saleInstanceId
-            return true;
+                var groupSaleVehicle = gsvRepository.Get(absBuybackResult.VehicleId.Value, connection);
+                gsvMapper.Map(absBuybackResult, groupSaleVehicle);
+                return gsvRepository.Update(groupSaleVehicle, connection) && buybackUpdateResult;
+            }
+            return buybackUpdateResult;
         }
     }
 }

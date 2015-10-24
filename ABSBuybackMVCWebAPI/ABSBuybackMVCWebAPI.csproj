@@ -256,7 +256,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\IMapToExisting.cs" />
-    <Compile Include="Mapping\IMaptToNew.cs" />
+    <Compile Include="Mapping\IMapToNew.cs" />
+    <Compile Include="Mapping\ToExistingGSVmapper.cs" />
     <Compile Include="Models\AbsBuybackResult.cs" />
     <Compile Include="Models\AbsBuybackResultQuery.cs" />
     <Compile Include="Models\AbsVehicleWithChoices.cs" />
@@ -526,6 +527,7 @@
     <Content Include="Scripts\app\src\EnterReserves.html" />
     <Content Include="Scripts\app\src\EnterReserves.js" />
     <Content Include="Scripts\app\src\CreateSales.js" />
+    <Content Include="Scripts\app\src\models\AbsBuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultQueryFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackVehicleFactory.js" />
@@ -544,13 +546,15 @@
     <Content Include="Scripts\app\src\repositories\StatusRepository.js" />
     <Content Include="Scripts\app\src\services\RepositoryService.js" />
     <Content Include="Scripts\app\src\utilities\ArrayExtensions.js" />
+    <Content Include="Scripts\app\src\utilities\mapping\AbsBuybackResultVMToAbsBuybackResult.js" />
     <Content Include="Scripts\app\src\utilities\mapping\BuybackVehicleVMToBuybackVehicle.js" />
     <Content Include="Scripts\app\src\utilities\mapping\CreateSaleStateToBuybackVehicleQuery.js" />
     <Content Include="Scripts\app\src\utilities\mapping\EditSaleStateToBuybackResultQuery.js" />
     <Content Include="Scripts\app\src\utilities\mapping\EnterReserveStateToBuybackResultQuery.js" />
     <Content Include="Scripts\app\src\utilities\mapping\MapperFactory.js" />
     <Content Include="Scripts\app\src\utilities\mapping\BuybackResultVMToBuybackResult.js" />
-    <Content Include="Scripts\app\src\viewModels\AbsBuybackViewModel.js" />
+    <Content Include="Scripts\app\src\viewModels\AbsBuybackResultViewModel.js" />
+    <Content Include="Scripts\app\src\viewModels\AbsBuybackResultViewModelFactory.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModelFactory.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackVehicleViewModel.js" />

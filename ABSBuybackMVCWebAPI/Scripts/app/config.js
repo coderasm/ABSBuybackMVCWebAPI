@@ -16,6 +16,7 @@ System.config({
 
   map: {
     "aurelia-animator-css": "github:aurelia/animator-css@0.17.0",
+    "aurelia-auth": "github:paulvanbladel/aurelia-auth@0.9.19",
     "aurelia-binding": "github:aurelia/binding@0.10.2",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.18.0",
     "aurelia-computed": "github:jdanyow/aurelia-computed@0.7.0",
@@ -99,6 +100,11 @@ System.config({
     "github:aurelia/history-browser@0.9.0": {
       "aurelia-history": "github:aurelia/history@0.8.0",
       "aurelia-pal": "github:aurelia/pal@0.2.0",
+      "core-js": "npm:core-js@0.9.18"
+    },
+    "github:aurelia/http-client@0.12.0": {
+      "aurelia-pal": "github:aurelia/pal@0.2.0",
+      "aurelia-path": "github:aurelia/path@0.10.0",
       "core-js": "npm:core-js@0.9.18"
     },
     "github:aurelia/loader-default@0.11.2": {
@@ -193,6 +199,11 @@ System.config({
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
+    },
+    "github:paulvanbladel/aurelia-auth@0.9.19": {
+      "aurelia-framework": "github:aurelia/framework@0.17.0",
+      "aurelia-http-client": "github:aurelia/http-client@0.12.0",
+      "aurelia-router": "github:aurelia/router@0.13.0"
     },
     "github:twbs/bootstrap@3.3.5": {
       "jquery": "github:components/jquery@2.1.4"

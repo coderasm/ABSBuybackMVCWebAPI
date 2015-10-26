@@ -10,7 +10,7 @@ import {Validation} from 'aurelia-validation';
 
 @inject(RepositoryService, BuybackResultVMToBuybackResult, AbsBuybackResultVMToAbsBuybackResult, EditSaleStateToBuybackResultQuery, Validation, EditSaleState)
 export class Buybacks {
-    heading = 'Buyback';
+    heading = 'Edit Buybacks';
     searchProperties = ['resultDescriptionId'];
     pageNumber = 1;
     pageSize = 15;
@@ -31,12 +31,14 @@ export class Buybacks {
                     this.loadBuybackResults(),
                     this.loadAbsBuybackResults(),
                     this.loadSaleOptions(),
-                    this.loadStatuses()
+                    this.loadStatuses(),
+                    this.loadLocations()
                 ]).then((data) =>
                 {
                     this.setBuybacks(data[0].concat(data[1]));
                     this.setSaleOptions(data[2]);
                     this.setStatuses(data[3]);
+                    this.setLocations(data[4]);
                 });
         }
     }
@@ -64,6 +66,17 @@ export class Buybacks {
         this.state.statuses = statuses;
     }
 
+    loadLocations()
+    {
+        return this.repositoryService.SaleLocationRepository.getAll()
+                .then(response => response.json());
+    }
+
+    setLocations(locations)
+    {
+        this.state.saleLocations = locations;
+    }
+
     loadAbsBuybackResults()
     {
         var queryObject = this.createQueryObject();
@@ -85,6 +98,17 @@ export class Buybacks {
         this.state.shownBuybacks = buybackResults.slice(this.pageNumber-1, this.pageSize-1);
         this.state.queriedBuybacks = buybackResults;
         this.state.allBuybacks = buybackResults;
+    }
+
+    loadAllBuybackResults()
+    {
+        Promise.all([
+                    this.loadBuybackResults(),
+                    this.loadAbsBuybackResults()
+        ]).then((data) =>
+                {
+                    this.setBuybacks(data[0].concat(data[1]));
+    });
     }
 
     createQueryObject()

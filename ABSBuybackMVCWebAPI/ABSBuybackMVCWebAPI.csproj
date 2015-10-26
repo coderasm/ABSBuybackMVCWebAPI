@@ -384,6 +384,7 @@
     <Content Include="Scripts\app\dist\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\dist\viewModels\BuybackVehicleViewModel.js" />
     <Content Include="Scripts\app\dist\vmstate\CreateSalesState.js" />
+    <Content Include="Scripts\app\dist\vmstate\EditSaleState.js" />
     <Content Include="Scripts\app\dist\vmstate\EnterReservesState.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\animator-css%400.17.0.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\animator-css%400.17.0\aurelia-animator-css.js" />
@@ -519,6 +520,8 @@
     <Content Include="Scripts\app\jspm_packages\system.js" />
     <Content Include="Scripts\app\src\app.html" />
     <Content Include="Scripts\app\src\app.js" />
+    <Content Include="Scripts\app\src\app.router.config.js" />
+    <Content Include="Scripts\app\src\authorization\AuthConfig.js" />
     <Content Include="Scripts\app\src\blur-image.js" />
     <Content Include="Scripts\app\src\CreateSales.html" />
     <Content Include="Scripts\app\src\customElements\select-all-none\select-all-none.html" />
@@ -528,6 +531,8 @@
     <Content Include="Scripts\app\src\EnterReserves.html" />
     <Content Include="Scripts\app\src\EnterReserves.js" />
     <Content Include="Scripts\app\src\CreateSales.js" />
+    <Content Include="Scripts\app\src\Login.html" />
+    <Content Include="Scripts\app\src\Login.js" />
     <Content Include="Scripts\app\src\models\AbsBuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultQueryFactory.js" />
@@ -554,7 +559,6 @@
     <Content Include="Scripts\app\src\utilities\mapping\EnterReserveStateToBuybackResultQuery.js" />
     <Content Include="Scripts\app\src\utilities\mapping\MapperFactory.js" />
     <Content Include="Scripts\app\src\utilities\mapping\BuybackResultVMToBuybackResult.js" />
-    <Content Include="Scripts\app\src\viewModels\AbsBuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\AbsBuybackResultViewModelFactory.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModelFactory.js" />

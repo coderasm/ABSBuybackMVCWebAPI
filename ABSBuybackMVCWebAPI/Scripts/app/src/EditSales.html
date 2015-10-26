@@ -18,7 +18,7 @@
                                 <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
                                     <div class="form-group">
                                         <label for="search"></label>
-                                        <button click.delegate="loadBuybackResults()" type="button" class="btn btn-primary form-control" id="search">Search</button>
+                                        <button click.delegate="loadAllBuybackResults()" type="button" class="btn btn-primary form-control" id="search">Search</button>
                                     </div>
                                 </div>
                             </form>
@@ -42,7 +42,7 @@
                                 <div class="col-xs-4 col-sm-3 col-md-3" if.bind="buyback.isAbsSale">
                                     <div class="form-group">
                                         <label for="location">Location</label>
-                                        <span class="form-control" id="location">${buyback.sale($parent.state.saleOptions)}</span>
+                                        <span class="form-control" id="location">${buyback.location($parent.state.saleLocations)}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-4 col-sm-3 col-md-3" if.bind="buyback.isAbsSale">

@@ -12,7 +12,7 @@ import {bindingEngine} from 'aurelia-binding';  // or 'aurelia-framework'
 
 @inject(RepositoryService, CreateSaleStateToBuybackVehicleQuery, BuybackVehicleVMToBuybackVehicle, bindingEngine, Validation, CreateSalesState)
 export class CreateSales {
-    heading = 'Buyback Vehicles Needing New Sale';
+    heading = 'Create New Sales';
     searchProperties = ["saleLocationId", "buyerId"];
     saveProperties = ["reason", "saleOption", "absOptionLocationId"];
     pageNumber = 1;

@@ -5,6 +5,7 @@
         shownBuybacks: [],
         saleOptions: [],
         statuses: [],
+        saleLocations: [],
         resultDescriptionId: null
     };
     return Object.create(prototype, {});

@@ -2,7 +2,7 @@
 
 export function AbsBuybackResultViewModelFactory(vehicle, validation, mapper, repositoryService)
 {
-    let instanceMembers = {
+    let prototype = {
         doUpdate:  function doUpdate() {
             let buybackResult = mapper.map(instance);
             repositoryService.AbsBuybackResultRepository.update(buybackResult);

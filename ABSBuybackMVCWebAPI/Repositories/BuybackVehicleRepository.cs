@@ -36,7 +36,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
 	                                            ) AS BBV
                                             WHERE BBV.RowNum BETWEEN (({1}-1)*{2})+1
                                             AND {2}*({1})";
-        private const string WhereTemplate = @" WHERE b.VehicleIdOriginal IS NULL AND g2.salefirstdate BETWEEN DATEADD(DAY, -30,GETDATE()) AND GETDATE(){0}";
+        private const string WhereTemplate = @" WHERE b.VehicleIdOriginal IS NULL AND g2.salefirstdate BETWEEN DATEADD(DAY, -60,GETDATE()) AND GETDATE(){0}";
         private string WherePredicate = "";
         private const string OrderBy = @" ORDER BY gs.SaleLocation,SaleFirstDate DESC, Seller, g.BidSheetNumber";
         private readonly IBuybackVehicleQueryProcessorFactory buybackVehicleQueryProcessorFactory;

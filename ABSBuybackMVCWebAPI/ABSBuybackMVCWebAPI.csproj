@@ -488,6 +488,7 @@
     </Content>
     <Content Include="Config\ConnectionStrings.config">
       <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Config\AppSettings.Debug.config">
       <DependentUpon>AppSettings.config</DependentUpon>

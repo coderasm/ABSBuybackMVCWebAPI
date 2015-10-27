@@ -16,9 +16,9 @@ export class App {
     config.title = 'Enter Reserves';
     config.addPipelineStep('authorize', AuthorizeStep); // Add a route filter to the authorize extensibility point.
     config.map([
-      { route: ['', 'EnterReserves'], name: 'EnterReserves', moduleId: 'EnterReserves', nav: true, title:'Enter Reserves'/*, auth: true */},
-      { route: ['CreateSales'], name: 'CreateSales', moduleId: 'CreateSales', nav: true, title:'Create Sales'/*, auth: true */},
-      { route: ['EditSales'], name: 'EditSales', moduleId: 'EditSales', nav: true, title:'Edit Sales'/*, auth: true */},
+      { route: ['', 'EnterReserves'], name: 'EnterReserves', moduleId: 'EnterReserves', nav: true, title:'Enter Reserves', auth: true },
+      { route: ['CreateSales'], name: 'CreateSales', moduleId: 'CreateSales', nav: true, title:'Create Sales', auth: true },
+      { route: ['EditSales'], name: 'EditSales', moduleId: 'EditSales', nav: true, title:'Edit Sales', auth: true },
 	  { route: ['Login'], moduleId: 'Login', nav: false, title:'Login' },
 	  { route: ['Logout'], moduleId: 'Logout', nav: false, title:'Logout' }
       //{ route: ['welcome'],  name: 'welcome',      moduleId: 'welcome',      nav: true, title:'Welcome' },

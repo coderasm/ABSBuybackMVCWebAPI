@@ -5,6 +5,7 @@ using System.Web.Http;
 
 namespace ABSBuybackMVCWebAPI.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/salelocation")]
     public class SaleLocationController : ApiController
     {

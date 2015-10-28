@@ -4,7 +4,7 @@ import config from './authorization/AuthConfig';
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    .developmentLogging()
+    //.developmentLogging()
     .plugin('aurelia-validation')
     .plugin('aurelia-computed')
     .plugin('aurelia-auth', (baseConfig)=>{

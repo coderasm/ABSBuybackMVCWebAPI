@@ -11,7 +11,8 @@
             clientId:''
         }
     },
-    loginRoute: "Login"
+    loginRoute: "Login",
+    loginUrl:"/Token"
 };
 
 var configForProduction = {
@@ -28,7 +29,8 @@ var configForProduction = {
         }
 
     },
-    loginRoute: "Login"
+    loginRoute: "Login",
+    loginUrl:"/Token"
 };
 var config ;
 if (window.location.hostname==='localhost') {

@@ -6,7 +6,6 @@ using ABSBuybackMVCWebAPI.Utilities;
 
 namespace ABSBuybackMVCWebAPI.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/buybackresult")]
     public class BuybackResultController : ApiController
     {

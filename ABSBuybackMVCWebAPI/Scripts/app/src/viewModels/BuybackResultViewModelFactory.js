@@ -2,6 +2,7 @@
 export function BuybackResultViewModelFactory(data, validation, mapper, repositoryService)
 {
     let prototype = {
+        textInputProperties: ["Reserve", "HighBid"],
         get isAbsSale() {
             return this.ResultDescriptionId == 10;
         },
@@ -20,8 +21,7 @@ export function BuybackResultViewModelFactory(data, validation, mapper, reposito
                 if (sale.ResultDescriptionId === this.ResultDescriptionId)
                     return sale.ResultDescription;
         },
-        update: function update()
-        {
+        update: function update() {
             this.validation.validate() //the validate will fulfil when validation is valid, and reject if not
                            .then( () => {
                                this.updateIfChanged();
@@ -30,7 +30,7 @@ export function BuybackResultViewModelFactory(data, validation, mapper, reposito
         updateIfChanged: function updateIfChanged()
         {
             for (var property in this.currentValues) {
-                if (this.currentValues[property] !== this[property] ) {
+                if (this.currentValues[property] != this[property] ) {
                     this.updateCurrentValues(property);
                     this.doUpdate();
                     return;
@@ -52,6 +52,12 @@ export function BuybackResultViewModelFactory(data, validation, mapper, reposito
         repositoryService: repositoryService
     };
 
+    function nullTextInputProperties() {
+        for(var property of prototype.textInputProperties)
+            if (instance.currentValues[property] === null)
+                instance.currentValues[property] = "";
+    };
+
     let instance = Object.assign(Object.create(prototype), {currentValues: data}, data);
     function initialize() {
         instance.validation = validation.on(instance)
@@ -63,6 +69,7 @@ export function BuybackResultViewModelFactory(data, validation, mapper, reposito
                 return {
                 }
             },(onValidateError)=>{ alert("Fix errors.")});
+        nullTextInputProperties();
     }
     initialize();
     return instance;

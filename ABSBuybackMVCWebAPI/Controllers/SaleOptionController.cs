@@ -5,7 +5,6 @@ using ABSBuybackMVCWebAPI.Services.Repository;
 
 namespace ABSBuybackMVCWebAPI.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/saleoption")]
     public class SaleOptionController : ApiController
     {

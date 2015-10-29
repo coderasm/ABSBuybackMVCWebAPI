@@ -1,11 +1,11 @@
-﻿using ABSBuybackMVCWebAPI.Models;
+﻿using System.Diagnostics;
+using ABSBuybackMVCWebAPI.Models;
 using ABSBuybackMVCWebAPI.Services.Repository;
 using System.Collections.Generic;
 using System.Web.Http;
 
 namespace ABSBuybackMVCWebAPI.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/salelocation")]
     public class SaleLocationController : ApiController
     {
@@ -20,6 +20,25 @@ namespace ABSBuybackMVCWebAPI.Controllers
         public IEnumerable<Location> Get()
         {
             return repositoryService.LocationRepository.GetAll();
+        }
+
+        [HttpGet]
+        [Route("authtest")]
+        // GET: api/SaleLocation
+        public IHttpActionResult GetAll()
+        {
+            Debug.Write("AuthenticationType:" + User.Identity.AuthenticationType);
+            Debug.Write("IsAuthenticated:" + User.Identity.IsAuthenticated);
+            Debug.Write("Name:" + User.Identity.Name);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return Ok("Authenticated: " + User.Identity.Name);
+            }
+            else
+            {
+                return BadRequest("Not authenticated");
+            }
         }
 
         // GET: api/SaleLocation/5

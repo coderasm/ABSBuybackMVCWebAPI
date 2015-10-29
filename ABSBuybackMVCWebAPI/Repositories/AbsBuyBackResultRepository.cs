@@ -14,13 +14,32 @@ namespace ABSBuybackMVCWebAPI.Repositories
 {
     public class AbsBuybackResultRepository : IAbsBuybackResultRepository
     {
-        private const string Select = @"SELECT bbr.*, dbo.Vehicle_Year(b.VehicleIdOriginal) AS Year, m.Manufacturer AS Make, g.VehicleDescription AS Model, g.VehicleMileage AS Mileage, g.VIN, bbras.VehicleId, bbras.SaleId, g2.SaleInstanceID, g2.SaleFirstDate FROM BuyBackResult bbr
+        private const string Select = @"SELECT bbr.BuyBackResultId,
+                                                bbr.StatusDescriptionId,
+                                                bbr.Reserve,
+                                                bbr.ActionDate,
+                                                bbr.ResultDescriptionId,
+                                                bbr.BuybackId,
+                                                bbr.CreationDate,
+                                                dbo.Vehicle_Year(b.VehicleIdOriginal) AS Year,
+                                                m.Manufacturer AS Make,
+                                                g.VehicleDescription AS Model,
+                                                g.VehicleMileage AS Mileage,
+                                                g.VIN,
+                                                bbras.VehicleId,
+                                                bbras.SaleId,
+                                                g2.SaleInstanceID,
+                                                g2.SaleFirstDate,
+                                                g3.Bid AS HighBid,
+                                                g3.BidsEntered AS HighBidDate
+                                        FROM BuyBackResult bbr
                                         JOIN Buyback b ON bbr.BuybackId = b.BuyBackId
                                         JOIN GSV g ON b.VehicleIdOriginal = g.VehicleID
                                         JOIN Manufacturers m ON g.VehicleManufacturer = m.ManufacturerID
                                         JOIN BuybackResultAbsSale bbras ON bbr.BuybackResultId = bbras.BuybackResultId
                                         LEFT JOIN GSV g1 ON bbras.VehicleId = g1.VehicleID
-                                        LEFT JOIN GSI g2 ON g1.SaleInstanceID = g2.SaleInstanceID";
+                                        LEFT JOIN GSI g2 ON g1.SaleInstanceID = g2.SaleInstanceID
+                                        LEFT JOIN GSB g3 ON bbras.VehicleId = g3.VehicleID AND g3.WinningBid = 1";
         private const string WhereTemplate = @" WHERE 1=1{0}";
         private string WherePredicate = "";
         private const string OrderBy = @" ORDER BY CreationDate DESC";

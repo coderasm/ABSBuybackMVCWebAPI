@@ -54,7 +54,8 @@
                                 <div class="col-xs-4 col-sm-3 col-md-3">
                                     <div class="form-group">
                                         <label for="highbid">High Bid</label>
-                                        <input blur.trigger="buyback.update()" type="number" class="form-control" id="highbid" validate="buyback.HighBid" value.bind="buyback.HighBid" />
+                                        <span class="form-control" id="saleInstance" if.bind="buyback.isAbsSale">${buyback.HighBid}</span>
+                                        <input blur.trigger="buyback.update()" type="number" class="form-control" id="highbid" validate="buyback.HighBid" value.bind="buyback.HighBid" if.bind="buyback.isNonAbsSale" />
                                     </div>
                                 </div>
                                 <div class="col-xs-4 col-sm-3 col-md-3">

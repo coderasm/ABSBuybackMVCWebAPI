@@ -1,5 +1,4 @@
 import 'bootstrap';
-//import config from './authorization/AuthConfig';
 
 export function configure(aurelia) {
   aurelia.use
@@ -7,9 +6,6 @@ export function configure(aurelia) {
     //.developmentLogging()
     .plugin('aurelia-validation')
     .plugin('aurelia-computed');
-    //.plugin('aurelia-auth', (baseConfig)=>{
-    //    baseConfig.configure(config);
-    //});
 
   //aurelia.use.plugin('aurelia-ui-virtualization');
 

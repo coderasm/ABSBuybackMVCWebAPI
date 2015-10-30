@@ -361,7 +361,6 @@
     <Content Include="Scripts\app\dist\app-build.js" />
     <Content Include="Scripts\app\dist\app.html" />
     <Content Include="Scripts\app\dist\app.js" />
-    <Content Include="Scripts\app\dist\app.router.config.js" />
     <Content Include="Scripts\app\dist\aurelia.js" />
     <Content Include="Scripts\app\dist\authorization\AuthConfig.js" />
     <Content Include="Scripts\app\dist\blur-image.js" />
@@ -375,8 +374,6 @@
     <Content Include="Scripts\app\dist\EditSales.js" />
     <Content Include="Scripts\app\dist\EnterReserves.html" />
     <Content Include="Scripts\app\dist\EnterReserves.js" />
-    <Content Include="Scripts\app\dist\Login.html" />
-    <Content Include="Scripts\app\dist\Login.js" />
     <Content Include="Scripts\app\dist\main.js" />
     <Content Include="Scripts\app\dist\models\AbsBuybackResultFactory.js" />
     <Content Include="Scripts\app\dist\models\BuybackResultFactory.js" />
@@ -425,8 +422,6 @@
     <Content Include="Scripts\app\jspm_packages\github\aurelia\history%400.8.0\aurelia-history.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\history-browser%400.9.0.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\history-browser%400.9.0\aurelia-history-browser.js" />
-    <Content Include="Scripts\app\jspm_packages\github\aurelia\http-client%400.12.0.js" />
-    <Content Include="Scripts\app\jspm_packages\github\aurelia\http-client%400.12.0\aurelia-http-client.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\loader%400.10.0.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\loader%400.10.0\aurelia-loader.js" />
     <Content Include="Scripts\app\jspm_packages\github\aurelia\loader-default%400.11.2.js" />
@@ -499,19 +494,6 @@
     <Content Include="Scripts\app\jspm_packages\github\github\fetch%400.9.0\fetch.js" />
     <Content Include="Scripts\app\jspm_packages\github\jdanyow\aurelia-computed%400.7.0.js" />
     <Content Include="Scripts\app\jspm_packages\github\jdanyow\aurelia-computed%400.7.0\aurelia-computed.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\app.httpClient.config.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\authentication.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\authFilter.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\authorizeStep.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\authService.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\authUtils.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\baseConfig.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\index.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\oAuth1.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\oAuth2.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\popup.js" />
-    <Content Include="Scripts\app\jspm_packages\github\paulvanbladel\aurelia-auth%400.9.19\storage.js" />
     <Content Include="Scripts\app\jspm_packages\github\systemjs\plugin-text%400.0.2.js" />
     <Content Include="Scripts\app\jspm_packages\github\systemjs\plugin-text%400.0.2\text.js" />
     <Content Include="Scripts\app\jspm_packages\github\twbs\bootstrap%403.3.5.js" />
@@ -558,7 +540,6 @@
     <Content Include="Scripts\app\jspm_packages\system.js" />
     <Content Include="Scripts\app\src\app.html" />
     <Content Include="Scripts\app\src\app.js" />
-    <Content Include="Scripts\app\src\app.router.config.js" />
     <Content Include="Scripts\app\src\authorization\AuthConfig.js" />
     <Content Include="Scripts\app\src\blur-image.js" />
     <Content Include="Scripts\app\src\CreateSales.html" />
@@ -569,8 +550,6 @@
     <Content Include="Scripts\app\src\EnterReserves.html" />
     <Content Include="Scripts\app\src\EnterReserves.js" />
     <Content Include="Scripts\app\src\CreateSales.js" />
-    <Content Include="Scripts\app\src\Login.html" />
-    <Content Include="Scripts\app\src\Login.js" />
     <Content Include="Scripts\app\src\models\AbsBuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultQueryFactory.js" />

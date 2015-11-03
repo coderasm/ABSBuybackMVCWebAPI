@@ -543,6 +543,8 @@
     <Content Include="Scripts\app\src\authorization\AuthConfig.js" />
     <Content Include="Scripts\app\src\blur-image.js" />
     <Content Include="Scripts\app\src\CreateSales.html" />
+    <Content Include="Scripts\app\src\customElements\buyback-vehicle\buyback-vehicle.html" />
+    <Content Include="Scripts\app\src\customElements\buyback-vehicle\buyback-vehicle.js" />
     <Content Include="Scripts\app\src\customElements\select-all-none\select-all-none.html" />
     <Content Include="Scripts\app\src\customElements\select-all-none\select-all-none.js" />
     <Content Include="Scripts\app\src\EditSales.html" />

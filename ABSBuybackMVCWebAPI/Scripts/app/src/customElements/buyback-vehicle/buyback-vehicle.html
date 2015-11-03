@@ -1,0 +1,68 @@
+﻿<template>
+    <div class="panel panel-default">
+        <div class="panel-body bg-info">
+            <div class="row text-center">
+                <div class="col-xs-2 col-sm-1 col-md-2">
+                    <div class="checkbox-inline">
+                        <label for="create">Create</label>
+                        <input id="create" type="checkbox" checked.bind="vehicle.create" />
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <label for="reserve">Reserve</label>
+                        <input type="number" class="form-control" id="reserve" value.bind="vehicle.Reserve" />
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-4 col-md-3">
+                    <div class="form-group">
+                        <label for="vid">VID</label>
+                        <span class="form-control" id="vid">${vehicle.VehicleId}</span>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="form-group">
+                        <label for="vin">VIN</label>
+                        <span class="form-control" id="vin">${vehicle.VIN}</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-5 col-md-5">
+                    <div class="form-group">
+                        <label for="seller">Seller</label>
+                        <span class="form-control" id="seller">${vehicle.Seller}</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-5 col-md-5">
+                    <div class="form-group">
+                        <label for="buyer">Buyer</label>
+                        <span class="form-control" id="buyer">${vehicle.Buyer}</span>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2">
+                    <div class="form-group">
+                        <label for="bidsheetnumber">BidSheet#</label>
+                        <span class="form-control" id="bidsheetnumber">${vehicle.BidSheetNumber}</span>
+                    </div>
+                </div>
+                <div class="col-xs-10 col-sm-5 col-md-5">
+                    <div class="form-group">
+                        <label for="ymm">YMM</label>
+                        <span class="form-control" id="ymm">${vehicle.YMM}</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                    <div class="form-group">
+                        <label for="salelocation">SaleLocation</label>
+                        <span class="form-control" id="salelocation">${vehicle.SaleLocation}</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <label for="salefirstdate">SaleFirstDate</label>
+                        <span class="form-control" id="salefirstdate">${showDateOnly()}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

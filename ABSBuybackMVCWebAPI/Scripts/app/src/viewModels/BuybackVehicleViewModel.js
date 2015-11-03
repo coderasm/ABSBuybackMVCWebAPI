@@ -14,10 +14,6 @@
             },(onValidateError)=>{ alert("Fix errors.")});
     }
 
-    showDateOnly() {
-        return new Date(this.SaleFirstDate).toDateString();
-    }
-
     isValid()
     {
         this.validation.validate().catch(err => {});

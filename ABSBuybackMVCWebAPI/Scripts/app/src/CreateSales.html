@@ -1,4 +1,5 @@
 ﻿<template>
+    <require from="customElements/buyback-creator/buyback-creator"></require>
     <require from="customElements/select-all-none/select-all-none"></require>
     <require from="customElements/buyback-vehicle/buyback-vehicle"></require>
     <section>
@@ -43,54 +44,7 @@
         </div>
         <div class="row au-stagger row-5-padding">
             <div class="col-sm-12 col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body ">
-                        <div class="row au-stagger">
-                            <form role="form" validate.bind="nonAbsSaleValidation">
-                                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
-                                    <div class="form-group">
-                                        <label for="reason">Reason</label>
-                                        <select class="form-control" id="reason" value.bind="state.reason" validate="reason">
-                                            <option repeat.for="reason of state.reasons" model.bind="reason.ReasonId">${reason.ReasonDescription}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
-                                    <div class="form-group">
-                                        <label for="saleOption">Sale Option</label>
-                                        <select class="form-control" id="saleOption" value.bind="state.saleOption" change.delegate="saleOptionSelected()" validate="saleOption">
-                                            <option repeat.for="saleOption of state.saleOptions" model.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
-                            <form role="form" validate.bind="absSaleValidation">
-                                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2" show.bind="showAbsSaleLocations">
-                                    <div class="form-group">
-                                        <label for="abssalelocation">ABS Sale Location</label>
-                                        <select value.bind="state.absOptionLocationId" change.delegate="absOptionLocationSelected()" validate="absOptionLocationId" class="form-control" id="abssalelocation">
-                                            <option repeat.for="location of state.absOptionLocations" model.bind="location.SaleId">${location.SaleLocation}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2" show.bind="showLocationSales">
-                                    <div class="form-group">
-                                        <label for="Sale">Sale</label>
-                                        <select value.bind="state.absOptionLocationInstanceId" class="form-control" id="Sale" validate="absOptionLocationInstanceId">
-                                            <option repeat.for="saleInstance of state.absOptionSaleLocationInstances" model.bind="saleInstance.value">${saleInstance.name}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="save"></label>
-                                        <button type="button" class="btn btn-primary form-control" click.trigger="createSelected()" id="save">Save</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <buyback-creator locations.bind="state.saleLocations" reasons.bind="state.reasons" saleOptions.bind="state.saleOptions"></buyback-creator>
             </div>
         </div>
         <div class="row au-stagger row-5-padding">

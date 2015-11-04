@@ -58,6 +58,12 @@ namespace ABSBuybackMVCWebAPI.Controllers
             return buybackResultProcessor.Process(vehicleWithChoices);
         }
 
+        // POST: api/BuybackResult
+        public int Post([FromBody]BuybackResult buybackResult)
+        {
+            return repositoryService.ResultRepository.Insert(buybackResult);
+        }
+
         // PUT: api/BuybackResult/
         public bool Put([FromBody]BuybackResult buybackResult)
         {

@@ -9,13 +9,7 @@
         saleOptions: [],
         saleLocationId: null,
         buyerId: null,
-        vehicleIds: [],
-        reason: null,
-        saleOption: null,
-        absOptionLocations: [],
-        absOptionLocationId: null,
-        absOptionSaleLocationInstances: [{name:"Select",value:-1}],
-        absOptionLocationInstanceId: -1
+        vehicleIds: []
     };
     return Object.create(prototype, {});
 }

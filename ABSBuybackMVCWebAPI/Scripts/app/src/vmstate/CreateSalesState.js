@@ -7,6 +7,7 @@
         queriedVehicles: [],
         reasons: [],
         saleOptions: [],
+        absOptionLocations: [],
         saleLocationId: null,
         buyerId: null,
         vehicleIds: []

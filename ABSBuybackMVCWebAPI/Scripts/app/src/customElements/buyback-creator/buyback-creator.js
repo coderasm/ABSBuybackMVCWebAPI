@@ -7,11 +7,10 @@ import {inject} from 'aurelia-framework';
 @inject(Validation, EventAggregator)
 export class BuybackCreator {
     @bindable reasons = [];
-    @bindable locations = [];
     @bindable saleOptions = [];
+    @bindable absOptionLocations = [];
 
-    absOptionLocations = [];
-    absOptionSaleLocationInstances = [{ name: "Select", value: -1 }];
+    absOptionSaleLocationInstances = [];
     saveProperties = ["reason", "saleOption", "absOptionLocationId"];
     reason = null;
     saleOption = null;
@@ -21,7 +20,7 @@ export class BuybackCreator {
     constructor(validation, eventAggregator)
     {
         this.eventAggregator = eventAggregator;
-        this.eventAggregator.subscribe("resetSaveProperties", this.resetProperties(this.saveProperties));
+        this.eventAggregator.subscribe("resetSaveProperties", this.resetProperties.bind(this));
         this.validation = validation;
         this.nonAbsSaleValidation = validation.on(this)
             .ensure('reason')
@@ -56,16 +55,6 @@ export class BuybackCreator {
             },(onValidateError)=>{ alert("Fix errors.")});
     }
 
-    activate()
-    {
-        this.setAbsOptionLocations();
-    }
-
-    setAbsOptionLocations() {
-        this.absOptionLocations = this.locations.slice(1);
-        this.absOptionLocations.unshift({ SaleId: null, SaleLocation: "Select" });
-    }
-
     get showAbsSaleLocations()
     {
         return this.saleOption == 10 ? true : false;
@@ -96,7 +85,7 @@ export class BuybackCreator {
 
     setSales()
     {
-        for(let saleLocation of this.saleLocations)
+        for(let saleLocation of this.absOptionLocations)
         {
             if (this.absOptionLocationId == saleLocation.SaleId) {
                 this.absOptionSaleLocationInstances = this.generateAbsOptionSaleLocationInstances(saleLocation);
@@ -117,12 +106,7 @@ export class BuybackCreator {
     createSelected()
     {
         if(!this.isValid()) return;
-        for(let vehicle of this.shownVehicles)
-        {
-            if (vehicle.create && vehicle.isValid()) {
-                this.createBuybackResult(vehicle);
-        };
-    }
+        this.eventAggregator.publish("createBuyback");
     }
 
     isValid()
@@ -134,36 +118,9 @@ export class BuybackCreator {
         return true;
     }
 
-    createBuybackResult(vehicle)
+    resetProperties()
     {
-        var vehicleWithChoices = this.createVehicleWithChoices(vehicle);
-        if (this.saleOption != 10)
-            this.repositoryService.BuybackResultRepository.insert(vehicleWithChoices);
-        else
-            this.createAbsBuyback(vehicleWithChoices);
-    }
-
-    createVehicleWithChoices(vehicle)
-    {
-        return {
-            Vehicle:this.buybackVehicleVMToBuybackVehicle.map(vehicle),
-            ResultDescriptionId:this.saleOption,
-            ReasonId:this.reason
-        }
-    }
-
-    createAbsBuyback(vehicle)
-    {
-        vehicle.SaleInstanceId = this.absOptionLocationInstanceId;
-        vehicle.SaleId = this.absOptionLocationId;
-        this.repositoryService.AbsBuybackResultRepository.insert(vehicle);
-    }
-
-    resetProperties(properties)
-    {
-        return function () {
-                for(var property of properties)
-                    this.state[property] = null;
-            }
+        for(var property of this.saveProperties)
+            this[property] = null;
     }
 }

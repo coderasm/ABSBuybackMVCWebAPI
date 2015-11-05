@@ -69,6 +69,8 @@ export class CreateSales {
     filterAndSetLocations(allLocations)
     {
         var locations = allLocations.filter((l) => this.state.allVehicles.some((v) => v.SaleLocationId === l.SaleId));
+        this.state.absOptionLocations = locations.slice(0);
+        this.state.absOptionLocations.unshift({SaleId:null,SaleLocation:"Select"});
         locations.unshift({SaleId:null,SaleLocation:"All"});
         this.state.saleLocations = locations;
     }

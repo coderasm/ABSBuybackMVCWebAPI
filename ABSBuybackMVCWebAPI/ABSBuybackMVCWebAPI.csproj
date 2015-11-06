@@ -570,12 +570,14 @@
     <Content Include="Scripts\app\src\EnterReserves.html" />
     <Content Include="Scripts\app\src\EnterReserves.js" />
     <Content Include="Scripts\app\src\CreateSales.js" />
+    <Content Include="Scripts\app\src\functions\buybackVehicle.js" />
     <Content Include="Scripts\app\src\models\AbsBuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultQueryFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackVehicleFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackVehicleQueryFactory.js" />
     <Content Include="Scripts\app\src\models\Dealer.js" />
+    <Content Include="Scripts\app\src\prototypes\buybackVehicle.js" />
     <Content Include="Scripts\app\src\repositories\AbsBuybackResultRepository.js" />
     <Content Include="Scripts\app\src\repositories\BuybackResultRepository.js" />
     <Content Include="Scripts\app\src\child-router.html" />

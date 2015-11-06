@@ -7,7 +7,7 @@ var config = {
   bundles: {
       "dist/app-build": {
       includes: [
-        '*/**/*',
+        '**/*',
         '*.html!text',
         '*.css!text',
         'bootstrap/css/bootstrap.css!text'

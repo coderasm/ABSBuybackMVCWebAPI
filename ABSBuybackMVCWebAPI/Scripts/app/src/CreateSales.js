@@ -10,15 +10,16 @@ import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
 import {computedFrom} from 'aurelia-framework';
 
-@inject(EventAggregator, RepositoryService, CreateSaleStateToBuybackVehicleQuery, BuybackVehicleVMToBuybackVehicle, Validation, CreateSalesState)
+@inject(BuybackVehicleViewModel, EventAggregator, RepositoryService, CreateSaleStateToBuybackVehicleQuery, BuybackVehicleVMToBuybackVehicle, Validation, CreateSalesState)
 export class CreateSales {
     heading = 'Create New Sales';
     searchProperties = ["saleLocationId", "buyerId"];
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(eventAggregator, repositoryService, createSaleStateToBuybackVehicleQuery, buybackVehicleVMToBuybackVehicle, validation, createSalesState)
+    constructor(buybackVehicleViewModel, eventAggregator, repositoryService, createSaleStateToBuybackVehicleQuery, buybackVehicleVMToBuybackVehicle, validation, createSalesState)
     {
+        this.buybackVehicleViewModel = buybackVehicleViewModel; 
         this.eventAggregator = eventAggregator;
         this.repositoryService = repositoryService;
         this.validation = validation;
@@ -50,7 +51,7 @@ export class CreateSales {
         var queryObject = this.createQueryObject();
         return this.repositoryService.BuybackVehicleRepository.search(queryObject)
               .then(response => response.json())
-              .then(json => $.map(json,(v) => {return new BuybackVehicleViewModel(v, this.validation, this.repositoryService)}));
+              .then(json => $.map(json,(v) => {return this.buybackVehicleViewModel.create(v)}));
     }
 
     setVehicles(vehicles)

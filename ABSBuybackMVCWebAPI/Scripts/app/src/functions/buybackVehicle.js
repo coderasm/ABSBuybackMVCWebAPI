@@ -15,7 +15,7 @@
     createVehicleWithChoices: function createVehicleWithChoices()
     {
         return {
-            Vehicle:this.buybackVehicleVMToBuybackVehicle.map(this),
+            Vehicle:this.mapper.map(this),
             ResultDescriptionId:this.saleOption,
             ReasonId:this.reason
         }
@@ -30,5 +30,17 @@
     {
         this.validation.validate().catch(err => {});
         return this.validation.result.isValid;
+    },
+    setReason: function setReason(reason) {
+        this.reasonId = reason;
+    },
+    setSaleOption: function setSaleOption(saleOption) {
+        this.resultDescriptionId= saleOption;
+    },
+    setAbsSaleLocation: function setAbsSaleLocation(saleId) {
+        this.saleId = saleId;
+    },
+    setAbsSaleInstance: function setAbsSaleInstance(saleInstance) {
+        this.saleInstanceId = saleInstance;
     }
 }

@@ -65,8 +65,14 @@ export class BuybackCreator {
         return this.showAbsSaleLocations && this.absOptionLocationId !== null;
     }
 
+    reasonSelected()
+    {
+        this.eventAggregator.publish("reasonSelected", this.reason);
+    }
+
     saleOptionSelected()
     {
+        this.eventAggregator.publish("saleOptionSelected", this.saleOption);
         this.absOptionLocationId = null;
         this.absOptionLocationInstanceId = -1;
         if(this.saleOption == 10)
@@ -75,12 +81,18 @@ export class BuybackCreator {
 
     absOptionLocationSelected()
     {
+        this.eventAggregator.publish("absSaleLocationSelected", this.absOptionLocationId);
         this.absOptionLocationInstanceId = -1;
         if (this.absOptionLocationId === null)
             return;
         this.setSales();
         this.absSaleValidation.validate().catch(err=>{});
 
+    }
+
+    absSaleInstanceSelected()
+    {
+        this.eventAggregator.publish("absSaleInstanceSelected", this.absOptionLocationInstanceId);
     }
 
     setSales()

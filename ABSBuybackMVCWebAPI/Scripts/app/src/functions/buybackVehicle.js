@@ -6,19 +6,11 @@
     },
     createBuybackResult: function createBuybackResult()
     {
-        var vehicleWithChoices = this.createVehicleWithChoices();
+        var vehicleWithChoices = this.mapper.map(this)
         if (this.saleOption != 10)
             this.repositoryService.BuybackResultRepository.insert(vehicleWithChoices);
         else
             this.createAbsBuyback(vehicleWithChoices);
-    },
-    createVehicleWithChoices: function createVehicleWithChoices()
-    {
-        return {
-            Vehicle:this.mapper.map(this),
-            ResultDescriptionId:this.saleOption,
-            ReasonId:this.reason
-        }
     },
     createAbsBuyback: function createAbsBuyback(vehicle)
     {

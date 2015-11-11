@@ -3,11 +3,7 @@
 export let
 BuybackVehicle = {
     instanceMembers: {
-        create: false,
-        reasonId: null,
-        resultDescriptionId: null,
-        saleId: null,
-        saleInstanceId: -1
+        create: false
     },
     protoMembers: {
         doCreate: bVF.doCreate,

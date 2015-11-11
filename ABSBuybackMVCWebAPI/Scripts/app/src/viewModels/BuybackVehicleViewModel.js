@@ -25,17 +25,28 @@ function buybackVehicleViewModel(validation, eventAggregator, repositoryService,
         prototype.closures.forEach(function(closure) {
             closure.call(instance);
         });
-
         // Simple copy of state to the new instance
         for (var key in prototype.instanceMembers) {
             instance[key] = prototype.instanceMembers[key];
         }
+
         function initialize() {
+            subscribeToEvents();
+            setupValidation();
+            setDefaultValues();
+        }
+
+        subscribeToEvents()
+        {
             instance.eventAggregator.subscribe("createBuyback", instance.doCreate.bind(instance));
             instance.eventAggregator.subscribe("reasonSelected", instance.setReason.bind(instance));
             instance.eventAggregator.subscribe("saleOptionSelected", instance.setSaleOption.bind(instance));
             instance.eventAggregator.subscribe("absSaleLocationSelected", instance.setAbsSaleLocation.bind(instance));
             instance.eventAggregator.subscribe("absSaleInstanceSelected", instance.setAbsSaleInstance.bind(instance));
+        }
+
+        setUpValidation()
+        {
             instance.validation = validation.on(instance)
                 .ensure('Reserve')
                     .containsOnly(/^[1-9]\d*$|^$/)
@@ -43,6 +54,11 @@ function buybackVehicleViewModel(validation, eventAggregator, repositoryService,
                     return {
                     }
                 },(onValidateError)=>{ alert("Fix errors.")});
+        }
+
+        setDefaultValues()
+        {
+            instance.SaleInstanceId = -1;
             nullTextInputProperties.call(instance);
         }
         initialize();

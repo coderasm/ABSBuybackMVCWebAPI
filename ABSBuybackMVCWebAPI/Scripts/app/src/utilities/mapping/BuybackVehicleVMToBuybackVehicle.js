@@ -17,6 +17,10 @@ export function BuybackVehicleVMToBuybackVehicle() {
             toObject.SaleLocation = buybackVehicleVM.SaleLocation === undefined ? null : buybackVehicleVM.buyerId;
             toObject.SaleLocationId = buybackVehicleVM.SaleLocationId === undefined ? null : buybackVehicleVM.SaleLocationId;
             toObject.SaleFirstDate = buybackVehicleVM.SaleFirstDate === undefined ? null : buybackVehicleVM.SaleFirstDate;
+            toObject.ReasonId = buybackVehicleVM.ReasonId === undefined ? null : buybackVehicleVM.ReasonId;
+            toObject.SaleId = buybackVehicleVM.SaleId === undefined ? null : buybackVehicleVM.SaleId;
+            toObject.ResultDescriptionId = buybackVehicleVM.ResultDescriptionId === undefined ? null : buybackVehicleVM.ResultDescriptionId;
+            toObject.SaleInstanceId = buybackVehicleVM.SaleInstanceId === undefined ? null : buybackVehicleVM.SaleInstanceId;
             return toObject;
         },
         toFactory: function() {

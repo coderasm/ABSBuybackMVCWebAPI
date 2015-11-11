@@ -11,7 +11,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
     public class AbsBuybackInserter : IAbsBuybackInserter
     {
         private readonly IRepositoryService repositoryService;
-        private AbsVehicleWithChoices absVehicleWithChoices;
+        private BuybackVehicle vehicle;
         private int buybackId;
         private int buybackResultId;
         private int? vehicleId;
@@ -22,9 +22,9 @@ namespace ABSBuybackMVCWebAPI.Utilities
             this.repositoryService = repositoryService;
         }
 
-        public int Process(AbsVehicleWithChoices absVehicleWithChoices)
+        public int Process(BuybackVehicle vehicle)
         {
-            this.absVehicleWithChoices = absVehicleWithChoices;
+            this.vehicle = vehicle;
             using (var transaction = new TransactionScope())
             {
                 using (connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
@@ -55,8 +55,8 @@ namespace ABSBuybackMVCWebAPI.Utilities
         {
             return repositoryService.BuybackRepository.Insert(new Buyback
             {
-                ReasonId = absVehicleWithChoices.ReasonId,
-                VehicleIdOriginal = absVehicleWithChoices.Vehicle.VehicleId
+                ReasonId = vehicle.ReasonId.Value,
+                VehicleIdOriginal = vehicle.VehicleId
             }, connection);
         }
 
@@ -64,15 +64,15 @@ namespace ABSBuybackMVCWebAPI.Utilities
         {
             return repositoryService.ResultRepository.Insert(new BuybackResult
             {
-                Reserve = absVehicleWithChoices.Vehicle.Reserve,
-                ResultDescriptionId = absVehicleWithChoices.ResultDescriptionId,
+                Reserve = vehicle.Reserve,
+                ResultDescriptionId = vehicle.ResultDescriptionId.Value,
                 BuybackId = buybackId
             }, connection);
         }
 
         private int? createVehicle()
         {
-            if (absVehicleWithChoices.SaleInstanceId == null)
+            if (vehicle.SaleInstanceId == null)
                 return null;
             var fullVehicle = prepareVehicle();
             return repositoryService.GsvRepository.Insert(fullVehicle, connection);
@@ -80,9 +80,9 @@ namespace ABSBuybackMVCWebAPI.Utilities
 
         private GroupSaleVehicle prepareVehicle()
         {
-            var fullVehicle = repositoryService.GsvRepository.Get(absVehicleWithChoices.Vehicle.VehicleId, connection);
-            fullVehicle.ma = absVehicleWithChoices.Vehicle.Reserve;
-            fullVehicle.SaleInstanceId = absVehicleWithChoices.SaleInstanceId.Value;
+            var fullVehicle = repositoryService.GsvRepository.Get(vehicle.VehicleId, connection);
+            fullVehicle.ma = vehicle.Reserve;
+            fullVehicle.SaleInstanceId = vehicle.SaleInstanceId.Value;
             return fullVehicle;
         }
 
@@ -91,7 +91,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
             repositoryService.BuybackResultAbsSaleRepository.Insert(new BuybackResultAbsSale
             {
                 BuybackResultId = buybackResultId,
-                SaleId = absVehicleWithChoices.SaleId,
+                SaleId = vehicle.SaleId,
                 VehicleId = vehicleId
             }, connection);
         }

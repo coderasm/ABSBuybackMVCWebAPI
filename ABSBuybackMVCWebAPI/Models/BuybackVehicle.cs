@@ -16,5 +16,9 @@ namespace ABSBuybackMVCWebAPI.Models
         public string SaleLocation { get; set; }
         public int SaleLocationId { get; set; }
         public DateTime SaleFirstDate { get; set; }
+        public int? SaleId { get; set; }
+        public int? ReasonId { get; set; }
+        public int? ResultDescriptionId { get; set; }
+        public int? SaleInstanceId { get; set; }
     }
 }

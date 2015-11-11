@@ -11,6 +11,10 @@
         Reserve: null,
         SaleLocation: null,
         SaleLocationId: null,
-        SaleFirstDate: null
+        SaleFirstDate: null,
+        ReasonId: null,
+        ResultDescriptionId: null,
+        SaleId: null,
+        SaleInstanceId: -1
     };
 };

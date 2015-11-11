@@ -5,6 +5,6 @@ namespace ABSBuybackMVCWebAPI.Utilities
 {
     public interface IAbsBuybackInserter
     {
-        int Process(AbsVehicleWithChoices absVehicleWithChoices);
+        int Process(BuybackVehicle vehicle);
     }
 }

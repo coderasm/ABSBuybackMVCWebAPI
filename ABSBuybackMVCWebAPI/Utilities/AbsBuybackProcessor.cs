@@ -19,9 +19,9 @@ namespace ABSBuybackMVCWebAPI.Utilities
             return absBuybackUpdater.Process(absBuybackResult);
         }
 
-        public int ProcessInsert(AbsVehicleWithChoices absVehicleWithChoices)
+        public int ProcessInsert(BuybackVehicle vehicle)
         {
-            return absBuybackInserter.Process(absVehicleWithChoices);
+            return absBuybackInserter.Process(vehicle);
         }
     }
 }

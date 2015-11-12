@@ -54,9 +54,9 @@ namespace ABSBuybackMVCWebAPI.Controllers
         }
 
         // POST: api/AbsBuybackResult
-        public int Post([FromBody] AbsVehicleWithChoices absVehicleWithChoices)
+        public int Post([FromBody] BuybackVehicle vehicle)
         {
-            return absBuybackProcessor.ProcessInsert(absVehicleWithChoices);
+            return absBuybackProcessor.ProcessInsert(vehicle);
         }
 
         // PUT: api/AbsBuybackResult

@@ -6,17 +6,11 @@
     },
     createBuybackResult: function createBuybackResult()
     {
-        var vehicleWithChoices = this.mapper.map(this)
-        if (this.saleOption != 10)
-            this.repositoryService.BuybackResultRepository.insert(vehicleWithChoices);
+        var vehicle = this.mapper.map(this)
+        if (this.ResultDescriptionId != 10)
+            this.repositoryService.BuybackResultRepository.insert(vehicle);
         else
-            this.createAbsBuyback(vehicleWithChoices);
-    },
-    createAbsBuyback: function createAbsBuyback(vehicle)
-    {
-        vehicle.SaleInstanceId = this.absOptionLocationInstanceId;
-        vehicle.SaleId = this.absOptionLocationId;
-        this.repositoryService.AbsBuybackResultRepository.insert(vehicle);
+            this.repositoryService.AbsBuybackResultRepository.insert(vehicle);
     },
     isValid: function isValid()
     {
@@ -24,15 +18,15 @@
         return this.validation.result.isValid;
     },
     setReason: function setReason(reason) {
-        this.reasonId = reason;
+        this.ReasonId = reason;
     },
     setSaleOption: function setSaleOption(saleOption) {
-        this.resultDescriptionId= saleOption;
+        this.ResultDescriptionId= saleOption;
     },
     setAbsSaleLocation: function setAbsSaleLocation(saleId) {
-        this.saleId = saleId;
+        this.SaleId = saleId;
     },
     setAbsSaleInstance: function setAbsSaleInstance(saleInstance) {
-        this.saleInstanceId = saleInstance;
+        this.SaleInstanceId = saleInstance;
     }
 }

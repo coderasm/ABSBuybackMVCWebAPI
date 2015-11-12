@@ -12,7 +12,7 @@ namespace ABSBuybackMVCWebAPI.Utilities
     {
         private IBuybackResultRepository buybackResultRepository;
         private IBuybackRepository buybackRepository;
-        private VehicleWithChoices vehicleWithChoices;
+        private BuybackVehicle vehicle;
         private int buybackId = 0;
         private SqlConnection connection;
 
@@ -22,9 +22,9 @@ namespace ABSBuybackMVCWebAPI.Utilities
             this.buybackRepository = buybackRepository;
         }
 
-        public int Process(VehicleWithChoices vehicleWithChoices)
+        public int Process(BuybackVehicle BuybackVehicle)
         {
-            this.vehicleWithChoices = vehicleWithChoices;
+            this.vehicle = BuybackVehicle;
             using (var transaction = new TransactionScope())
             {
                 using (connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
@@ -53,8 +53,8 @@ namespace ABSBuybackMVCWebAPI.Utilities
         {
             return buybackRepository.Insert(new Buyback
             {
-                ReasonId = vehicleWithChoices.ReasonId,
-                VehicleIdOriginal = vehicleWithChoices.Vehicle.VehicleId
+                ReasonId = vehicle.ReasonId.Value,
+                VehicleIdOriginal = vehicle.VehicleId
             }, connection);
         }
 
@@ -62,8 +62,8 @@ namespace ABSBuybackMVCWebAPI.Utilities
         {
             buybackResultRepository.Insert(new BuybackResult
             {
-                Reserve = vehicleWithChoices.Vehicle.Reserve,
-                ResultDescriptionId = vehicleWithChoices.ResultDescriptionId,
+                Reserve = vehicle.Reserve,
+                ResultDescriptionId = vehicle.ResultDescriptionId.Value,
                 BuybackId = buybackId
             }, connection);
         }

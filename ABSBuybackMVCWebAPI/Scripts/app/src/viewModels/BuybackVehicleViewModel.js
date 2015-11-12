@@ -36,7 +36,7 @@ function buybackVehicleViewModel(validation, eventAggregator, repositoryService,
             setDefaultValues();
         }
 
-        subscribeToEvents()
+        function subscribeToEvents()
         {
             instance.eventAggregator.subscribe("createBuyback", instance.doCreate.bind(instance));
             instance.eventAggregator.subscribe("reasonSelected", instance.setReason.bind(instance));
@@ -45,7 +45,7 @@ function buybackVehicleViewModel(validation, eventAggregator, repositoryService,
             instance.eventAggregator.subscribe("absSaleInstanceSelected", instance.setAbsSaleInstance.bind(instance));
         }
 
-        setUpValidation()
+        function setupValidation()
         {
             instance.validation = validation.on(instance)
                 .ensure('Reserve')
@@ -56,7 +56,7 @@ function buybackVehicleViewModel(validation, eventAggregator, repositoryService,
                 },(onValidateError)=>{ alert("Fix errors.")});
         }
 
-        setDefaultValues()
+        function setDefaultValues()
         {
             instance.SaleInstanceId = -1;
             nullTextInputProperties.call(instance);

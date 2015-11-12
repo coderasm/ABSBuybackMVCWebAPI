@@ -6,6 +6,6 @@ namespace ABSBuybackMVCWebAPI.Utilities
     public interface IAbsBuybackProcessor
     {
         bool ProcessUpdate(AbsBuybackResult absBuybackResult);
-        int ProcessInsert(AbsVehicleWithChoices absVehicleWithChoices);
+        int ProcessInsert(BuybackVehicle vehicle);
     }
 }

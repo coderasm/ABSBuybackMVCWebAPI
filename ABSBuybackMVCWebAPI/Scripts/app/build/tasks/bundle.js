@@ -28,7 +28,10 @@ var config = {
         'github:aurelia/templating-router',
         'github:aurelia/loader-default',
         'github:aurelia/history-browser',
-        'github:aurelia/logging-console'
+        'github:aurelia/logging-console',
+        'github:aurelia/validation',
+        'github:aurelia/dialog',
+        'github:jdanyow/aurelia-computed'
       ],
       options: {
         inject: true,

@@ -1,4 +1,4 @@
-﻿import {BuybackResultViewModelFactory} from 'viewModels/BuybackResultViewModelFactory';
+﻿import {BuybackResultViewModel} from 'viewModels/BuybackResultViewModel';
 import {AbsBuybackResultViewModelFactory} from 'viewModels/AbsBuybackResultViewModelFactory';
 import {BuybackResultVMToBuybackResult} from 'utilities/mapping/BuybackResultVMToBuybackResult';
 import {AbsBuybackResultVMToAbsBuybackResult} from 'utilities/mapping/AbsBuybackResultVMToAbsBuybackResult';
@@ -89,7 +89,7 @@ export class Buybacks {
         var queryObject = this.createQueryObject();
         return this.repositoryService.BuybackResultRepository.search(queryObject)
               .then(response => response.json())
-              .then(json => $.map(json, v => {return BuybackResultViewModelFactory(v, this.validation, this.buybackResultVMToBuybackResult, this.repositoryService)}));
+              .then(json => $.map(json, v => {return BuybackResultViewModel(this.validation, this.buybackResultVMToBuybackResult, this.repositoryService).create(v)}));
     }
 
     setBuybacks(buybackResults)

@@ -1,4 +1,4 @@
-﻿export let nonAbsbuybackResultFunctions = {
+﻿export let nonAbsBuybackResultFunctions = {
     update: function update(buybackresult) {
         return this.repositoryService.BuybackResultRepository.update(buybackResult);
     },

@@ -604,7 +604,7 @@
     <Content Include="Scripts\app\src\utilities\mapping\EnterReserveStateToBuybackResultQuery.js" />
     <Content Include="Scripts\app\src\utilities\mapping\MapperFactory.js" />
     <Content Include="Scripts\app\src\utilities\mapping\BuybackResultVMToBuybackResult.js" />
-    <Content Include="Scripts\app\src\viewModels\AbsBuybackResultViewModelFactory.js" />
+    <Content Include="Scripts\app\src\viewModels\AbsBuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackVehicleViewModel.js" />
     <Content Include="Scripts\app\src\vmstate\CreateSalesState.js" />

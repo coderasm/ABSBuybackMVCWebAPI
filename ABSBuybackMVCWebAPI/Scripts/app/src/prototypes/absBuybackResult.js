@@ -1,6 +1,6 @@
-﻿import {absbuybackResultFunctions as absBRF} from "../functions/absBuybackResult"
+﻿import {absBuybackResultFunctions as absBRF} from "../functions/absBuybackResult"
 
-export let BuybackResult = {
+export let AbsBuybackResult = {
     instanceMembers: {},
     protoMembers: {
         update: absBRF.update,

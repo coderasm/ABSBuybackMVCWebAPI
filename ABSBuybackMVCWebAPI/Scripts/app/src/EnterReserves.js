@@ -1,5 +1,5 @@
 ﻿import {BuybackResultViewModel} from 'viewModels/BuybackResultViewModel';
-import {AbsBuybackResultViewModelFactory} from 'viewModels/AbsBuybackResultViewModelFactory';
+import {AbsBuybackResultViewModel} from 'viewModels/AbsBuybackResultViewModel';
 import {BuybackResultVMToBuybackResult} from 'utilities/mapping/BuybackResultVMToBuybackResult';
 import {AbsBuybackResultVMToAbsBuybackResult} from 'utilities/mapping/AbsBuybackResultVMToAbsBuybackResult';
 import {EnterReserveStateToBuybackResultQuery} from 'utilities/mapping/EnterReserveStateToBuybackResultQuery';
@@ -79,17 +79,19 @@ export class Buybacks {
     loadAbsBuybackResults()
     {
         var queryObject = this.createQueryObject();
-        return this.repositoryService.AbsBuybackResultRepository.search(queryObject)
-              .then(response => response.json())
-              .then(json => $.map(json,v => {return AbsBuybackResultViewModelFactory(v, this.validation, this.absBuybackResultVMToAbsBuybackResult, this.repositoryService)}));
+        return new Promise((resolve, reject) => resolve([]));
+        //return this.repositoryService.AbsBuybackResultRepository.search(queryObject)
+        //      .then(response => response.json())
+        //      .then(json => $.map(json,v => {return AbsBuybackResultViewModel(this.validation, this.absBuybackResultVMToAbsBuybackResult, this.repositoryService).create(v)}));
     }
 
     loadBuybackResults()
     {
         var queryObject = this.createQueryObject();
-        return this.repositoryService.BuybackResultRepository.search(queryObject)
-              .then(response => response.json())
-              .then(json => $.map(json, v => {return BuybackResultViewModel(this.validation, this.buybackResultVMToBuybackResult, this.repositoryService).create(v)}));
+        return new Promise((resolve, reject) => resolve([]));
+        //return this.repositoryService.BuybackResultRepository.search(queryObject)
+        //      .then(response => response.json())
+        //      .then(json => $.map(json, v => {return BuybackResultViewModel(this.validation, this.buybackResultVMToBuybackResult, this.repositoryService).create(v)}));
     }
 
     setBuybacks(buybackResults)

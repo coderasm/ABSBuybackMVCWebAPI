@@ -1,26 +1,26 @@
 ﻿import {BuybackResult} from '../prototypes/buybackResult';
-import {NonAbsBuybackResult} from '../prototypes/nonAbsBuybackResult';
-import {BuybackResultVMToBuybackResult} from '../utilities/mapping/BuybackResultVMToBuybackResult';
+import {AbsBuybackResult} from '../prototypes/absBuybackResult';
+import {AbsBuybackResultVMToAbsBuybackResult} from '../utilities/mapping/AbsBuybackResultVMToAbsBuybackResult';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
 
-function buybackResultViewModel(validation, eventAggregator, repositoryService, buybackResultVMToBuybackResult) {
+function absBuybackResultViewModel(validation, eventAggregator, repositoryService, absBuybackResultVMToAbsBuybackResult) {
     Object.assign(BuybackResult.protoMembers, {
-                                                    validation: validation,
-                                                    eventAggregator: eventAggregator,
-                                                    repositoryService: repositoryService,
-                                                    mapper: buybackResultVMToBuybackResult
-                                                }
+        validation: validation,
+        eventAggregator: eventAggregator,
+        repositoryService: repositoryService,
+        mapper: absBuybackResultVMToAbsBuybackResult
+    }
                     );
     let buybackPrototype = BuybackResult;
-    let prototype = Object.assign({}, BuybackResult.protoMembers, NonAbsBuybackResult.protoMembers);
+    let prototype = Object.assign({}, BuybackResult.protoMembers, AbsBuybackResult.protoMembers);
 
     function nullTextInputProperties() {
         for(var property of buybackPrototype.protoMembers.textInputProperties)
             if (this.currentValues[property] === null)
             this.currentValues[property] = "";
-    };
+        };
 
     function create(data) {
         let instance = Object.assign(Object.create(prototype), {currentValues: data}, data);
@@ -47,8 +47,6 @@ function buybackResultViewModel(validation, eventAggregator, repositoryService, 
             instance.validation = validation.on(instance)
                 .ensure('Reserve')
                     .containsOnly(/^[1-9]\d*$|^$/)
-                .ensure('HighBid')
-                    .containsOnly(/^[1-9]\d*$|^$/)
                 .onValidate( () => {
                     return {
                     }
@@ -64,6 +62,6 @@ function buybackResultViewModel(validation, eventAggregator, repositoryService, 
     }
     return {create: create};
 };
-buybackResultViewModel.inject = [Validation, EventAggregator, RepositoryService, BuybackResultVMToBuybackResult];
+absBuybackResultViewModel.inject = [Validation, EventAggregator, RepositoryService, AbsBuybackResultVMToAbsBuybackResult];
 
-export let BuybackResultViewModel = buybackResultViewModel;
+export let AbsBuybackResultViewModel = absBuybackResultViewModel;

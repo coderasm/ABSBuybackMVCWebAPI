@@ -1,7 +1,6 @@
 ﻿import {buybackVehicleFunctions as bVF} from "../functions/buybackVehicle"
 
-export let
-BuybackVehicle = {
+export let BuybackVehicle = {
     instanceMembers: {
         create: false
     },

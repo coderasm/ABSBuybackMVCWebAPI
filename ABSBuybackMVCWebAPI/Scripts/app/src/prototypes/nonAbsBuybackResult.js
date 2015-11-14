@@ -1,4 +1,4 @@
-﻿import {nonAbsbuybackResultFunctions as nonAbsBRF} from "../functions/nonAbsBuybackResult"
+﻿import {nonAbsBuybackResultFunctions as nonAbsBRF} from "../functions/nonAbsBuybackResult"
 
 export let NonAbsBuybackResult = {
     instanceMembers: {},

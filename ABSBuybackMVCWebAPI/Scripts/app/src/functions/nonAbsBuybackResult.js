@@ -1,5 +1,5 @@
 ﻿export let nonAbsBuybackResultFunctions = {
-    update: function update(buybackresult) {
+    update: function update(buybackResult) {
         return this.repositoryService.BuybackResultRepository.update(buybackResult);
     },
     sale: function sale(sales)

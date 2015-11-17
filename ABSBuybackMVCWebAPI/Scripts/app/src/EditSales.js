@@ -7,21 +7,23 @@ import {EditSaleState} from 'vmstate/EditSaleState';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
+import {EventAggregator} from 'aurelia-event-aggregator';
 
-@inject(RepositoryService, BuybackResultVMToBuybackResult, AbsBuybackResultVMToAbsBuybackResult, EditSaleStateToBuybackResultQuery, Validation, EditSaleState)
+@inject(RepositoryService, BuybackResultVMToBuybackResult, AbsBuybackResultVMToAbsBuybackResult, EditSaleStateToBuybackResultQuery, Validation, EditSaleState, EventAggregator)
 export class Buybacks {
     heading = 'Edit Buybacks';
     searchProperties = ['resultDescriptionId'];
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, buybackResultVMToBuybackResult, absBuybackResultVMToAbsBuybackResult, editSaleStateToBuybackResultQuery, validation, editSaleState) {
+    constructor(repositoryService, buybackResultVMToBuybackResult, absBuybackResultVMToAbsBuybackResult, editSaleStateToBuybackResultQuery, validation, editSaleState, eventAggregator) {
         this.repositoryService = repositoryService;
         this.buybackResultVMToBuybackResult = buybackResultVMToBuybackResult;
         this.absBuybackResultVMToAbsBuybackResult = absBuybackResultVMToAbsBuybackResult;
         this.editSaleStateToBuybackResultQuery = editSaleStateToBuybackResultQuery;
         this.state = editSaleState;
         this.validation = validation;
+        this.eventAggregator = eventAggregator;
     }
 
     activate()
@@ -82,7 +84,7 @@ export class Buybacks {
         var queryObject = this.createQueryObject();
         return this.repositoryService.AbsBuybackResultRepository.search(queryObject)
               .then(response => response.json())
-              .then(json => $.map(json,v => {return AbsBuybackResultViewModel(this.validation, this.absBuybackResultVMToAbsBuybackResult, this.repositoryService).create(v)}));
+              .then(json => $.map(json,v => {return AbsBuybackResultViewModel(this.validation, this.eventAggregator, this.repositoryService, this.absBuybackResultVMToAbsBuybackResult).create(v)}));
     }
 
     loadBuybackResults()
@@ -90,7 +92,7 @@ export class Buybacks {
         var queryObject = this.createQueryObject();
         return this.repositoryService.BuybackResultRepository.search(queryObject)
               .then(response => response.json())
-              .then(json => $.map(json, v => {return BuybackResultViewModel(v, this.validation, this.buybackResultVMToBuybackResult, this.repositoryService)}));
+              .then(json => $.map(json, v => {return BuybackResultViewModel(this.validation, this.eventAggregator, this.repositoryService, this.buybackResultVMToBuybackResult).create(v)}));
     }
 
     setBuybacks(buybackResults)

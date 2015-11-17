@@ -7,7 +7,7 @@ export let BuybackResult = {
         isNonAbsSale: bRF.isNonAbsSale,
         lastSixOfVIN: bRF.lastSixOfVIN,
         sale: bRF.sale,
-        update: bRF.update,
+        updateBuybackResult: bRF.update,
         updateIfChanged: bRF.updateIfChanged,
         doUpdate: bRF.doUpdate,
         updateCurrentValues: bRF.updateCurrentValues,

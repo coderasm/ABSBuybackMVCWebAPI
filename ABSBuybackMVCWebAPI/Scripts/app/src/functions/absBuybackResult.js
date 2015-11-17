@@ -1,11 +1,11 @@
 ﻿export let absBuybackResultFunctions = {
-    update: function update(buybackresult) {
+    update: function update(buybackResult) {
         return this.repositoryService.AbsBuybackResultRepository.update(buybackResult);
     },
     get saleFirstDate() {
-        if (instance.SaleFirstDate === null)
+        if (this.SaleFirstDate === null)
             return "Next Sale";
-        return (new Date(instance.SaleFirstDate)).toLocaleDateString();
+        return (new Date(this.SaleFirstDate)).toLocaleDateString();
     },
     location: function location(saleLocations) {
         for(let location of saleLocations)

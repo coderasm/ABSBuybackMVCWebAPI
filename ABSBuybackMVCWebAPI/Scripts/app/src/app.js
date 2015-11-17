@@ -1,5 +1,5 @@
 export class App {
-  configureRouter(config, router){
+  configureRouter(config, router) {
     config.title = 'Enter Reserves';
     config.map([
       { route: ['', 'EnterReserves'], name: 'EnterReserves', moduleId: 'EnterReserves', nav: true, title:'Enter Reserves'},

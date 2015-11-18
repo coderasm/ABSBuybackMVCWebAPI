@@ -4,7 +4,6 @@ export let AbsBuybackResult = {
     instanceMembers: {},
     protoMembers: {
         update: absBRF.update,
-        saleFirstDate: absBRF.saleFirstDate,
         location: absBRF.location
     },
     closures: [

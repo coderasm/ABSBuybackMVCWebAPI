@@ -1,0 +1,20 @@
+﻿<template>
+    <require from="customElements/buyback-creator/buyback-creator"></require>
+    <require from="customElements/buyback-vehicle/buyback-vehicle"></require>
+    <section>
+        <h2>${heading}</h2>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-12">
+                <buyback-creator reasons.bind="state.reasons" sale-options.bind="state.saleOptions" abs-option-locations.bind="state.absOptionLocations"></buyback-creator>
+            </div>
+        </div>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12">
+                <select-all-none items.bind="state.shownVehicles" selector.bind="'create'"></select-all-none>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="vehicle of state.shownVehicles">
+                <buyback-vehicle vehicle.bind="vehicle"></buyback-vehicle>
+            </div>
+        </div>
+    </section>
+</template>

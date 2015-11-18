@@ -1,20 +1,31 @@
 ﻿import {BuybackResult} from '../prototypes/buybackResult';
 import {NonAbsBuybackResult} from '../prototypes/nonAbsBuybackResult';
+import {BuybackResultGetters} from '../prototypes/buybackResultGetters';
+import {DialogService} from 'aurelia-dialog';
 import {BuybackResultVMToBuybackResult} from '../utilities/mapping/BuybackResultVMToBuybackResult';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
 
-function buybackResultViewModel(validation, eventAggregator, repositoryService, buybackResultVMToBuybackResult) {
+function buybackResultViewModel(validation, eventAggregator, repositoryService, dialogService, buybackResultVMToBuybackResult) {
     Object.assign(BuybackResult.protoMembers, {
                                                     validation: validation,
                                                     eventAggregator: eventAggregator,
                                                     repositoryService: repositoryService,
-                                                    mapper: buybackResultVMToBuybackResult
+                                                    mapper: buybackResultVMToBuybackResult,
+                                                    dialogService: dialogService
                                                 }
                     );
     let buybackPrototype = BuybackResult;
     let prototype = Object.assign({}, BuybackResult.protoMembers, NonAbsBuybackResult.protoMembers);
+    defineGetters();
+
+    function defineGetters() {
+        let isAbsSaleGetter = Object.getOwnPropertyDescriptor(BuybackResultGetters.protoMembers, "isAbsSale");
+        Object.defineProperty(prototype, "isAbsSale", isAbsSaleGetter);
+        let isNonAbsSaleGetter = Object.getOwnPropertyDescriptor(BuybackResultGetters.protoMembers, "isNonAbsSale");
+        Object.defineProperty(prototype, "isNonAbsSale", isNonAbsSaleGetter);
+    }
 
     function nullTextInputProperties() {
         for(var property of buybackPrototype.protoMembers.textInputProperties)
@@ -64,6 +75,6 @@ function buybackResultViewModel(validation, eventAggregator, repositoryService, 
     }
     return {create: create};
 };
-buybackResultViewModel.inject = [Validation, EventAggregator, RepositoryService, BuybackResultVMToBuybackResult];
+buybackResultViewModel.inject = [Validation, EventAggregator, RepositoryService, DialogService, BuybackResultVMToBuybackResult];
 
 export let BuybackResultViewModel = buybackResultViewModel;

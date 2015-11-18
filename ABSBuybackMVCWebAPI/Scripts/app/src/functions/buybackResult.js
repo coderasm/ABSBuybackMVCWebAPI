@@ -35,6 +35,15 @@
     updateCurrentValues: function updateCurrentValues(property)
     {
         this.currentValues[property] = this[property];
-
+    },
+    promptForNewSale: function promptForNewSale() {
+        this.dialogService.open({ viewModel: CreateBuyback, model: this}).then(response => {
+          if (!response.wasCancelled) {
+            console.log('good - ', response.output);
+          } else {
+            console.log('bad');
+          }
+          console.log(response.output);
+        });
     }
 }

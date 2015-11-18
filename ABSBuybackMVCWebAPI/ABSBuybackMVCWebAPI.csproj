@@ -558,6 +558,8 @@
     <Content Include="Scripts\app\src\app.js" />
     <Content Include="Scripts\app\src\authorization\AuthConfig.js" />
     <Content Include="Scripts\app\src\blur-image.js" />
+    <Content Include="Scripts\app\src\CreateBuyback.html" />
+    <Content Include="Scripts\app\src\CreateBuyback.js" />
     <Content Include="Scripts\app\src\CreateSales.html" />
     <Content Include="Scripts\app\src\customElements\buyback-creator\buyback-creator.html" />
     <Content Include="Scripts\app\src\customElements\buyback-creator\buyback-creator.js" />
@@ -581,7 +583,9 @@
     <Content Include="Scripts\app\src\models\BuybackVehicleQueryFactory.js" />
     <Content Include="Scripts\app\src\models\Dealer.js" />
     <Content Include="Scripts\app\src\prototypes\absBuybackResult.js" />
+    <Content Include="Scripts\app\src\prototypes\absBuybackResultGetters.js" />
     <Content Include="Scripts\app\src\prototypes\buybackResult.js" />
+    <Content Include="Scripts\app\src\prototypes\buybackResultGetters.js" />
     <Content Include="Scripts\app\src\prototypes\buybackVehicle.js" />
     <Content Include="Scripts\app\src\prototypes\nonAbsBuybackResult.js" />
     <Content Include="Scripts\app\src\repositories\AbsBuybackResultRepository.js" />

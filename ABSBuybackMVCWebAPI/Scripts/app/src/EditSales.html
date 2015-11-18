@@ -61,7 +61,7 @@
                                 <div class="col-xs-4 col-sm-3 col-md-3">
                                     <div class="form-group">
                                         <label for="status">Status</label>
-                                        <select class="form-control" id="status" value.bind="buyback.StatusDescriptionId" change.delegate="buyback.update()">
+                                        <select class="form-control" id="status" value.bind="buyback.StatusDescriptionId" change.delegate="buyback.updateBuybackResult()">
                                             <option repeat.for="status of $parent.state.statuses" model.bind="status.StatusDescriptionId">${status.StatusDescription}</option>
                                         </select>
                                     </div>
@@ -69,7 +69,7 @@
                                 <div class="col-xs-4 col-sm-3 col-md-3">
                                     <div class="form-group">
                                         <label for="reserve">Reserve</label>
-                                        <input blur.trigger="buyback.update()" type="number" class="form-control" id="reserve" validate="buyback.Reserve" value.bind="buyback.Reserve" />
+                                        <input blur.trigger="buyback.updateBuybackResult()" type="number" class="form-control" id="reserve" validate="buyback.Reserve" value.bind="buyback.Reserve" />
                                     </div>
                                 </div>
                                 <div class="col-xs-4 col-sm-2 col-md-2">

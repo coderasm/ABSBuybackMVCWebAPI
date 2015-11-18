@@ -60,6 +60,7 @@
     "dependencies": {
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.0-beta.1",
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-beta.1",
+      "aurelia-computed": "github:jdanyow/aurelia-computed@^0.9.0",
       "aurelia-dialog": "npm:aurelia-dialog@^0.5.0",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@^1.0.0-beta.1",
       "aurelia-framework": "npm:aurelia-framework@^1.0.0-beta.1",

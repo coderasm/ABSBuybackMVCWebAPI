@@ -3,8 +3,6 @@
 export let BuybackResult = {
     instanceMembers: {},
     protoMembers: {
-        isAbsSale: bRF.isAbsSale,
-        isNonAbsSale: bRF.isNonAbsSale,
         lastSixOfVIN: bRF.lastSixOfVIN,
         sale: bRF.sale,
         updateBuybackResult: bRF.update,

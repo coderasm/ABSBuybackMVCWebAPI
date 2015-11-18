@@ -173,3 +173,16 @@ div.au-stagger {
     opacity: 1;
   }
 }
+
+/*Validation Overrides*/
+
+.help-block {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/*padding 5px*/
+.row-5-padding [class*="col-"] {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}

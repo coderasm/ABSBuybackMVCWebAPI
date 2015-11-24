@@ -1,19 +1,19 @@
 ﻿import {BuybackResult} from '../prototypes/buybackResult';
 import {NonAbsBuybackResult} from '../prototypes/nonAbsBuybackResult';
 import {BuybackResultGetters} from '../prototypes/buybackResultGetters';
-import {DialogService} from 'aurelia-dialog';
 import {BuybackResultVMToBuybackResult} from '../utilities/mapping/BuybackResultVMToBuybackResult';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {RepositoryService} from 'services/RepositoryService';
 import {Validation} from 'aurelia-validation';
+import {DialogService} from 'aurelia-dialog';
 
 function buybackResultViewModel(validation, eventAggregator, repositoryService, dialogService, buybackResultVMToBuybackResult) {
     Object.assign(BuybackResult.protoMembers, {
                                                     validation: validation,
                                                     eventAggregator: eventAggregator,
                                                     repositoryService: repositoryService,
+                                                    dialogService: dialogService,
                                                     mapper: buybackResultVMToBuybackResult,
-                                                    dialogService: dialogService
                                                 }
                     );
     let buybackPrototype = BuybackResult;

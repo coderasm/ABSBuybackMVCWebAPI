@@ -1,20 +1,23 @@
 ﻿<template>
     <require from="customElements/buyback-creator/buyback-creator"></require>
-    <require from="customElements/buyback-vehicle/buyback-vehicle"></require>
-    <section>
-        <h2>${heading}</h2>
-        <div class="row au-stagger row-5-padding">
-            <div class="col-sm-12 col-md-12">
-                <buyback-creator reasons.bind="state.reasons" sale-options.bind="state.saleOptions" abs-option-locations.bind="state.absOptionLocations"></buyback-creator>
+    <require from="customElements/buyback-result/buyback-result"></require>
+    <ai-dialog>
+        <ai-dialog-body>
+            <h2>${heading}</h2>
+            <div class="row au-stagger row-5-padding">
+                <div class="col-sm-12">
+                    <buyback-creator reasons.bind="lookup.reasons" sale-options.bind="lookup.saleOptions" abs-option-locations.bind="lookup.absOptionLocations"></buyback-creator>
+                </div>
             </div>
-        </div>
-        <div class="row au-stagger row-5-padding">
-            <div class="col-sm-12">
-                <select-all-none items.bind="state.shownVehicles" selector.bind="'create'"></select-all-none>
+            <div class="row au-stagger row-5-padding">
+                <div class="col-sm-12">
+                    <buyback-result buyback.bind="buyback" lookup.bind="lookup"></buyback-result>
+                </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="vehicle of state.shownVehicles">
-                <buyback-vehicle vehicle.bind="vehicle"></buyback-vehicle>
-            </div>
-        </div>
-    </section>
+        </ai-dialog-body>
+        <ai-dialog-footer>
+            <button click.trigger="controller.cancel()">Cancel</button>
+            <button click.trigger="controller.ok(person)">Ok</button>
+        </ai-dialog-footer>
+    </ai-dialog>
 </template>

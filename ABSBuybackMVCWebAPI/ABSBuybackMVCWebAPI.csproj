@@ -563,6 +563,8 @@
     <Content Include="Scripts\app\src\CreateSales.html" />
     <Content Include="Scripts\app\src\customElements\buyback-creator\buyback-creator.html" />
     <Content Include="Scripts\app\src\customElements\buyback-creator\buyback-creator.js" />
+    <Content Include="Scripts\app\src\customElements\buyback-result\buyback-result.html" />
+    <Content Include="Scripts\app\src\customElements\buyback-result\buyback-result.js" />
     <Content Include="Scripts\app\src\customElements\buyback-vehicle\buyback-vehicle.html" />
     <Content Include="Scripts\app\src\customElements\buyback-vehicle\buyback-vehicle.js" />
     <Content Include="Scripts\app\src\customElements\select-all-none\select-all-none.html" />

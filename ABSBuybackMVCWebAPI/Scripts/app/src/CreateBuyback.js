@@ -2,11 +2,13 @@
 
 export class CreateBuyback {
     static inject = [DialogController];
-    rejectedBuyback = null;
+    lookup = null;
+    buyback = null;
     constructor(controller){
         this.controller = controller;
     }
-    activate(rejectedBuyback) {
-        this.rejectedBuyback = rejectedBuyback
+    activate(model) {
+        this.lookup = model.lookup;
+        this.buyback = model.buyback;
     }
 }

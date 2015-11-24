@@ -1,4 +1,6 @@
-﻿export let buybackResultFunctions = {
+﻿import {CreateBuyback} from '../CreateBuyback';
+
+export let buybackResultFunctions = {
     get isAbsSale() {
         return this.ResultDescriptionId == 10;
     },
@@ -36,14 +38,23 @@
     {
         this.currentValues[property] = this[property];
     },
-    promptForNewSale: function promptForNewSale() {
-        this.dialogService.open({ viewModel: CreateBuyback, model: this}).then(response => {
-          if (!response.wasCancelled) {
-            console.log('good - ', response.output);
-          } else {
-            console.log('bad');
-          }
-          console.log(response.output);
-        });
+    statusChanged()
+    {
+        if(this.StatusDescriptionId === 2)
+            promptForNewSale.call(this);
+        else
+            this.doUpdate();
     }
+}
+
+
+function promptForNewSale() {
+    this.dialogService.open({ viewModel: CreateBuyback, model: {lookup:this.lookup,buyback:this}}).then(response => {
+        if (!response.wasCancelled) {
+        console.log('good - ', response.output);
+} else {
+            console.log('bad');
+}
+console.log(response.output);
+});
 }

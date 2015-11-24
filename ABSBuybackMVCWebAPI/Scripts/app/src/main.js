@@ -8,10 +8,10 @@ export function configure(aurelia) {
     .plugin('aurelia-computed')
     .plugin('aurelia-dialog');
 
-  //aurelia.use.plugin('aurelia-ui-virtualization');
+  aurelia.use.plugin('aurelia-ui-virtualization');
 
   //Uncomment the line below to enable animation.
-  //aurelia.use.plugin('aurelia-animator-css');
+  aurelia.use.plugin('aurelia-animator-css');
 
   //Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   //aurelia.use.plugin('aurelia-html-import-template-loader')

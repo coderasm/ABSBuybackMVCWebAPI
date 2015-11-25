@@ -49,7 +49,7 @@ export let buybackResultFunctions = {
 
 
 function promptForNewSale() {
-    this.dialogService.open({ viewModel: CreateBuyback, model: {lookup:this.lookup,buyback:this}}).then(response => {
+    this.dialogService.open({ viewModel: CreateBuyback, model: {buyback:this}}).then(response => {
         if (!response.wasCancelled) {
         console.log('good - ', response.output);
 } else {

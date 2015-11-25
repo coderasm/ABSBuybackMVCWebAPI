@@ -578,6 +578,7 @@
     <Content Include="Scripts\app\src\functions\buybackResult.js" />
     <Content Include="Scripts\app\src\functions\buybackVehicle.js" />
     <Content Include="Scripts\app\src\functions\nonAbsBuybackResult.js" />
+    <Content Include="Scripts\app\src\lookups\lookups.js" />
     <Content Include="Scripts\app\src\models\AbsBuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultFactory.js" />
     <Content Include="Scripts\app\src\models\BuybackResultQueryFactory.js" />

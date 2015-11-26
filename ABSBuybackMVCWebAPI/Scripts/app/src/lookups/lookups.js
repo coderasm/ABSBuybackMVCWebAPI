@@ -36,12 +36,20 @@ function lookups(repositoryService) {
         return repositoryService.ReasonRepository.getAll()
                 .then(response => response.json());
     }
+    initialize();
     return {
-        initialize: initialize,
-        statuses: statuses,
-        saleOptions: saleOptions,
-        locations: locations,
-        reasons: reasons
+        get statuses() {
+            return statuses;
+        },
+        get saleOptions() {
+            return saleOptions;
+        },
+        get locations() {
+            return locations;
+        },
+        get reasons() {
+            return reasons;
+        }
     }
 }
 

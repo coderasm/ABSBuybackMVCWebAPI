@@ -614,6 +614,7 @@
     <Content Include="Scripts\app\src\viewModels\AbsBuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackResultViewModel.js" />
     <Content Include="Scripts\app\src\viewModels\BuybackVehicleViewModel.js" />
+    <Content Include="Scripts\app\src\views\createBuyback.html" />
     <Content Include="Scripts\app\src\vmstate\CreateSalesState.js" />
     <Content Include="Scripts\app\src\vmstate\EditSaleState.js" />
     <Content Include="Scripts\app\src\vmstate\EnterReservesState.js" />

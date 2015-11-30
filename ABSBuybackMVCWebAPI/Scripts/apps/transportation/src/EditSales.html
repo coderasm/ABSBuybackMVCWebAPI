@@ -1,0 +1,37 @@
+<template>
+    <require from="customElements/buyback-result/buyback-result"></require>
+    <section>
+        <h2>${heading}</h2>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+                        <div class="row au-stagger">
+                            <form role="form" validate.bind="nonAbsSaleValidation">
+                                <div class="col-xs-8 col-sm-8 col-md-2 col-lg-2">
+                                    <div class="form-group">
+                                        <label for="saleOption">Sale Option</label>
+                                        <select class="form-control" id="saleOption" value.bind="state.resultDescriptionId" change.delegate="saleOptionSelected()">
+                                            <option repeat.for="saleOption of state.saleOptions" model.bind="saleOption.ResultDescriptionId">${saleOption.ResultDescription}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                    <div class="form-group">
+                                        <label for="search"></label>
+                                        <button click.delegate="loadAllBuybackResults()" type="button" class="btn btn-primary form-control" id="search">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="buyback of state.shownBuybacks">
+                <buyback-result buyback.bind="buyback" lookup.bind="$parent.state"></buyback-result>
+            </div>
+        </div>
+    </section>
+</template>

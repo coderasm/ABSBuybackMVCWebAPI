@@ -1,0 +1,14 @@
+﻿@section Styles {
+    @Styles.Render("/Scripts/apps/buyback/jspm_packages/npm/font-awesome@4.4.0/css/font-awesome.min.css")
+    @Styles.Render("/Scripts/apps/buyback/styles/styles.css")
+}
+<body aurelia-app="main">
+    <div class="splash">
+        <div class="message">BuyBack Management</div>
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+    @Scripts.Render("~/Scripts/apps/buyback/jspm_packages/system.js")
+    @Scripts.Render("~/Scripts/apps/buyback/config.js")
+    <script>
+        System.import('aurelia-bootstrapper');
+    </script>

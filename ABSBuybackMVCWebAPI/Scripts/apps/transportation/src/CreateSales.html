@@ -1,0 +1,59 @@
+﻿<template>
+    <require from="customElements/buyback-creator/buyback-creator"></require>
+    <require from="customElements/select-all-none/select-all-none"></require>
+    <require from="customElements/buyback-vehicle/buyback-vehicle"></require>
+    <section>
+        <h2>${heading}</h2>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+                        <div class="row au-stagger">
+                            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <select value.bind="state.saleLocationId" change.delegate="locationSelected()" class="form-control" id="location">
+                                        <option repeat.for="location of state.saleLocations" model.bind="location.SaleId">${location.SaleLocation}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label for="dealer">Dealer</label>
+                                    <select class="form-control" value.bind="state.buyerId" change.delegate="dealerSelected()" id="dealer">
+                                        <option repeat.for="dealer of state.dealers" model.bind="dealer.id">${dealer.name}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="vids">VIDs</label>
+                                    <input class="form-control" id="vids" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
+                                <div class="form-group">
+                                    <label for="search"></label>
+                                    <button click.trigger="loadBuybackVehiclesFromApi()" type="button" class="btn btn-primary form-control" id="search">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12 col-md-12">
+                <buyback-creator reasons.bind="state.reasons" sale-options.bind="state.saleOptions" abs-option-locations.bind="state.absOptionLocations"></buyback-creator>
+            </div>
+        </div>
+        <div class="row au-stagger row-5-padding">
+            <div class="col-sm-12">
+                <select-all-none items.bind="state.shownVehicles" selector.bind="'create'"></select-all-none>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4" repeat.for="vehicle of state.shownVehicles">
+                <buyback-vehicle vehicle.bind="vehicle"></buyback-vehicle>
+            </div>
+        </div>
+    </section>
+</template>

@@ -52,6 +52,11 @@ namespace ABSBuybackMVCWebAPI
             container.RegisterType<IAbsBuybackProcessor, AbsBuybackProcessor>();
             container.RegisterType<IAbsBuybackInserter, AbsBuybackInserter>();
             container.RegisterType<IAbsBuybackUpdater, AbsBuybackUpdater>();
+            // Transport Resolvers
+            container.RegisterType<ITransportRepository, TransportRepository>();
+            container.RegisterType<ITransportNoteRepository, TransportNoteRepository>();
+            container.RegisterType<ITransportNoteQueryProcessor, TransportNoteQueryProcessor>();
+            container.RegisterType<ITransportNoteQueryProcessorFactory, TransportNoteQueryProcessorFactory>();
         }
     }
 }

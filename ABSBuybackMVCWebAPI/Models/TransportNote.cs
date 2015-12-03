@@ -9,7 +9,6 @@ namespace ABSBuybackMVCWebAPI.Models
     {
         [Key]
         public int UserNoteId { get; set; }
-        // Type
         public int NoteId { get; set; }
         public int VehicleId { get; set; }
         public string UserNote { get; set; }

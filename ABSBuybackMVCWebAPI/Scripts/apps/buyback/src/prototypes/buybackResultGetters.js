@@ -1,6 +1,6 @@
 ﻿import {buybackResultFunctions as bRF} from "../functions/buybackResult"
 
-let buybackResultGetters = {
+let transportGetters = {
     instanceMembers: {},
     protoMembers: {},
     closures: [
@@ -12,9 +12,9 @@ setGetters();
 
 function setGetters() {
     let isAbsSaleGetter = Object.getOwnPropertyDescriptor(bRF, "isAbsSale");
-    Object.defineProperty(buybackResultGetters.protoMembers, "isAbsSale", isAbsSaleGetter);
+    Object.defineProperty(transportGetters.protoMembers, "isAbsSale", isAbsSaleGetter);
     let isNonAbsSaleGetter = Object.getOwnPropertyDescriptor(bRF, "isNonAbsSale");
-    Object.defineProperty(buybackResultGetters.protoMembers, "isNonAbsSale", isNonAbsSaleGetter);
+    Object.defineProperty(transportGetters.protoMembers, "isNonAbsSale", isNonAbsSaleGetter);
 }
 
-export let BuybackResultGetters = buybackResultGetters;
+export let BuybackResultGetters = transportGetters;

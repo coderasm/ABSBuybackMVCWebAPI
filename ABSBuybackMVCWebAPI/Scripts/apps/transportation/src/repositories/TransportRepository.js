@@ -1,14 +1,14 @@
 ﻿import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
-export class BuybackVehicleRepository
+export class TransportRepository
 {
     constructor() {
         this.http = new HttpClient();
         this.http.configure(config => {
             config
               .useStandardConfiguration()
-              .withBaseUrl('/api/buybackvehicle/')
+              .withBaseUrl('api/transport/')
         });
     }
 
@@ -23,24 +23,44 @@ export class BuybackVehicleRepository
         return this.http.fetch(uri);
     }
 
-    search(buybackVehicleQueryObject)
+    search(transportQueryObject)
     {
         var requestInit = {
             headers: {"content-type" : "application/json"},
             method: "POST",
-            body: JSON.stringify(buybackVehicleQueryObject)
+            body: JSON.stringify(transportQueryObject)
         }
         return this.http.fetch('search', requestInit);
     }
 
-    searchPaged(buybackVehicleQueryObject, pageNumber, pageSize)
+    searchPaged(buybackResultQueryObject, pageNumber, pageSize)
     {
         var requestInit = {
             headers: {"content-type" : "application/json"},
             method: "POST",
-            body: JSON.stringify(buybackVehicleQueryObject)
+            body: JSON.stringify(buybackResultQueryObject)
         }
         var uri = "search/" + pageNumber + "/" + pageSize;
         return this.http.fetch(uri, requestInit);
+    }
+
+    update(transport)
+    {
+        var requestInit = {
+            headers: {"content-type" : "application/json"},
+            method: "PUT",
+            body: JSON.stringify(transport)
+        }
+        return this.http.fetch('', requestInit);
+    }
+
+    insert(transport)
+    {
+        var requestInit = {
+            headers: {"content-type" : "application/json"},
+            method: "POST",
+            body: JSON.stringify(transport)
+        }
+        return this.http.fetch('', requestInit);
     }
 }

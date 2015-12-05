@@ -1,0 +1,30 @@
+<template>
+    <require from="customElements/transport/transport"></require>
+    <require from="customElements/transport-note/transport-note"></require>
+    <section>
+        <virtual-list items.bind="transports">
+            <template replace-part="item-template">
+                <div class="row au-stagger row-5-padding">
+                    <div class="col-sm-9">
+                        <transport transport.bind="item"></transport>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="row au-stagger row-5-padding" repeat.for="note of item.Notes">
+                            <div class="col-md-12">
+                                <transport-note note.bind="note"></transport-note>
+                            </div>
+                        </div>
+                        <div class="row au-stagger row-5-padding">
+                            <div class="col-sm-2">
+                                <button click.delegate="item.addNote()">Add</button>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" value.bind="item.newNote"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </virtual-list>
+    </section>
+</template>

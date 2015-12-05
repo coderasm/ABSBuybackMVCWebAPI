@@ -1,27 +1,99 @@
 <template>
-    <require from="customElements/transport/transport"></require>
-    <require from="customElements/transport-note/transport-note"></require>
     <section>
-        <virtual-list items.bind="transports">
-            <template replace-part="item-template">
-                <div class="row au-stagger row-5-padding">
-                    <div class="col-sm-9">
-                        <transport transport.bind="item"></transport>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="row au-stagger row-5-padding" repeat.for="note of item.Notes">
-                            <div class="col-md-12">
-                                <transport-note note.bind="note"></transport-note>
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <th></th>
+                    <th>Buyer</th>
+                    <th>Seller</th>
+                    <th>YMM</th>
+                    <th>VIN</th>
+                    <th>VID</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Setup</th>
+                    <th>Shipped</th>
+                    <th>Status</th>
+                    <th>Initiator</th>
+                    <th>Transporter</th>
+                    <th>Heat</th>
+                    <th>IGFrame</th>
+                    <th>Released</th>
+                    <th>Notes</th>
+                </tr>
+                <tr repeat.for="transport of transports">
+                    <td>
+                        TODO: Pin Form
+                    </td>
+                    <td>
+                        ${transport.Buyer}
+                    </td>
+                    <td>
+                        ${transport.Seller}
+                    </td>
+
+                    <td>
+                        ${transport.YMM}
+                    </td>
+                    <td>
+                        ${transport.VIN}
+                    </td>
+                    <td>
+                        ${transport.VID}
+                    </td>
+                    <td>
+                        ${transport.BoughtFrom}
+                    </td>
+                    <td>
+                        ${transport.ShipTo}
+                    </td>
+                    <td>
+                        ${transport.setupDate}
+                    </td>
+                    <td>
+                        ${transport.SetUPPerson}
+                    </td>
+                    <td>
+                        ${transport.shipped}
+                    </td>
+                    <td>
+                        ${transport.VehicleStatus}
+                    </td>
+                    <td>
+                        ${transport.VendorCompany}
+                    </td>
+                    <td>
+                        ${transport.HeatID}
+                    </td>
+                    <td>
+                        ${transport.IGFrameStatus}
+                    </td>
+                    <td>
+                        ${transport.released}
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row" repeat.for="note of transport.Notes">
+                                    <div class="col-md-12">
+                                        ${note.created} - ${note.CreatedBy} - ${note.UserNote}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" click.delegate="transport.addNote()"><i class="fa fa-plus-circle"></i></button>
+                                            </span>
+                                            <input type="text" class="form-control" placeholder="Note" value.bind="transport.newNote" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </template>
-        </virtual-list>
-        <!--<div class="row au-stagger row-5-padding">
-            <div class="col-sm-12 col-md-6" repeat.for="transport of transports">
-                <transport transport.bind="transport"></transport>
-            </div>
-        </div>-->
+                    </td>
+                </tr>
+            </table>
+        </div>
     </section>
 </template>

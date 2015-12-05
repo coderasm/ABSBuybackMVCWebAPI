@@ -1,17 +1,19 @@
 import {TransportViewModel} from 'viewModels/TransportViewModel';
+import {TransportNoteViewModel} from 'viewModels/TransportNoteViewModel';
 import {inject} from 'aurelia-framework';
 import {RepositoryService} from 'services/RepositoryService';
 
-@inject(RepositoryService, TransportViewModel)
+@inject(RepositoryService, TransportViewModel, TransportNoteViewModel)
 export class Transports {
     heading = 'Transports';
     transports = [];
     pageNumber = 1;
     pageSize = 15;
 
-    constructor(repositoryService, transportViewModel) {
+    constructor(repositoryService, transportViewModel, transportNoteViewModel) {
         this.repositoryService = repositoryService;
         this.transportViewModel = transportViewModel;
+        this.transportNoteViewModel = transportNoteViewModel;
     }
 
     activate()
@@ -31,12 +33,23 @@ export class Transports {
         //var queryObject = this.createQueryObject();
         return this.repositoryService.TransportRepository.getAll()
               .then(response => response.json())
-              .then(json => $.map(json, v => {return this.transportViewModel.create(v)}));
+              .then(json => $.map(json, t =>
+                                            {
+                                                this.createNotes(t);
+                                                return this.transportViewModel.create(t)
+                                            }
+                                 )
+                   );
     }
 
     setTransports(transports)
     {
         this.transports = transports
+    }
+
+    createNotes(transport)
+    {
+        transport.Notes = $.map(transport.Notes, n => this.transportNoteViewModel.create(n));
     }
 
     createQueryObject()

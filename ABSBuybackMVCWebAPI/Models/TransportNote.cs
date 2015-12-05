@@ -8,9 +8,8 @@ namespace ABSBuybackMVCWebAPI.Models
     public class TransportNote
     {
         [Key]
-        public int UserNoteId { get; set; }
-        public int NoteId { get; set; }
-        public int VehicleId { get; set; }
+        public int UserNoteID { get; set; }
+        public int VehicleID { get; set; }
         public string UserNote { get; set; }
         public DateTime CreatedDT { get; set; }
         public string CreatedBy { get; set; }

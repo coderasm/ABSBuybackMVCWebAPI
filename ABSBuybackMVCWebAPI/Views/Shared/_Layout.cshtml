@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.RegularExpressions
+<!DOCTYPE html>
 <html>
     <head>
         <title>Buyback Management</title>
         @RenderSection("Styles", false)
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type='text/javascript'>
+            var User = {
+                name: "@Regex.Match(HttpContext.Current.User.Identity.Name, @"\\(.*)").Groups[0].Captures[0].Value"
+            }
+        </script>
+
     </head>
     @RenderBody()
     @RenderSection("Scripts", false)

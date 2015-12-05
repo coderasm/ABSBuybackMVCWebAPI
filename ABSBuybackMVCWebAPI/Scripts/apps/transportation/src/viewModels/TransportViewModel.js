@@ -1,10 +1,12 @@
 ﻿import {Transport} from '../prototypes/transport';
 import {TransportGetters} from '../prototypes/transportGetters';
+import {TransportNoteVMToTransportNote} from '../utilities/mapping/TransportNoteVMToTransportNote';
 import {RepositoryService} from 'services/RepositoryService';
 
-function transportViewModel(repositoryService) {
+function transportViewModel(repositoryService, transportNoteVMToTransportNote) {
     Object.assign(Transport.protoMembers, {
-                                                    repositoryService: repositoryService
+        repositoryService: repositoryService,
+        mapper: transportNoteVMToTransportNote
                                                 }
                     );
     let transportPrototype = Transport;
@@ -58,6 +60,6 @@ function transportViewModel(repositoryService) {
     }
     return {create: create};
 };
-transportViewModel.inject = [RepositoryService];
+transportViewModel.inject = [RepositoryService, TransportNoteVMToTransportNote];
 
 export let TransportViewModel = transportViewModel;

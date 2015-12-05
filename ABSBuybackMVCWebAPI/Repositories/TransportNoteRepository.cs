@@ -19,7 +19,8 @@ namespace ABSBuybackMVCWebAPI.Repositories
 	                                        * 
                                         FROM 
 	                                        usernotes";
-                                        
+
+        const string insertTemplate = "INSERT INTO UserNotes VALUES(3,@VehicleID,@UserNote,@CreatedDT,@CreatedBy,DEFAULT)";
         private const string SelectPaged = @"";
         private const string WhereTemplate = @" WHERE NoteID = 3{0}";
         private string WherePredicate = "";
@@ -54,7 +55,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
         {
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
             {
-                return (int)connection.Insert(poco);
+                return connection.Execute(insertTemplate, poco);
             }
         }
 
@@ -62,7 +63,7 @@ namespace ABSBuybackMVCWebAPI.Repositories
         {
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ABS-SQL"].ConnectionString))
             {
-                return (int)connection.Insert(poco, transaction);
+                return connection.Execute(insertTemplate, poco, transaction);
             }
         }
 

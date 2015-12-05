@@ -1,4 +1,6 @@
-﻿export let transportFunctions = {
+﻿import {TransportNoteViewModel} from 'viewModels/TransportNoteViewModel';
+
+export let transportFunctions = {
     get hasHeat() {
         return this.HeatID  !== null;
     },
@@ -18,5 +20,14 @@
     },
     get released() {
         return (new Date(this.ReleaseDT)).toLocaleDateString();
+    },
+    createNote: function createNote() {
+        var newNote = {
+            VehicleID: this.VID,
+            UserNote: this.newNote,
+            CreatedDT: new Date(),
+            CreatedBy: "someone"
+        };
+        return TransportNoteViewModel().create(newNote);
     }
 }

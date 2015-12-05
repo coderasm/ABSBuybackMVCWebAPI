@@ -14,12 +14,12 @@ function transportNoteViewModel() {
 
     function create(data) {
         let instance = Object.assign(Object.create(prototype), data);
-        transportPrototype.closures.forEach(function(closure) {
+        transportNotePrototype.closures.forEach(function(closure) {
             closure.call(instance);
         });
         // Simple copy of state to the new instance
-        for (var key in transportPrototype.instanceMembers) {
-            instance[key] = transportPrototype.instanceMembers[key];
+        for (var key in transportNotePrototype.instanceMembers) {
+            instance[key] = transportNotePrototype.instanceMembers[key];
         }
 
         function initialize() {
